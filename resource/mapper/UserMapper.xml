@@ -8,6 +8,8 @@
 		<result property="id" column="id" />
 		<result property="userName" column="user_name" />
 		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="vaild" column="vaild" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
 	</resultMap>
@@ -16,8 +18,8 @@
 	<!--保存 -->
 	<insert id="save" parameterType="com.artcweb.baen.User">
 		insert into
-		user(user_name,password,create_date,update_date)
-		values(#{userName},#{password},now(),now())
+		user(user_name,password,email,vaild,create_date,update_date)
+		values(#{userName},#{password},#{email},#{vaild},now(),now())
 	</insert>
 
 	<!--删除 -->
@@ -37,14 +39,29 @@
 			<if test="password !=null and password!='' ">
 				password=#{password},
 			</if>
+			<if test="email !=null and email'' ">
+				email=#{email},
+			</if>
+			<if test="vaild !=null and vaild'' ">
+				vaild=#{vaild},
+			</if>
 			update_date = now()
 		</set>
 		where id=#{id}
 	</update>
 
-
-	<select id="select" parameterType="Map" resultMap="userResult">
-		select * from user
+	<!-- 查找 -->
+	<select id="get" parameterType="Map" resultMap="userResult">
+		select user_name,password,email,vaild,create_date,update_date from
+		user 
+		where 1=1
+		<if test="userName != nul and '' != userName">
+			and user_name=#{userName}
+		</if>
+		<if test="password !=null and ''!= password ">
+			and password=#{password}
+		</if>
+		limit 1
 	</select>
 
 
