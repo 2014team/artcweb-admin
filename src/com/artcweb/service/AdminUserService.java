@@ -1,8 +1,8 @@
 package com.artcweb.service;
 
-import com.artcweb.baen.User;
+import com.artcweb.baen.AdminUser;
 
-public interface UserService extends BaseService<User, Integer> {
+public interface AdminUserService extends BaseService<AdminUser, Integer> {
 
 	/**
 	* @Title: checkLoginParam
@@ -10,7 +10,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param user
 	* @return
 	*/
-	public String checkLoginParam(User user);
+	public String checkLoginParam(AdminUser user);
 
 	/**
 	* @Title: login
@@ -18,7 +18,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param user
 	* @return
 	*/
-	public User login(User user);
+	public AdminUser login(AdminUser user);
 	
 	
 	

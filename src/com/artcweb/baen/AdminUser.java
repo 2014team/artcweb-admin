@@ -1,7 +1,7 @@
 
 package com.artcweb.baen;
 
-public class User extends BaseBean {
+public class AdminUser extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artcweb.dao.AdminCategoryDao">
+
+	<resultMap type="com.artcweb.baen.AdminCategory" id="result">
+		<result property="id" column="id" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
+
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.artcweb.baen.AdminCategory">
+		insert into
+		admin_right_category(category_name)
+		values(#{categoryName})
+	</insert>
+
+	<!--删除 -->
+	<delete id="delete" parameterType="Integer">
+		delete from
+		admin_right_category
+		where id=#{id}
+	</delete>
+
+
+	<!-- 修改 -->
+	<update id="update" parameterType="com.artcweb.baen.AdminCategory">
+		update admin_right_category
+		<set>
+			<if test="categoryName !=null and categoryName !='' ">
+				category_name=#{categoryName}
+			</if>
+		</set>
+			where id=#{id}
+	</update>
+
+	<!-- 查找 -->
+	<select id="get" parameterType="Map" resultMap="result">
+		select category_name from
+		admin_right_category
+		where 1=1
+		<if test="categoryName != nul and '' != categoryName">
+			and category_name=#{categoryName}
+		</if>
+		limit 1
+	</select>
+
+
+
+</mapper> 

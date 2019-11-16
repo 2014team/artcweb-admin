@@ -7,15 +7,15 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.artcweb.baen.User;
-import com.artcweb.dao.UserDao;
-import com.artcweb.service.UserService;
+import com.artcweb.baen.AdminUser;
+import com.artcweb.dao.AdminUserDao;
+import com.artcweb.service.AdminUserService;
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements  UserService{
+public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> implements  AdminUserService{
 	
 	@Autowired
-	private UserDao userDao;
+	private AdminUserDao userDao;
 	
 
 	/**
@@ -25,7 +25,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements  
 	* @return
 	*/
 	@Override
-	public String checkLoginParam(User user) {
+	public String checkLoginParam(AdminUser user) {
 		String userName = user.getUserName();
 		if(StringUtils.isBlank(userName)){
 			return "用户名不能为空!";
@@ -44,7 +44,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements  
 	* @return
 	*/
 	@Override
-	public User login(User user) {
+	public AdminUser login(AdminUser user) {
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		paramMap.put("userName", user.getUserName());
 		paramMap.put("password", user.getPassword());

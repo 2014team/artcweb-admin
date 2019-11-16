@@ -1,0 +1,86 @@
+2019-11-16 00:34:16 INFO  DispatcherServlet:479 - FrameworkServlet 'springmvc': initialization started
+2019-11-16 00:34:16 INFO  XmlWebApplicationContext:513 - Refreshing WebApplicationContext for namespace 'springmvc-servlet': startup date [Sat Nov 16 00:34:16 CST 2019]; parent: Root WebApplicationContext
+2019-11-16 00:34:16 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [config/spring-servlet.xml]
+2019-11-16 00:34:16 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/upload/image],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UploadImageController.upload(org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-11-16 00:34:16 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.login()
+2019-11-16 00:34:16 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/logout],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.logout(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:34:16 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login/submit],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UserController.loginSubmit(com.artcweb.baen.User,javax.servlet.http.HttpServletRequest)
+2019-11-16 00:34:16 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/index],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.centerIndex(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/images/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/fonts/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/lib/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/upload/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5'
+2019-11-16 00:34:17 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/html/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6'
+2019-11-16 00:34:17 INFO  DispatcherServlet:498 - FrameworkServlet 'springmvc': initialization completed in 681 ms
+2019-11-16 00:34:24 ERROR LoginInterceptor:33 - LoginInterceptor.preHandle()未登录!
+2019-11-16 00:41:37 INFO  DispatcherServlet:479 - FrameworkServlet 'springmvc': initialization started
+2019-11-16 00:41:37 INFO  XmlWebApplicationContext:513 - Refreshing WebApplicationContext for namespace 'springmvc-servlet': startup date [Sat Nov 16 00:41:37 CST 2019]; parent: Root WebApplicationContext
+2019-11-16 00:41:37 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [config/spring-servlet.xml]
+2019-11-16 00:41:37 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/upload/image],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UploadImageController.upload(org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-11-16 00:41:37 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/index],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.centerIndex(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:41:37 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login/submit],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UserController.loginSubmit(com.artcweb.baen.User,javax.servlet.http.HttpServletRequest)
+2019-11-16 00:41:37 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.login()
+2019-11-16 00:41:37 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/logout],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.logout(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/images/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/fonts/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/lib/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/upload/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5'
+2019-11-16 00:41:37 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/html/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6'
+2019-11-16 00:41:38 INFO  DispatcherServlet:498 - FrameworkServlet 'springmvc': initialization completed in 561 ms
+2019-11-16 00:41:52 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+2019-11-16 00:41:52 INFO  SQLErrorCodesFactory:126 - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+2019-11-16 00:44:30 INFO  DispatcherServlet:479 - FrameworkServlet 'springmvc': initialization started
+2019-11-16 00:44:30 INFO  XmlWebApplicationContext:513 - Refreshing WebApplicationContext for namespace 'springmvc-servlet': startup date [Sat Nov 16 00:44:30 CST 2019]; parent: Root WebApplicationContext
+2019-11-16 00:44:30 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [config/spring-servlet.xml]
+2019-11-16 00:44:30 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/upload/image],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UploadImageController.upload(org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-11-16 00:44:30 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.login()
+2019-11-16 00:44:30 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/logout],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.logout(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:44:30 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/index],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.centerIndex(javax.servlet.http.HttpServletRequest)
+2019-11-16 00:44:30 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login/submit],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UserController.loginSubmit(com.artcweb.baen.User,javax.servlet.http.HttpServletRequest)
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/images/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/fonts/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/lib/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/upload/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5'
+2019-11-16 00:44:30 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/html/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6'
+2019-11-16 00:44:30 INFO  DispatcherServlet:498 - FrameworkServlet 'springmvc': initialization completed in 562 ms
+2019-11-16 11:49:10 INFO  DispatcherServlet:479 - FrameworkServlet 'springmvc': initialization started
+2019-11-16 11:49:10 INFO  XmlWebApplicationContext:513 - Refreshing WebApplicationContext for namespace 'springmvc-servlet': startup date [Sat Nov 16 11:49:10 CST 2019]; parent: Root WebApplicationContext
+2019-11-16 11:49:10 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [config/spring-servlet.xml]
+2019-11-16 11:49:10 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/upload/image],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UploadImageController.upload(org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-11-16 11:49:10 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.login()
+2019-11-16 11:49:10 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/logout],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.logout(javax.servlet.http.HttpServletRequest)
+2019-11-16 11:49:10 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/index],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.centerIndex(javax.servlet.http.HttpServletRequest)
+2019-11-16 11:49:10 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login/submit],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UserController.loginSubmit(com.artcweb.baen.User,javax.servlet.http.HttpServletRequest)
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/images/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/fonts/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/lib/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/upload/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5'
+2019-11-16 11:49:10 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/html/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6'
+2019-11-16 11:49:10 INFO  DispatcherServlet:498 - FrameworkServlet 'springmvc': initialization completed in 657 ms
+2019-11-16 11:50:38 ERROR LoginInterceptor:33 - LoginInterceptor.preHandle()未登录!
+2019-11-16 11:50:58 WARN  PageNotFound:1114 - No mapping found for HTTP request with URI [/admin/center/html/admin-cate.html] in DispatcherServlet with name 'springmvc'
+2019-11-16 12:00:58 INFO  DispatcherServlet:479 - FrameworkServlet 'springmvc': initialization started
+2019-11-16 12:00:58 INFO  XmlWebApplicationContext:513 - Refreshing WebApplicationContext for namespace 'springmvc-servlet': startup date [Sat Nov 16 12:00:58 CST 2019]; parent: Root WebApplicationContext
+2019-11-16 12:00:58 INFO  XmlBeanDefinitionReader:316 - Loading XML bean definitions from class path resource [config/spring-servlet.xml]
+2019-11-16 12:00:58 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/upload/image],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UploadImageController.upload(org.springframework.web.multipart.MultipartFile,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-11-16 12:00:58 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.login()
+2019-11-16 12:00:58 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/logout],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.logout(javax.servlet.http.HttpServletRequest)
+2019-11-16 12:00:58 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/center/index],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String com.artcweb.controller.UserController.centerIndex(javax.servlet.http.HttpServletRequest)
+2019-11-16 12:00:58 INFO  RequestMappingHandlerMapping:197 - Mapped "{[/admin/login/submit],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public com.artcweb.baen.JsonResult com.artcweb.controller.UserController.loginSubmit(com.artcweb.baen.AdminUser,javax.servlet.http.HttpServletRequest)
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/css/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/images/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#1'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/js/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#2'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/fonts/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#3'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/lib/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#4'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/upload/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#5'
+2019-11-16 12:00:58 INFO  SimpleUrlHandlerMapping:315 - Mapped URL path [/html/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#6'
+2019-11-16 12:00:58 INFO  DispatcherServlet:498 - FrameworkServlet 'springmvc': initialization completed in 550 ms
+2019-11-16 12:00:59 ERROR LoginInterceptor:33 - LoginInterceptor.preHandle()未登录!

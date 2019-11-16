@@ -133,7 +133,7 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="html/admin-cate.html">
+                        <a _href="/html/admin-cate.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>权限分类</cite>
                         </a>

@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.artcweb.baen.JsonResult;
-import com.artcweb.baen.User;
-import com.artcweb.service.UserService;
+import com.artcweb.baen.AdminUser;
+import com.artcweb.service.AdminUserService;
+import com.artcweb.util.SessionUtil;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private AdminUserService userService;
 
 	/**
 	 * @Title: login
@@ -27,19 +28,21 @@ public class UserController {
 	 */
 	@RequestMapping("/admin/login")
 	public String login() {
+
 		return "login";
 	}
-	
+
 	/**
-	* @Title: logout
-	* @Description: 退出
-	* @param request
-	* @return
-	*/
+	 * @Title: logout
+	 * @Description: 退出
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/admin/logout")
 	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.removeAttribute("sessionUser");
+
+		// 删除用户session信息
+		SessionUtil.deleteSessionUser(request);
 		return "redirect:/admin/login";
 	}
 
@@ -52,7 +55,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/admin/login/submit")
-	public JsonResult loginSubmit(User user, HttpServletRequest request) {
+	public JsonResult loginSubmit(AdminUser user, HttpServletRequest request) {
 
 		JsonResult jsonResult = new JsonResult();
 		// 基本参数验证
@@ -63,13 +66,15 @@ public class UserController {
 		}
 
 		// 登录
-		User userResult = userService.login(user);
+		AdminUser userResult = userService.login(user);
 		if (null == userResult) {
 			jsonResult.failure("请认真核对账号、密码！");
 			return jsonResult;
 		}
-		HttpSession session = request.getSession();
-		session.setAttribute("sessionUser", userResult);
+
+		// 保存用户session信息
+		SessionUtil.saveSessionUser(request, userResult);
+
 		jsonResult.success("登录成功！");
 		return jsonResult;
 	}
@@ -83,9 +88,9 @@ public class UserController {
 	 */
 	@RequestMapping("/admin/center/index")
 	public String centerIndex(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = ( com.artcweb.baen.User ) session.getAttribute("sessionUser");
-		if(null == user){
+
+		AdminUser user = SessionUtil.getSessionUser(request);
+		if (null == user) {
 			return "redirect:/admin/login.do";
 		}
 		request.setAttribute("user", user);
