@@ -17,8 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	private static Logger logger = Logger.getLogger(LoginInterceptor.class);
 
 	@Override
-	public boolean preHandle(	HttpServletRequest request,
-								HttpServletResponse response, Object handler)
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 					throws Exception {
 
 		// 获取请求你url
@@ -37,15 +36,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	}
 
-	public void afterCompletion(HttpServletRequest request,
-								HttpServletResponse response, Object handler,
-								Exception ex)
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 					throws Exception {
 
 	}
 
-	public void postHandle(	HttpServletRequest request,
-							HttpServletResponse response, Object handler,
+	public void postHandle(	HttpServletRequest request, HttpServletResponse response, Object handler,
 							ModelAndView modelAndView)
 					throws Exception {
 

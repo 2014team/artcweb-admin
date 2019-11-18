@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-	<%@include file="/WEB-INF/pages/common/head-layui.jsp" %>
+	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
 
   </head>
   
@@ -133,7 +133,7 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="/html/admin-cate.html">
+                        <a _href="/admin/center/system/category/list/ui.do">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>权限分类</cite>
                         </a>

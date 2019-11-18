@@ -2,7 +2,6 @@
 package com.artcweb.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +9,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.artcweb.baen.JsonResult;
 import com.artcweb.baen.AdminUser;
+import com.artcweb.baen.JsonResult;
 import com.artcweb.service.AdminUserService;
 import com.artcweb.util.SessionUtil;
 
 @Controller
-public class UserController {
+@RequestMapping("/admin")
+public class AdminUserController {
 
 	@Autowired
-	private AdminUserService userService;
+	private AdminUserService adminUserService;
 
 	/**
 	 * @Title: login
 	 * @Description: 登录界面
 	 * @return
 	 */
-	@RequestMapping("/admin/login")
+	@RequestMapping("/login")
 	public String login() {
 
 		return "login";
@@ -38,7 +38,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/admin/logout")
+	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
 
 		// 删除用户session信息
@@ -54,19 +54,19 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/admin/login/submit")
+	@RequestMapping("/login/submit")
 	public JsonResult loginSubmit(AdminUser user, HttpServletRequest request) {
 
 		JsonResult jsonResult = new JsonResult();
 		// 基本参数验证
-		String errorMsg = userService.checkLoginParam(user);
+		String errorMsg = adminUserService.checkLoginParam(user);
 		if (StringUtils.isNotBlank(errorMsg)) {
 			jsonResult.failure(errorMsg);
 			return jsonResult;
 		}
 
 		// 登录
-		AdminUser userResult = userService.login(user);
+		AdminUser userResult = adminUserService.login(user);
 		if (null == userResult) {
 			jsonResult.failure("请认真核对账号、密码！");
 			return jsonResult;
@@ -86,7 +86,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/admin/center/index")
+	@RequestMapping("/center/index")
 	public String centerIndex(HttpServletRequest request) {
 
 		AdminUser user = SessionUtil.getSessionUser(request);

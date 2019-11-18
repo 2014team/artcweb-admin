@@ -96,7 +96,30 @@ public abstract interface BaseDao<T extends BaseBean, PK extends Serializable> {
      */
     public abstract List<T> select(Map<String, Object> param);
     
-
+    
+    /**
+     * 按条件查询记录
+    * @param entity 实体对象
+    * @return
+    */
+    public abstract List<T> select(T entity);
+    
+    /**
+    * @Title: findByPage
+    * @Description: 分页查找
+    * @param param
+    * @return
+    */
+    public abstract List<T> findByPage(Map<String, Object> param);
+    
+    
+    /**
+    * @Title: findByPageCount
+    * @Description: 分页查找总数
+    * @param param
+    * @return
+    */
+    public abstract int findByPageCount(Map<String, Object> param);
 }
 
 

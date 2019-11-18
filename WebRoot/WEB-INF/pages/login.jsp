@@ -3,7 +3,7 @@
 <html>
   <head>
    	<meta charset="UTF-8">
-	<%@include file="/WEB-INF/pages/common/head-layui.jsp" %>
+	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
   </head>
 
  <body class="login-bg">

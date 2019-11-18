@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Pager implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int pageSize = 10; // 每页多少条
+	private int pageSize = 2; // 每页多少条
 	private int pageNo = 1; // 第几页
 	private int totalPages = 10; // 总的页数
 	private int totalSize = 0; // 总的记录数
@@ -79,7 +79,11 @@ public class Pager implements Serializable {
 	}
 
 	public int getStep() {
-		return step;
+		if(this.totalPages <= step){
+			return this.totalPages;
+		}else{
+			return step;
+		}
 	}
 
 	public void setStep(int step) {
