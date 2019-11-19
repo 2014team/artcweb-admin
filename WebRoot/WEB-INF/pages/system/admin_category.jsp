@@ -19,13 +19,13 @@
     </div>
     <div class="x-body">
       <div class="layui-row demoTable">
-        <form class="layui-form layui-col-md12 x-so layui-form-pane">
+        <!-- <form class="layui-form layui-col-md12 x-so layui-form-pane"> -->
            	分类名：
           <div class="layui-inline">
 		    <input class="layui-input" name="categoryName" id=categoryName autocomplete="off">
 		  </div>
           <button class="layui-btn" type="button" id="search_id">搜索</button>
-        </form>
+      <!--   </form> -->
       </div>
       
    	
@@ -35,7 +35,7 @@
      <!-- 头部工具条 -->
 	<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
-   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('category_list','/admin/center/system/category/delete/batch.do')">批量删除</button>
+   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('catogoryReload','/admin/center/system/category/delete/batch.do')">批量删除</button>
    			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/system/category/add.do',600,260)"><i class="layui-icon"></i>增加</button>
   		</div>
 	</script>
@@ -53,7 +53,7 @@
 	layui.use('table', function() {
 		var table = layui.table;
 
-		  var $table  =  table.render({
+		  table.render({
 			elem : '#category_list',
 			url : '/admin/center/system/category/list.do',
 			toolbar: '#toolbar',
