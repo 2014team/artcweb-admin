@@ -61,6 +61,7 @@
 		<if test="null != categoryName and '' != categoryName">
 			and category_name = #{categoryName}
 		</if>
+		order by id desc
 	</select>
 	
 	
@@ -91,7 +92,7 @@
 		<if test="entity.categoryName != null and '' != entity.categoryName">
 			and category_name=#{entity.categoryName}
 		</if>
-		limit ${page.begin},${page.limit};
+		order by id desc limit ${page.begin},${page.limit} ;
 	</select>
 
 	<!-- 分页数量 -->

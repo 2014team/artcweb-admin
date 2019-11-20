@@ -116,6 +116,7 @@ function crup_save(form,monitor, url) {
 				if (data.code == 200) { //这个是从后台取回来的状态值
 					layer.msg(data.msg, {icon : 6,time : 500
 					}, function() {
+						debugger
 						// 获得frame索引
 						var index = parent.layer.getFrameIndex(window.name);
 						//关闭当前frame

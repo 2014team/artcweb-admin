@@ -1,6 +1,9 @@
 
 package com.artcweb.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,20 +15,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.artcweb.baen.AdminCategory;
+import com.artcweb.baen.AdminRight;
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.service.AdminCategoryService;
+import com.artcweb.service.AdminRightService;
 
 /**
-* @ClassName: AdminCategoryController
-* @Description: 权限分类
+* @ClassName: AdminRightController
+* @Description: 权限管理
 */
 @Controller
-@RequestMapping("/admin/center/system/category")
-public class AdminCategoryController {
+@RequestMapping("/admin/center/system/right")
+public class AdminRightController {
 
 	@Autowired
+	private AdminRightService adminRightService;
+	
+	@Autowired
 	private AdminCategoryService adminCategoryService;
-
 	/**
 	 * @Title: toList
 	 * @Description: 列表UI
@@ -34,7 +41,7 @@ public class AdminCategoryController {
 	@RequestMapping(value = "/list/ui")
 	public String toList() {
 
-		return "/system/admin_category";
+		return "/system/admin_right";
 	}
 
 	/**
@@ -43,9 +50,12 @@ public class AdminCategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/add")
-	public String toAdd() {
-
-		return "/system/admin_category_edit";
+	public String toAdd(HttpServletRequest request) {
+		
+		Map<String,Object> paramMap = null;
+		List<AdminCategory> categoryList = adminCategoryService.select(paramMap);
+		request.setAttribute("categoryList", categoryList);
+		return "/system/admin_right_edit";
 	}
 
 	/**
@@ -58,9 +68,15 @@ public class AdminCategoryController {
 	@RequestMapping(value = "/edit/{id}")
 	public String toEdit(@PathVariable Integer id, HttpServletRequest request) {
 
-		AdminCategory adminCategory = adminCategoryService.get(id);
-		request.setAttribute("entity", adminCategory);
-		return "/system/admin_category_edit";
+		
+		AdminRight AdminRight = adminRightService.get(id);
+		request.setAttribute("entity", AdminRight);
+		
+		Map<String,Object> paramMap = null;
+		List<AdminCategory> categoryList = adminCategoryService.select(paramMap);
+		request.setAttribute("categoryList", categoryList);
+		
+		return "/system/admin_right_edit";
 	}
 
 	/**
@@ -72,12 +88,12 @@ public class AdminCategoryController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/save")
-	public LayUiResult save(AdminCategory adminCate) {
+	public LayUiResult save(AdminRight adminCate,String rightRulexx) {
 
 		LayUiResult result = new LayUiResult();
 
 		// 参数验证
-		String checkResult = adminCategoryService.checkSaveParam(adminCate);
+		String checkResult = adminRightService.checkSaveParam(adminCate);
 		if (StringUtils.isNotBlank(checkResult)) {
 			result.failure(checkResult);
 			return result;
@@ -86,26 +102,26 @@ public class AdminCategoryController {
 		Integer operator = null;
 		Integer id = adminCate.getId();
 
-		// 修改
-		if (null != id) {
-			// 验证唯一性
-			String checkUpdateUnique = adminCategoryService.checkUpdateUnique(adminCate);
-			if (StringUtils.isNotBlank(checkUpdateUnique)) {
-				result.failure(checkUpdateUnique);
-				return result;
-			}
-			operator = adminCategoryService.update(adminCate);
-			// 保存
-		}
-		else {
-			// 验证唯一性
-			String checkAddUnique = adminCategoryService.checkAddUnique(adminCate);
-			if (StringUtils.isNotBlank(checkAddUnique)) {
-				result.failure(checkAddUnique);
-				return result;
-			}
-			operator = adminCategoryService.save(adminCate);
-		}
+//		// 修改
+//		if (null != id) {
+//			// 验证唯一性
+//			String checkUpdateUnique = adminRightService.checkUpdateUnique(adminCate);
+//			if (StringUtils.isNotBlank(checkUpdateUnique)) {
+//				result.failure(checkUpdateUnique);
+//				return result;
+//			}
+//			operator = adminRightService.update(adminCate);
+//			// 保存
+//		}
+//		else {
+//			// 验证唯一性
+//			String checkAddUnique = adminRightService.checkAddUnique(adminCate);
+//			if (StringUtils.isNotBlank(checkAddUnique)) {
+//				result.failure(checkAddUnique);
+//				return result;
+//			}
+			operator = adminRightService.save(adminCate);
+//		}
 
 		if (null != operator && operator > 0) {
 			result.success();
@@ -126,13 +142,13 @@ public class AdminCategoryController {
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult list(AdminCategory adminCate, HttpServletRequest request) {
+	public LayUiResult list(AdminRight adminCate, HttpServletRequest request) {
 
 		// 获取参数
 		Integer page = Integer.valueOf(request.getParameter("page"));
 		Integer limit = Integer.valueOf(request.getParameter("limit"));
 		LayUiResult result = new LayUiResult(page, limit);
-		result = adminCategoryService.findByPage(adminCate, result);
+		result = adminRightService.findByPage(adminCate, result);
 		return result;
 	}
 
@@ -145,12 +161,12 @@ public class AdminCategoryController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(AdminCategory adminCate) {
+	public LayUiResult delete(AdminRight adminCate) {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
 		Integer id = adminCate.getId();
-		int delResult = adminCategoryService.delete(id);
+		int delResult = adminRightService.delete(id);
 		if (delResult > 0) {
 			result.success();
 			return result;
@@ -179,7 +195,7 @@ public class AdminCategoryController {
 
 		array = array.replace("[", "").replace("]", "");
 
-		int deleteResult = adminCategoryService.deleteByBatch(array);
+		int deleteResult = adminRightService.deleteByBatch(array);
 		if (deleteResult > 0) {
 			result.success();
 			return result;

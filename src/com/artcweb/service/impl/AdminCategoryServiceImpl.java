@@ -21,6 +21,27 @@ public class AdminCategoryServiceImpl extends BaseServiceImpl<AdminCategory, Int
 	private AdminCategoryDao adminCategoryDao;
 
 	/**
+	 * @Title: checkSaveParam
+	 * @Description: 参数验证
+	 * @param adminCate
+	 * @return
+	 */
+	@Override
+	public String checkSaveParam(AdminCategory adminCate) {
+
+		Integer categoryId = adminCate.getCategoryId();
+		if (null == categoryId) {
+			return "参数[categoryId]不能为空!";
+		}
+		String categoryName = adminCate.getCategoryName();
+		if (StringUtils.isBlank(categoryName)) {
+			return "参数[categoryName]不能为空!";
+
+		}
+		return null;
+	}
+
+	/**
 	 * @Title: findByPage
 	 * @Description: 分页查找
 	 * @param adminCate
@@ -43,30 +64,8 @@ public class AdminCategoryServiceImpl extends BaseServiceImpl<AdminCategory, Int
 
 	}
 
-	/**
-	 * @Title: checkSaveParam
-	 * @Description: 参数验证
-	 * @param adminCate
-	 * @return
-	 */
-	@Override
-	public String checkSaveParam(AdminCategory adminCate) {
-
-		Integer categoryId = adminCate.getCategoryId();
-		if (null == categoryId) {
-			return "参数[categoryId]不能为空!";
-		}
-		String categoryName = adminCate.getCategoryName();
-		if (StringUtils.isBlank(categoryName)) {
-			return "参数[categoryName]不能为空!";
-
-		}
-		return null;
-	}
-
 	@Override
 	public int deleteByBatch(String StrIds) {
-
 		return adminCategoryDao.deleteByBatch(StrIds);
 	}
 

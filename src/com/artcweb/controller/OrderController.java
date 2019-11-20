@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.artcweb.baen.AdminCategory;
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.service.AdminCategoryService;
+import com.artcweb.service.OrderService;
 
-/**
-* @ClassName: AdminCategoryController
-* @Description: 权限分类
-*/
+
 @Controller
-@RequestMapping("/admin/center/system/category")
-public class AdminCategoryController {
+@RequestMapping("/admin/center/order")
+public class OrderController {
 
 	@Autowired
 	private AdminCategoryService adminCategoryService;
+	
+	@Autowired 
+	private OrderService orderService;
+	
+	
 
 	/**
 	 * @Title: toList
@@ -34,7 +37,7 @@ public class AdminCategoryController {
 	@RequestMapping(value = "/list/ui")
 	public String toList() {
 
-		return "/system/admin_category";
+		return "/order/admin_order";
 	}
 
 	/**
@@ -45,7 +48,7 @@ public class AdminCategoryController {
 	@RequestMapping(value = "/add")
 	public String toAdd() {
 
-		return "/system/admin_category_edit";
+		return "/order/admin_order_edit";
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class AdminCategoryController {
 
 		AdminCategory adminCategory = adminCategoryService.get(id);
 		request.setAttribute("entity", adminCategory);
-		return "/system/admin_category_edit";
+		return "/order/admin_order_edit";
 	}
 
 	/**

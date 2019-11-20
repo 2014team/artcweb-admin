@@ -7,6 +7,14 @@ import com.artcweb.baen.LayUiResult;
 public interface AdminCategoryService extends BaseService<AdminCategory, Integer> {
 
 	/**
+	 * @Title: checkSaveParam
+	 * @Description: 参数验证
+	 * @param operator
+	 * @return
+	 */
+	public String checkSaveParam(AdminCategory adminCate);
+
+	/**
 	 * @Title: findByPage
 	 * @Description: 分页查找
 	 * @param adminCate
@@ -14,14 +22,6 @@ public interface AdminCategoryService extends BaseService<AdminCategory, Integer
 	 * @return
 	 */
 	public LayUiResult findByPage(AdminCategory adminCate, LayUiResult result);
-
-	/**
-	 * @Title: checkSaveParam
-	 * @Description: 参数验证
-	 * @param operator
-	 * @return
-	 */
-	public String checkSaveParam(AdminCategory adminCate);
 
 	/**
 	 * @Title: deleteByBatch
