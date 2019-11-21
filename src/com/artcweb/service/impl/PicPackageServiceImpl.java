@@ -28,8 +28,8 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 	*/
 	@Override
 	public String checkSaveParam(PicPackage entity) {
-		Integer packageId = entity.getPackageId();
-		if(null == packageId){
+		String packageId = entity.getPackageId();
+		if(StringUtils.isBlank(packageId)){
 			return "参数[packageId]不能为空!";
 		}
 		String packageName  = entity.getPackageName();

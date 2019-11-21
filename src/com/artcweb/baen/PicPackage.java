@@ -1,3 +1,4 @@
+
 package com.artcweb.baen;
 
 public class PicPackage extends BaseBean {
@@ -7,7 +8,8 @@ public class PicPackage extends BaseBean {
 	/**
 	 * 套餐ID
 	 */
-	private Integer packageId;
+	private String packageId;
+
 	/**
 	 * 套餐名称
 	 */
@@ -17,40 +19,49 @@ public class PicPackage extends BaseBean {
 	 * imageUrl图片
 	 */
 	private String imageUrl;
+
 	/**
 	 * 执行步骤
 	 */
 	private String step;
 
-	public Integer getPackageId() {
+	public String getPackageId() {
+
 		return packageId;
 	}
 
-	public void setPackageId(Integer packageId) {
+	public void setPackageId(String packageId) {
+
 		this.packageId = packageId;
 	}
 
 	public String getPackageName() {
+
 		return packageName;
 	}
 
 	public void setPackageName(String packageName) {
+
 		this.packageName = packageName;
 	}
 
 	public String getImageUrl() {
+
 		return imageUrl;
 	}
 
 	public void setImageUrl(String imageUrl) {
+
 		this.imageUrl = imageUrl;
 	}
 
 	public String getStep() {
+
 		return step;
 	}
 
 	public void setStep(String step) {
+
 		this.step = step;
 	}
 

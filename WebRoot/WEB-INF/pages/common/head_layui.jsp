@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="/css/font.css">
-<link rel="stylesheet" href="/css/xadmin.css">
+<link rel="stylesheet" href="/css/font.css?t=<%=new java.util.Date().getTime() %>">
+<link rel="stylesheet" href="/css/xadmin.css?t=<%=new java.util.Date().getTime() %>">
 <script src="/js/jquery.min.js"></script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript" src="/js/xadmin.js"></script>
-<script type="text/javascript" src="/js/crud.js"></script>
+<script type="text/javascript" src="/js/xadmin.js?t=<%=new java.util.Date().getTime() %>"></script>
+<script type="text/javascript" src="/js/crud.js?t=<%=new java.util.Date().getTime() %>"></script>

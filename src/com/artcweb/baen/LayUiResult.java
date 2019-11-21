@@ -16,17 +16,19 @@ public class LayUiResult implements Serializable {
 	/**
 	 * 总的记录数
 	 */
-	private int count;
+	private int count; // 总的记录数
 
 	/**
 	 * 页码
 	 */
-	private int page = 1;
+	private int page = 1;// 第几页
 
 	/**
 	 * 每页多少条
 	 */
-	private int limit = 10;
+	private int limit = 10; // 每页多少条
+
+	private int totalPages = 10; // 总的页数
 
 	public LayUiResult() {
 		super();
@@ -36,6 +38,18 @@ public class LayUiResult implements Serializable {
 		super();
 		this.page = page;
 		this.limit = limit;
+	}
+
+	public int getTotalPages() {
+
+		totalPages = totalPages < 1 ? 1 : totalPages;
+		totalPages = getCount() % getLimit() == 0 ? (getCount() / getLimit()) : (getCount() / getLimit() + 1);
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+
+		this.totalPages = totalPages;
 	}
 
 	public int getCode() {
@@ -102,37 +116,46 @@ public class LayUiResult implements Serializable {
 
 		return (this.getPage() - 1) * this.getLimit();
 	}
-	
+
 	/**
-	* @Title: success
-	* @Description: 成功
-	*/
+	 * @Title: success
+	 * @Description: 成功
+	 */
 	public void success() {
 
 		this.code = 200;
 		this.msg = "请求成功";
 	}
+
+	public void success(Object data) {
+
+		success();
+		this.data = data;
+	}
+
 	public void success(String msg) {
+
 		success();
 		this.msg = msg;
 	}
-	
+
 	/**
-	* @Title: failure
-	* @Description: 失败
-	*/
+	 * @Title: failure
+	 * @Description: 失败
+	 */
 	public void failure() {
 
 		this.code = 500;
 		this.msg = "请求失败";
 	}
+
 	/**
 	 * @Title: failure
 	 * @Description: 失败
 	 */
 	public void failure(String msg) {
-		
-		 failure();
+
+		failure();
 		this.msg = msg;
 	}
 

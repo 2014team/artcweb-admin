@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.artcweb.baen.LayUiResult;
+import com.artcweb.baen.Order;
 import com.artcweb.baen.User;
+import com.artcweb.dao.OrderDao;
 import com.artcweb.dao.UserDao;
 import com.artcweb.service.UserService;
 
@@ -18,6 +20,9 @@ import com.artcweb.service.UserService;
 public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements UserService {
 	@Autowired
 	private UserDao  userDao;
+	
+	@Autowired
+	private OrderDao orderDao;
 	
 	/**
 	* @Title: checkSaveParam
@@ -93,11 +98,34 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		int count = findByPageCount(paramMap);
 		if (count > 0) {
 			List<User> dataList = findByPage(paramMap);
+			
+			//获取订单
+			getOrderList(dataList);
+			
 			result.setData(dataList);
 			result.setCount(count);
 		}
 		return result;
 	}
+	
+	
+	/**
+	* @Title: getOrderList
+	* @Description: 获取订单
+	* @param dataList
+	*/
+	private void getOrderList(List<User> dataList){
+		if(null == dataList || dataList.size() < 1){
+			return;
+		}
+		for (User user : dataList) {
+			Map<String,Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("mobile", user.getMobile());
+			List<Order> orderList = orderDao.select(paramMap);
+			user.setOrderList(orderList);
+		}
+	}
+	
 
 	/**
 	* @Title: deleteByBatch

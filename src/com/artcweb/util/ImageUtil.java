@@ -2,8 +2,10 @@ package com.artcweb.util;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.artcweb.constant.SiteConstant;
 import com.artcweb.constant.UploadConstant;
 
 public class ImageUtil {
@@ -52,5 +54,15 @@ public class ImageUtil {
 		}
 		return null;
 	}
+	
+	
+	public static String imageUrlDeal(String image) {
+		if (StringUtils.isBlank(image)) {
+			return "";
+		}
+		return SiteConstant.HTTP_DOMAIN + image;
+		
+	}
+
 
 }

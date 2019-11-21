@@ -30,11 +30,11 @@ CREATE TABLE `admin_user` (
   `email` varchar(100) NOT NULL COMMENT '邮箱',
   `vaild` int(11) NOT NULL DEFAULT '0' COMMENT '0:无效 1:有效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `admin_user` */
 
-insert  into `admin_user`(`id`,`user_name`,`password`,`create_date`,`update_date`,`email`,`vaild`) values (1,'admin','admin','2019-11-14 20:41:16','2019-11-14 20:41:18','',0);
+insert  into `admin_user`(`id`,`user_name`,`password`,`create_date`,`update_date`,`email`,`vaild`) values (1,'admin','admin','2019-11-14 20:41:16','2019-11-14 20:41:18','',0),(2,'lisi','lisi','2019-11-14 23:38:51','2019-11-14 23:38:53','',0);
 
 /*Table structure for table `order` */
 
@@ -53,7 +53,7 @@ CREATE TABLE `order` (
 
 /*Data for the table `order` */
 
-insert  into `order`(`id`,`mobile`,`package_id`,`current_step`,`sort`,`create_date`,`update_date`) values (1,'13537612556','110','',1,'2019-11-21 16:59:05','2019-11-21 16:59:08'),(2,'13537612556','111','',1,'2019-11-21 17:00:41','2019-11-21 17:00:43');
+insert  into `order`(`id`,`mobile`,`package_id`,`current_step`,`sort`,`create_date`,`update_date`) values (1,'13537612556','110','54',1,'2019-11-21 23:31:27','2019-11-21 23:31:27'),(2,'13537612556','111','',2,'2019-11-21 19:18:47','2019-11-21 17:00:43');
 
 /*Table structure for table `pic_package` */
 
@@ -72,7 +72,7 @@ CREATE TABLE `pic_package` (
 
 /*Data for the table `pic_package` */
 
-insert  into `pic_package`(`id`,`package_id`,`package_name`,`image_url`,`step`,`create_date`,`update_date`) values (1,110,'周杰伦','https://apizza.net/pro','assssssssss','2019-11-21 15:24:54','2019-11-21 15:24:56'),(2,111,'蔡依林','https://apizza.net/pro','1111111111','2019-11-21 15:25:18','2019-11-21 15:25:20'),(3,113,'张德华','https://apizza.net/pro','11111','2019-11-21 15:59:19','2019-11-21 15:59:19');
+insert  into `pic_package`(`id`,`package_id`,`package_name`,`image_url`,`step`,`create_date`,`update_date`) values (1,110,'周杰伦','https://apizza.net/pro','imageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrlimageUrl','2019-11-21 21:03:59','2019-11-21 15:24:56'),(2,111,'蔡依林','https://google','1111111111','2019-11-21 19:18:18','2019-11-21 15:25:20'),(3,113,'张德华','https://baidu.com','11111','2019-11-21 19:18:10','2019-11-21 15:59:19');
 
 /*Table structure for table `user` */
 
@@ -80,16 +80,16 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号码',
+  `mobile` varchar(20) NOT NULL COMMENT '手机号码',
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建日期',
   `update_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`mobile`,`sort`,`create_date`,`update_date`) values (1,'13537612557',1,'2019-11-21 16:37:38','2019-11-21 16:37:38'),(2,'13537612558',2,'2019-11-21 16:30:10','2019-11-21 16:30:12');
+insert  into `user`(`id`,`mobile`,`sort`,`create_date`,`update_date`) values (1,'13537612556',1,'2019-11-20 21:56:07','2019-11-20 21:48:08'),(2,'13537612557',2,'2019-11-20 21:56:13','2019-11-20 21:48:24');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

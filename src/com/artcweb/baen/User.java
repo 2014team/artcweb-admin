@@ -1,6 +1,8 @@
 
 package com.artcweb.baen;
 
+import java.util.List;
+
 public class User extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
@@ -14,6 +16,11 @@ public class User extends BaseBean {
 	 * 排序
 	 */
 	private Integer sort;
+	
+	
+	private List<Order> orderList;
+	
+	
 
 	public String getMobile() {
 
@@ -35,4 +42,16 @@ public class User extends BaseBean {
 		this.sort = sort;
 	}
 
+	
+	public List<Order> getOrderList() {
+	
+		return orderList;
+	}
+
+	
+	public void setOrderList(List<Order> orderList) {
+	
+		this.orderList = orderList;
+	}
+	
 }

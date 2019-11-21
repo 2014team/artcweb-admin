@@ -23,19 +23,33 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so layui-form-pane">
-          <input class="layui-input" placeholder="分类名" name="cate_name">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>增加</button>
+          <input class="layui-input" placeholder="手机号码" name="cate_name">
+          <button class="layui-btn" type="button" id="search_id">搜索</button>
         </form>
       </div>
-      <blockquote class="layui-elem-quote">每个tr 上有两个属性 cate-id='1' 当前分类id fid='0' 父级id ,顶级分类为 0，有子分类的前面加收缩图标<i class="layui-icon x-show" status='true'>&#xe623;</i></blockquote>
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
-      </xblock>
+      
+      
+      
       <div class="x-cate">
-      <table class="layui-table layui-form " id="category_list">
+      <table class="layui-table layui-form " id="table_list">
       </table>
       </div>
+      
+      
+       <!-- 头部工具条 -->
+	<script type="text/html" id="toolbar">
+  		<div class="layui-btn-container">
+   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('rendReloadId','/admin/center/order/delete/batch.do')">批量删除</button>
+  		</div>
+	</script>
+      
+       <!--列表行Bar  -->
+     <script type="text/html" id="rowBar">
+		 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+ 		 <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="del">添加订单</a>
+ 		 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+      
       
     </div>
     <style type="text/css">
@@ -57,15 +71,8 @@
         var form = layui.form
         ,table = layui.table;
         
-        
           table.render({
-          
-          	
-          	
-          	
-          	
-          
-			elem : '#category_list',
+			elem : '#table_list',
 			url : '/admin/center/system/category/list.do',
 			toolbar: '#toolbar',
 		    defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
@@ -110,7 +117,7 @@
 					title : '分类名'
 				}
 				, {
-					align:'center', toolbar: '#categoryBar',
+					align:'center', toolbar: '#rowBar',
 					title : '操作'
 				}
 

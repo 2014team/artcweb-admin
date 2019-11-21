@@ -42,12 +42,13 @@
 		update order
 		set
 		mobile=#{mobile}
-		,packageId=#{package_id}
+		,package_id=#{packageId}
 		,step=#{step}
-		,currentStep=#{current_step}
+		,current_step=#{currentStep}
 		,sort=#{sort}
 		,update_date=now()
-		where id=#{id}
+		where
+		id=#{id}
 	</update>
 
 	<!-- 查找 -->
@@ -57,43 +58,102 @@
 		where id = #{id}
 		order by sort limit 1
 	</select>
-	
-	
-	<delete id="deleteByBatch" parameterType="String">
-		delete from
-		order
-		where
-		FIND_IN_SET (id,#{id})
-	</delete>
-	
-	
-	
+
+
+
+	<!-- 查询 -->
+	<select id="select" parameterType="Map" resultType="com.artcweb.baen.Order">
+		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
+		as packageName,
+		p.image_url as imageUrl ,p.step ,o.current_step as
+		currentStep
+		FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="mobile!= null and '' != mobile">
+			and o.mobile=#{mobile}
+		</if>
+	</select>
+
+
 	<!-- 分页查找 -->
-	<select id="findByPage" parameterType="Map" resultMap="result">
-		select id, category_id,category_name from
-		admin_right_category
-		where 1=1
-		<if test="entity.categoryId != null and '' != entity.categoryId">
-			and category_id=#{entity.categoryId}
+	<select id="findByPage" parameterType="Map" resultType="com.artcweb.baen.Order">
+		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
+		as packageName,
+		p.image_url as imageUrl ,p.step ,o.current_step as
+		currentStep
+		FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="entity.mobile!= null and '' != entity.mobile">
+			and o.mobile=#{entity.mobile}
 		</if>
-		<if test="entity.categoryName != null and '' != entity.categoryName">
-			and category_name=#{entity.categoryName}
-		</if>
-		order by id desc limit ${page.begin},${page.limit} ;
+		ORDER BY o.sort limit ${page.begin},${page.limit} ;
 	</select>
 
 	<!-- 分页数量 -->
 	<select id="findByPageCount" parameterType="Map" resultType="int">
-		select count(1) category_name from
-		admin_right_category
-		where 1=1
-		<if test="entity.categoryId != null and '' != entity.categoryId">
-			and category_id=#{entity.categoryId}
-		</if>
-		<if test="entity.categoryName != null and '' != entity.categoryName">
-			and category_name=#{entity.categoryName}
+		SELECT count(1) FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="entity.mobile!= null and '' != entity.mobile">
+			and o.mobile=#{entity.mobile}
 		</if>
 	</select>
+
+
+
+	<!-- API分页查找 -->
+	<select id="findPageByApi" parameterType="Map"
+		resultType="com.artcweb.baen.Order">
+		SELECT o.id as orderId ,o.sort ,p.package_name as packageName,
+		p.image_url as imageUrl
+		FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="entity.mobile!= null and '' != entity.mobile">
+			and o.mobile=#{entity.mobile}
+		</if>
+		ORDER BY o.sort limit ${page.begin},${page.limit} ;
+	</select>
+
+	<!-- API分页数量 -->
+	<select id="findPageByApiCount" parameterType="Map" resultType="int">
+		SELECT count(1) FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="entity.mobile!= null and '' != entity.mobile">
+			and o.mobile=#{entity.mobile}
+		</if>
+	</select>
+
+	<!-- 获取订单详情 -->
+	<select id="getOrderDetail" parameterType="Map"
+		resultType="com.artcweb.baen.Order">
+		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
+		as packageName,
+		p.image_url as imageUrl ,p.step ,o.current_step as
+		currentStep
+		FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="mobile != null and '' != mobile">
+			and o.mobile=#{mobile}
+		</if>
+		<if test="orderId !=null and '' != orderId">
+			and o.id=#{orderId}
+		</if>
+		LIMIT 1
+	</select>
+	
+	
+	<update id="updateCurrentStep" parameterType="Map">
+		update `order`
+		set current_step=#{currentStep}
+		,update_date=now()
+		where
+		id=#{orderId}
+	</update>
 	
 
 
