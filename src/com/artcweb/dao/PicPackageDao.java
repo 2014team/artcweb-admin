@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.artcweb.baen.User;
+import com.artcweb.baen.PicPackage;
 
 @Repository
-public interface UserDao extends BaseDao<User, Integer> {
+public interface PicPackageDao extends BaseDao<PicPackage, Integer> {
 
-	public List<User> checkUnique(Map<String, Object> paramMap);
+	public List<PicPackage> checkUnique(Map<String, Object> paramMap);
 
 	public int deleteByBatch(String array);
+
+	
 }

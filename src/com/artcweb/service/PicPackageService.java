@@ -2,9 +2,9 @@
 package com.artcweb.service;
 
 import com.artcweb.baen.LayUiResult;
-import com.artcweb.baen.User;
+import com.artcweb.baen.PicPackage;
 
-public interface UserService extends BaseService<User, Integer> {
+public interface PicPackageService extends BaseService<PicPackage, Integer> {
 
 	/**
 	* @Title: checkSaveParam
@@ -12,7 +12,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param entity
 	* @return
 	*/
-	public String checkSaveParam(User entity);
+	public String checkSaveParam(PicPackage entity);
 
 	/**
 	* @Title: checkUpdateUnique
@@ -20,7 +20,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param entity
 	* @return
 	*/
-	public String checkUpdateUnique(User entity);
+	public String checkUpdateUnique(PicPackage entity);
 
 	/**
 	* @Title: checkAddUnique
@@ -28,7 +28,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param entity
 	* @return
 	*/
-	public String checkAddUnique(User entity);
+	public String checkAddUnique(PicPackage entity);
 
 	/**
 	* @Title: findByPage
@@ -37,7 +37,7 @@ public interface UserService extends BaseService<User, Integer> {
 	* @param result
 	* @return
 	*/
-	public LayUiResult findByPage(User entity, LayUiResult result);
+	public LayUiResult findByPage(PicPackage entity, LayUiResult result);
 
 	/**
 	* @Title: deleteByBatch
@@ -46,4 +46,6 @@ public interface UserService extends BaseService<User, Integer> {
 	* @return
 	*/
 	public int deleteByBatch(String array);
+
+
 }

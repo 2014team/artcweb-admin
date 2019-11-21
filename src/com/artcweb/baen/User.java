@@ -4,8 +4,10 @@ package com.artcweb.baen;
 public class User extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
-
-	// 手机号码
+	 
+	/**
+	* 手机号码
+	*/
 	private String mobile;
 
 	/**

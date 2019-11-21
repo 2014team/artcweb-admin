@@ -38,8 +38,8 @@
 	<update id="update" parameterType="com.artcweb.baen.User">
 		update user
 		set
-		mobile=#{mobile},
-		sort=#{sort},
+		mobile=#{mobile}
+		,sort=#{sort}
 		,update_date=now()
 		where id=#{id}
 	</update>

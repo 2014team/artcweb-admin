@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artcweb.dao.PicPackageDao">
+
+	<resultMap type="com.artcweb.baen.PicPackage" id="result">
+		<result property="id" column="id" />
+		<result property="packageId" column="package_id" />
+		<result property="packageName" column="package_name" />
+		<result property="imageUrl" column="image_url" />
+		<result property="step" column="step" />
+		<result property="createDate" column="create_date" />
+		<result property="updateDate" column="update_date" />
+	</resultMap>
+
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.artcweb.baen.PicPackage">
+		insert into
+		pic_package(package_id,package_name,image_url,step,create_date,update_date)
+		values(#{packageId},#{packageName},#{imageUrl},#{step},now(),now())
+	</insert>
+
+	<!--删除 -->
+	<delete id="delete" parameterType="Integer">
+		delete from
+		pic_package
+		where
+		id=#{id}
+	</delete>
+
+	<delete id="deleteByBatch" parameterType="String">
+		delete from
+		pic_package
+		where
+		FIND_IN_SET (id,#{id})
+	</delete>
+
+
+	<!-- 修改 -->
+	<update id="update" parameterType="com.artcweb.baen.PicPackage">
+		update pic_package
+		set
+		package_name=#{packageName}
+		,image_url=#{imageUrl}
+		,step=#{step}
+		,update_date=now()
+		where id=#{id}
+	</update>
+
+	<!-- 查找 -->
+	<select id="get" parameterType="Integer" resultMap="result">
+		select * from
+		pic_package
+		where id = #{id}
+		limit 1
+	</select>
+
+
+	<!-- 更新唯一性验证 -->
+	<select id="checkUnique" parameterType="Map" resultMap="result">
+		select * from
+		pic_package
+		where 1 = 1
+		<if test="null != packageId and '' != packageId">
+			and package_id = #{packageId}
+		</if>
+		<if test="null != packageName and '' != packageName">
+			and package_name = #{packageName}
+		</if>
+		<if test="null != id and '' != id">
+			<![CDATA[and id <> #{id}]]>
+		</if>
+	</select>
+
+
+
+	<!-- 分页查找 -->
+	<select id="findByPage" parameterType="Map" resultMap="result">
+		select * from pic_package
+		where 1=1
+		<if test="entity.packageId!= null and '' != entity.packageId">
+			and package_id=#{entity.packageId}
+		</if>
+		<if test="entity.packageName != null and '' != entity.packageName">
+			and package_name=#{entity.packageName}
+		</if>
+		order by id desc limit ${page.begin},${page.limit} ;
+	</select>
+
+	<!-- 分页数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="int">
+		select count(1) from pic_package
+		where 1=1
+		<if test="entity.packageId!= null and '' != entity.packageId">
+			and package_id=#{entity.packageId}
+		</if>
+		<if test="entity.packageName != null and '' != entity.packageName">
+			and package_name=#{entity.packageName}
+		</if>
+	</select>
+
+
+
+
+
+</mapper> 

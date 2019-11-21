@@ -6,11 +6,9 @@
 
 	<resultMap type="com.artcweb.baen.Order" id="result">
 		<result property="id" column="id" />
-		<result property="orderName" column="order_name" />
-		<result property="orderImage" column="order_image" />
-		<result property="step" column="step" />
+		<result property="mobile" column="mobile" />
+		<result property="packageId" column="package_id" />
 		<result property="currentStep" column="current_step" />
-		<result property="userId" column="user_id" />
 		<result property="sort" column="sort" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
@@ -20,8 +18,8 @@
 	<!--保存 -->
 	<insert id="save" parameterType="com.artcweb.baen.Order">
 		insert into
-		order(order_name,order_image,step,current_step,user_id,sort,create_date,update_date)
-		values(#{orderName},#{orderImage},#{step},#{currentStep},#{userId},#{sort},now(),now())
+		order(mobile,package_id,current_step,sort,create_date,update_date)
+		values(#{mobile},#{packageId}#{currentStep},#{sort},now(),now())
 	</insert>
 
 	<!--删除 -->
@@ -43,12 +41,11 @@
 	<update id="update" parameterType="com.artcweb.baen.Order">
 		update order
 		set
-		order_name=#{orderName}
-		order_image=#{orderImage}
-		step=#{step}
-		current_step=#{currentStep}
-		user_id=#{userId}
-		sort=#{sort}
+		mobile=#{mobile}
+		,packageId=#{package_id}
+		,step=#{step}
+		,currentStep=#{current_step}
+		,sort=#{sort}
 		,update_date=now()
 		where id=#{id}
 	</update>
@@ -58,14 +55,46 @@
 		select * from
 		order
 		where id = #{id}
-		limit 1
+		order by sort limit 1
+	</select>
+	
+	
+	<delete id="deleteByBatch" parameterType="String">
+		delete from
+		order
+		where
+		FIND_IN_SET (id,#{id})
+	</delete>
+	
+	
+	
+	<!-- 分页查找 -->
+	<select id="findByPage" parameterType="Map" resultMap="result">
+		select id, category_id,category_name from
+		admin_right_category
+		where 1=1
+		<if test="entity.categoryId != null and '' != entity.categoryId">
+			and category_id=#{entity.categoryId}
+		</if>
+		<if test="entity.categoryName != null and '' != entity.categoryName">
+			and category_name=#{entity.categoryName}
+		</if>
+		order by id desc limit ${page.begin},${page.limit} ;
 	</select>
 
-
-
-
-
-
+	<!-- 分页数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="int">
+		select count(1) category_name from
+		admin_right_category
+		where 1=1
+		<if test="entity.categoryId != null and '' != entity.categoryId">
+			and category_id=#{entity.categoryId}
+		</if>
+		<if test="entity.categoryName != null and '' != entity.categoryName">
+			and category_name=#{entity.categoryName}
+		</if>
+	</select>
+	
 
 
 </mapper> 

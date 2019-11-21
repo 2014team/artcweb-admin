@@ -8,5 +8,7 @@ import com.artcweb.baen.Order;
 @Repository
 public interface OrderDao extends BaseDao<Order, Integer> {
 
+	public int deleteByBatch(String array);
+
 	
 }
