@@ -81,6 +81,11 @@
     		//保存
     		
     	form.on('submit(save)', function(obj) {
+    		var formData = new FormData($("#uploadForm")[0])  //创建一个forData 
+   			 formData.append('img', $('#pic_img')[0].files[0]) //把file添加进去  name命名为img
+    	
+    	
+    	
     			$.ajax({
     				url : '/admin/center/system/right/save.do',
     				type : "POST",

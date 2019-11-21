@@ -35,7 +35,7 @@
               </div>
           </div>
           
-          <div class="layui-form-item">
+       <%--    <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
                   <span class="x-red">*</span>执行步骤
               </label>
@@ -43,15 +43,27 @@
                   <input type="text" id="step" name="step" value="${entity.step }" lay-verify="required"
                   autocomplete="off" class="layui-input">
               </div>
-          </div>
+          </div> --%>
+          
+          
+          <div class="layui-form-item layui-form-text">
+		    <label class="layui-form-label"> <span class="x-red">*</span>执行步骤</label>
+		    <div class="layui-input-block">
+		      <textarea name="desc" placeholder="请输入内容" class="layui-textarea" lay-verify="required"></textarea>
+		    </div>
+		  </div>
+          
+          
+          
           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
                   <span class="x-red">*</span>图片
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="imageUrl" name="imageUrl" value="${entity.imageUrl }" lay-verify="required"
-                  autocomplete="off" class="layui-input">
+                <%--   <input type="text" id="imageUrl" name="imageUrl" value="${entity.imageUrl }" lay-verify="required"
+                  autocomplete="off" class="layui-input"> --%>
+                  <input type="file" id="fileId" >
           </div>
              
           </div>
@@ -81,7 +93,66 @@
           });
           
         //保存
-        crup_save(form,'save','/admin/center/package/save.do');
+        
+        
+        form.on('submit(save)', function(obj) {
+        	var formData = new FormData($("#uploadForm")[0])  //创建一个forData 
+   			 formData.append('img', $('#pic_img')[0].files[0]) //把file添加进去  name命名为img
+        
+        
+    			$.ajax({
+    				url : '/admin/center/package/save.do',
+    				type : "POST",
+    				data : {
+    					id:$("#id").val(),
+    					rightRule:$("#rightRule").val(),
+    					rightName:$("#rightName").val(),
+    					rightCategoryId:$("#rightCategoryId").val()
+    				},
+    				dataType : "json",
+    				success : function(data) {
+    						if (data.code == 200) { //这个是从后台取回来的状态值
+								layer.msg(data.msg, {icon : 6,time : 500
+								}, function() {
+									// 获得frame索引
+									var index = parent.layer.getFrameIndex(window.name);
+									//关闭当前frame
+									parent.layer.close(index);
+									//刷新列表
+									window.parent.location.reload();
+								});
+								
+							} else {
+								layer.msg(data.msg, {
+									icon : 2,
+									time : 500
+								});
+							}
+    					},
+    				error : function(e) {
+    					console.log(e);
+    					layer.msg("系统异常，稍后再试!", {
+    						icon : 2,
+    						time : 1000
+    					});
+    				}
+    			});
+    
+    			return false;
+    		});
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //crup_save(form,'save','/admin/center/package/save.do');
           
         });
     </script>
