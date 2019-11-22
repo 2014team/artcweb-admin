@@ -4,7 +4,6 @@
   <head>
     <meta charset="UTF-8">
 	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
-
   </head>
   
   <body>
@@ -14,22 +13,22 @@
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
-        <ul class="layui-nav left fast-add" lay-filter="">
+        <!-- <ul class="layui-nav left fast-add" lay-filter="">
           <li class="layui-nav-item">
             <a href="javascript:;">+新增</a>
-            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dl class="layui-nav-child"> 二级菜单
               <dd><a onClick="x_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
               <dd><a onClick="x_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
                <dd><a onClick="x_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>
             </dl>
           </li>
-        </ul>
+        </ul> -->
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
             <a href="javascript:;">${user.userName}</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-              <dd><a onClick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
-              <dd><a onClick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+           <!--    <dd><a onClick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
+              <dd><a onClick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd> -->
               <dd><a href="/admin/logout.do">退出</a></dd>
             </dl>
           </li>
@@ -50,10 +49,10 @@
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li><a _href="html/welcome.html"><i class="iconfont">&#xe6a7;</i><cite>控制台</cite></a></li >
+                    <li><a _href="/admin/center/welcome.do"><i class="iconfont">&#xe6a7;</i><cite>控制台</cite></a></li >
                 </ul>
             </li>
-             <li >
+            <!--  <li >
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6e4;</i>
                     <cite>基本元素</cite>
@@ -73,21 +72,21 @@
                     <li><a _href="html/table-element.html"><i class="iconfont">&#xe6a7;</i><cite>静态表格</cite></a></li>
                     <li><a _href="html/anim.html"><i class="iconfont">&#xe6a7;</i><cite>动画</cite></a></li>
                 </ul>
-            </li>
+            </li> -->
             
             
             <li>
-                <a href="javascript:;"><i class="iconfont">&#xe6f6;</i><cite>组件页面</cite><i class="iconfont nav_right">&#xe6a7;</i></a>
+                <a href="javascript:;"><i class="iconfont">&#xe6f6;</i><cite>订单管理</cite><i class="iconfont nav_right">&#xe6a7;</i></a>
                 <ul class="sub-menu">
-                    <li><a _href="html/upload.html"><i class="iconfont">&#xe6a7;</i><cite>文件上传</cite></a></li>
-                    <li><a _href="html/page.html"><i class="iconfont">&#xe6a7;</i><cite>分页</cite></a></li>
+                   <!--  <li><a _href="html/upload.html"><i class="iconfont">&#xe6a7;</i><cite>文件上传</cite></a></li>
+                    <li><a _href="html/page.html"><i class="iconfont">&#xe6a7;</i><cite>分页</cite></a></li> -->
                     <li><a _href="/admin/center/package/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>套餐列表</cite></a></li>
                     <li><a _href="/admin/center/order/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li>
-                    <li><a _href="html/carousel.html"><i class="iconfont">&#xe6a7;</i><cite>轮播图</cite></a></li>
-                    <li><a _href="html/city.html"><i class="iconfont">&#xe6a7;</i><cite>城市三级联动</cite></a></li>
+                   <!--  <li><a _href="html/carousel.html"><i class="iconfont">&#xe6a7;</i><cite>轮播图</cite></a></li>
+                    <li><a _href="html/city.html"><i class="iconfont">&#xe6a7;</i><cite>城市三级联动</cite></a></li> -->
                 </ul>
             </li>
-             <li >
+             <!-- <li >
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b4;</i>
                     <cite>排版布局</cite>
@@ -97,9 +96,9 @@
                     <li><a _href="html/grid.html"><i class="iconfont">&#xe6a7;</i><cite>栅格</cite></a></li>
                     <li><a _href="html/welcome2.html"><i class="iconfont">&#xe6a7;</i><cite>排版</cite></a></li>
                 </ul>
-            </li>
+            </li> -->
                    
-            <li>
+           <!--  <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe69e;</i>
                     <cite>订单管理</cite>
@@ -113,7 +112,7 @@
                         </a>
                     </li >
                 </ul>
-            </li>
+            </li> -->
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe726;</i>
@@ -121,18 +120,18 @@
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li>
+                  <!--   <li>
                         <a _href="html/admin-list.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>管理员列表</cite>
                         </a>
-                    </li >
-                    <li>
+                    </li > -->
+                 <!--    <li>
                         <a _href="html/admin-role.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>角色管理</cite>
                         </a>
-                    </li >
+                    </li > -->
                     <li>
                         <a _href="/admin/center/system/category/list/ui.do">
                             <i class="iconfont">&#xe6a7;</i>
@@ -147,7 +146,7 @@
                     </li >
                 </ul>
             </li>            
-            <li>
+<!--             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>用户管理</cite>
@@ -194,8 +193,9 @@
                     </li>
                     
                 </ul>
-            </li>             
-<li>
+            </li> -->             
+
+<!-- <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6ae;</i>
                     <cite>系统统计</cite>
@@ -251,7 +251,9 @@
                         </a>
                     </li>
                 </ul>
-            </li>            </ul>
+            </li>   -->          
+         
+         </ul>
       </div>
     </div>
     <!-- <div class="x-slide_left"></div> -->
@@ -264,7 +266,7 @@
           </ul>
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <iframe src='/html/welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                <iframe src='/admin/center/welcome.do' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
             </div>
           </div>
         </div>

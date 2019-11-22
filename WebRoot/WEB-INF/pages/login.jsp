@@ -49,7 +49,8 @@
 						if (result.code == 200) {
 							window.location.href = "/admin/center/index.do";
 						} else {
-							layer.msg(result.msg);
+							alert(result.msg);
+							//layer.msg(result.msg);
 						}
 					},
 					error : function(e) {
