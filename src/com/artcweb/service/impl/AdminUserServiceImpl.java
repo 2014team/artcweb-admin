@@ -80,4 +80,10 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> im
 		return adminUserDao.getById(id);
 	}
 
+	@Override
+	public List<AdminUser> checkUnique(Map<String, Object> paramMap) {
+
+		return adminUserDao.checkUnique(paramMap);
+	}
+
 }

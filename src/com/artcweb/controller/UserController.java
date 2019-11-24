@@ -164,6 +164,8 @@ public class UserController {
 			result.failure("参数[id]不能为空!");
 			return result;
 		}
+		
+		
 		return  userService.deleteUser(id);
 		
 	}

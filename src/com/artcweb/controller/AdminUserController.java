@@ -1,6 +1,10 @@
 
 package com.artcweb.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -147,9 +151,16 @@ public class AdminUserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/user/save")
-	public LayUiResult save(AdminUser adminUser) {
+	public LayUiResult save(AdminUser adminUser,HttpServletRequest request) {
 
+		AdminUser entity = SessionUtil.getSessionUser(request);
 		LayUiResult result = new LayUiResult();
+		if(null != entity){
+			if(!"admin".equals(entity.getUserName())){
+				result.failure("您没有权限删除操作!");
+				return result;
+			}
+		}
 		
 		//参数验证
 		String userName = adminUser.getUserName();
@@ -175,6 +186,16 @@ public class AdminUserController {
 		}else{//保存
 			adminUser.setVaild(0);
 			adminUser.setEmail("");
+			
+			//唯一性验证
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("userName",userName);
+			List<AdminUser>  list = adminUserService.checkUnique(paramMap);
+			if(null != list && list.size() > 0){
+				result.failure("用户已存在!");
+				return result;
+			}
+			
 			operate = adminUserService.save(adminUser);
 		}
 		
@@ -221,7 +242,7 @@ public class AdminUserController {
 		AdminUser adminUser = SessionUtil.getSessionUser(request);
 		LayUiResult result = new LayUiResult();
 		if(null != adminUser){
-			if("admin".equals(adminUser.getUserName())){
+			if(!"admin".equals(adminUser.getUserName())){
 				result.failure("您没有权限删除操作!");
 				return result;
 			}
@@ -248,9 +269,17 @@ public class AdminUserController {
 	@ResponseBody
 	@RequestMapping(value = "/user/delete/batch", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult deleteBatch(String array) {
-
+	public LayUiResult deleteBatch(String array,HttpServletRequest request) {
+		
+		AdminUser adminUser = SessionUtil.getSessionUser(request);
 		LayUiResult result = new LayUiResult();
+		if(null != adminUser){
+			if(!"admin".equals(adminUser.getUserName())){
+				result.failure("您没有权限删除操作!");
+				return result;
+			}
+		}
+
 		if (StringUtils.isBlank(array)) {
 			result.failure();
 			return result;

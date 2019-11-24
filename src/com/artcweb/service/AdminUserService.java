@@ -1,5 +1,8 @@
 package com.artcweb.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.artcweb.baen.AdminUser;
 import com.artcweb.baen.LayUiResult;
 
@@ -26,6 +29,7 @@ public interface AdminUserService extends BaseService<AdminUser, Integer> {
 	public int deleteByBatch(String array);
 	
 	public AdminUser getById(Integer id);
+	public List<AdminUser> checkUnique(Map<String, Object> paramMap);
 	
 	
 	
