@@ -216,9 +216,17 @@ public class AdminUserController {
 	@ResponseBody
 	@RequestMapping(value = "/user/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(AdminUser entity) {
-
+	public LayUiResult delete(AdminUser entity,HttpServletRequest request) {
+		
+		AdminUser adminUser = SessionUtil.getSessionUser(request);
 		LayUiResult result = new LayUiResult();
+		if(null != adminUser){
+			if("admin".equals(adminUser.getUserName())){
+				result.failure("您没有权限删除操作!");
+				return result;
+			}
+		}
+
 		// 获取参数
 		Integer id = entity.getId();
 		Integer delResult = adminUserService.delete(id);

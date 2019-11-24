@@ -159,7 +159,7 @@
 		<if test="entity.mobile!= null and '' != entity.mobile">
 			and o.mobile=#{entity.mobile}
 		</if>
-		ORDER BY o.sort ,o.`update_date` DESC limit,  ${page.begin},${page.limit} ;
+		ORDER BY o.sort ,o.`update_date` DESC limit  ${page.begin},${page.limit} ;
 	</select>
 
 	<!-- API分页数量 -->
