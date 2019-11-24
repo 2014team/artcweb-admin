@@ -19,9 +19,10 @@
       <div class="layui-row demoTable">
            	用户名：
           <div class="layui-inline">
-		    <input class="layui-input" name="categoryName" id=categoryName autocomplete="off">
+		    <input class="layui-input" name="userName" id="userName" autocomplete="off">
 		  </div>
           <button class="layui-btn" type="button" id="search_id">搜索</button>
+          <button class="layui-btn" type="button" id="clean_search_input">置空搜索框</button>
       <!--   </form> -->
       </div>
       
@@ -106,14 +107,14 @@
 		
 		/* 搜索 */
 		$('#search_id').on('click', function(){
-           var categoryName = $('#categoryName').val();
+           var userName = $('#userName').val();
 		      //执行重载
 		      table.reload( 'tableReload',{
 		        page: {
 		          curr: 1 //重新从第 1 页开始
 		        }
 		        ,where: {
-		            categoryName: categoryName
+		            userName: userName
 		        }
 		      }, 'data');
       
@@ -131,6 +132,11 @@
 		      break;
 			 }
 		});
+	});
+	
+	//置空搜索框
+	$("#clean_search_input").on('click',function(){
+			$("#userName").val('');
 	});
 	
 </script>

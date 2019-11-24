@@ -59,7 +59,7 @@
 		admin_user
 		where 1=1
 		<if test="entity.userName != null and '' != entity.userName">
-			and userName=#{entity.userName}
+			and user_name=#{entity.userName}
 		</if>
 		
 		order by id desc limit ${page.begin},${page.limit} ;
@@ -71,7 +71,7 @@
 		admin_user
 		where 1=1
 		<if test="entity.userName != null and '' != entity.userName">
-			and userName=#{entity.userName}
+			and user_name=#{entity.userName}
 		</if>
 	</select>
 	
