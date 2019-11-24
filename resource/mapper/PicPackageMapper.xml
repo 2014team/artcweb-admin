@@ -5,7 +5,6 @@
 <mapper namespace="com.artcweb.dao.PicPackageDao">
 
 	<resultMap type="com.artcweb.baen.PicPackage" id="result">
-		<result property="id" column="id" />
 		<result property="packageId" column="package_id" />
 		<result property="packageName" column="package_name" />
 		<result property="imageUrl" column="image_url" />
@@ -16,10 +15,10 @@
 
 
 	<!--保存 -->
-	<insert id="save" parameterType="com.artcweb.baen.PicPackage">
+	<insert id="save" parameterType="com.artcweb.baen.PicPackage" useGeneratedKeys="true" keyProperty="packageId">
 		insert into
-		pic_package(package_id,package_name,image_url,step,create_date,update_date)
-		values(#{packageId},#{packageName},#{imageUrl},#{step},now(),now())
+		pic_package(package_name,image_url,step,create_date,update_date)
+		values(#{packageName},#{imageUrl},#{step},now(),now())
 	</insert>
 
 	<!--删除 -->
@@ -27,14 +26,15 @@
 		delete from
 		pic_package
 		where
-		id=#{id}
+		package_id=#{packageId}
 	</delete>
 
+	<!-- 批量删除 -->
 	<delete id="deleteByBatch" parameterType="String">
 		delete from
 		pic_package
 		where
-		FIND_IN_SET (id,#{id})
+		FIND_IN_SET (package_id,#{packageId})
 	</delete>
 
 
@@ -46,14 +46,14 @@
 		,image_url=#{imageUrl}
 		,step=#{step}
 		,update_date=now()
-		where id=#{id}
+		where package_id=#{packageId}
 	</update>
 
 	<!-- 查找 -->
 	<select id="get" parameterType="Integer" resultMap="result">
 		select * from
 		pic_package
-		where id = #{id}
+		where package_id = #{packageId}
 		limit 1
 	</select>
 
@@ -63,46 +63,43 @@
 		select * from
 		pic_package
 		where 1 = 1
-		<if test="null != packageId and '' != packageId">
-			and package_id = #{packageId}
-		</if>
 		<if test="null != packageName and '' != packageName">
 			and package_name = #{packageName}
 		</if>
-		<if test="null != id and '' != id">
-			<![CDATA[and id <> #{id}]]>
+		<if test="null != packageId and '' != packageId">
+			<![CDATA[and package_id <> #{packageId}]]>
 		</if>
 	</select>
-
 
 
 	<!-- 分页查找 -->
 	<select id="findByPage" parameterType="Map" resultMap="result">
 		select * from pic_package
 		where 1=1
-		<if test="entity.packageId!= null and '' != entity.packageId">
-			and package_id=#{entity.packageId}
-		</if>
 		<if test="entity.packageName != null and '' != entity.packageName">
 			and package_name=#{entity.packageName}
 		</if>
-		order by id desc limit ${page.begin},${page.limit} ;
+		order by package_id desc ,update_date desc  limit ${page.begin},${page.limit} ;
 	</select>
-
-	<!-- 分页数量 -->
-	<select id="findByPageCount" parameterType="Map" resultType="int">
+	
+	
+	<!-- 分页查找数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="Integer">
 		select count(1) from pic_package
 		where 1=1
-		<if test="entity.packageId!= null and '' != entity.packageId">
-			and package_id=#{entity.packageId}
-		</if>
 		<if test="entity.packageName != null and '' != entity.packageName">
 			and package_name=#{entity.packageName}
 		</if>
 	</select>
 
 
-
-
+	<!-- 查找 -->
+	<select id="select" parameterType="Map" resultMap="result">
+		select * from pic_package
+		where 1=1
+		<if test="packageName != null and '' != packageName">
+			and package_name=#{packageName}
+		</if>
+	</select>
 
 </mapper> 

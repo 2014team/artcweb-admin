@@ -6,21 +6,20 @@ import java.util.List;
 public class User extends BaseBean {
 
 	private static final long serialVersionUID = 1L;
-	 
+
 	/**
-	* 手机号码
-	*/
+	 * 手机号码
+	 */
 	private String mobile;
 
 	/**
 	 * 排序
 	 */
 	private Integer sort;
-	
-	
+
 	private List<Order> orderList;
-	
-	
+
+	private int orderCount;
 
 	public String getMobile() {
 
@@ -42,16 +41,24 @@ public class User extends BaseBean {
 		this.sort = sort;
 	}
 
-	
 	public List<Order> getOrderList() {
-	
+
 		return orderList;
 	}
 
-	
 	public void setOrderList(List<Order> orderList) {
-	
+
 		this.orderList = orderList;
 	}
-	
+
+	public int getOrderCount() {
+
+		return orderCount;
+	}
+
+	public void setOrderCount(int orderCount) {
+
+		this.orderCount = orderCount;
+	}
+
 }

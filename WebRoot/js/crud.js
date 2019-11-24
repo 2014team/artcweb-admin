@@ -5,13 +5,13 @@
  * url：后台url
  * 
  */
-function crup_delete(obj, url) {
+function crup_delete(obj, url,delId) {
 	layer.confirm('确认要删除吗？', function(index) {
 		$.ajax({
 			url : url,
 			type : "POST",
 			data : {
-				"id" : obj.data.id
+				"id" : delId
 			}, //这个是传给后台的值
 			dataType : "json",
 			success : function(data) {
@@ -116,7 +116,6 @@ function crup_save(form,monitor, url) {
 				if (data.code == 200) { //这个是从后台取回来的状态值
 					layer.msg(data.msg, {icon : 6,time : 500
 					}, function() {
-						debugger
 						// 获得frame索引
 						var index = parent.layer.getFrameIndex(window.name);
 						//关闭当前frame

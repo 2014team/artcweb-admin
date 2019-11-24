@@ -31,39 +31,56 @@
 
 	<!-- 修改 -->
 	<update id="update" parameterType="com.artcweb.baen.AdminUser">
-		update admin_user
-		<set>
-			<if test="userName !=null and userName!='' ">
+		update admin_user set 
 				user_name=#{userName},
-			</if>
-			<if test="password !=null and password!='' ">
 				password=#{password},
-			</if>
-			<if test="email !=null and email'' ">
 				email=#{email},
-			</if>
-			<if test="vaild !=null and vaild'' ">
 				vaild=#{vaild},
-			</if>
 			update_date = now()
-		</set>
 		where id=#{id}
 	</update>
-
-	<!-- 查找 -->
+	
+	
 	<select id="get" parameterType="Map" resultMap="userResult">
-		select user_name,password,email,vaild,create_date,update_date from
-		admin_user 
+		select *  from
+		admin_user where  user_name=#{userName} and  password=#{password}
+		limit 1;
+	</select>
+	
+	<select id="getById" parameterType="Integer" resultMap="userResult">
+		select *  from
+		admin_user where  id=#{id}
+		limit 1;
+	</select>
+	
+	<!-- 分页查找 -->
+	<select id="findByPage" parameterType="Map" resultMap="userResult">
+		select *  from
+		admin_user
 		where 1=1
-		<if test="userName != nul and '' != userName">
-			and user_name=#{userName}
+		<if test="entity.userName != null and '' != entity.userName">
+			and userName=#{entity.userName}
 		</if>
-		<if test="password !=null and ''!= password ">
-			and password=#{password}
-		</if>
-		limit 1
+		
+		order by id desc limit ${page.begin},${page.limit} ;
 	</select>
 
-
+	<!-- 分页数量 -->
+	<select id="findByPageCount" parameterType="Map" resultType="int">
+		select count(1)  from
+		admin_user
+		where 1=1
+		<if test="entity.userName != null and '' != entity.userName">
+			and userName=#{entity.userName}
+		</if>
+	</select>
+	
+	
+	<delete id="deleteByBatch" parameterType="String">
+		delete from
+		admin_user
+		where FIND_IN_SET (id,#{id})
+	</delete>
+	
 
 </mapper> 

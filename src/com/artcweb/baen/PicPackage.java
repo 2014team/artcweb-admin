@@ -8,7 +8,7 @@ public class PicPackage extends BaseBean {
 	/**
 	 * 套餐ID
 	 */
-	private String packageId;
+	private Integer packageId;
 
 	/**
 	 * 套餐名称
@@ -25,12 +25,12 @@ public class PicPackage extends BaseBean {
 	 */
 	private String step;
 
-	public String getPackageId() {
+	public Integer getPackageId() {
 
 		return packageId;
 	}
 
-	public void setPackageId(String packageId) {
+	public void setPackageId(Integer packageId) {
 
 		this.packageId = packageId;
 	}

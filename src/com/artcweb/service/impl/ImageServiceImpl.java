@@ -94,7 +94,7 @@ public class ImageServiceImpl implements ImageService {
 		}
 
 		// 图片处理
-		int big = 2 * 1024 * 1024; // 2M以上就进行0.6压缩
+		int big = 1 * 1024 * 1024; // 2M以上就进行0.6压缩
 		if (file.getSize() > big) {
 			thumbnail(filePathAndName, 0.6f);
 		} else {

@@ -5,7 +5,6 @@ $(function () {
         layer = layui.layer;
         element = layui.element;
     });
-
     //触发事件
   var tab = {
         tabAdd: function(title,url,id){
@@ -205,5 +204,23 @@ function x_admin_close(){
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
 }
+
+var htmlLoad = `<div class="easemobim-prompt-wrapper" style="display: block;">
+    <div class="loading">
+    <div class="em-widget-loading"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+            <circle opacity=".3" fill="none" stroke="#000" stroke-width="4" stroke-miterlimit="10" cx="35" cy="35" r="11"></circle>
+            <path fill="none" stroke="#E5E5E5" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" d="M24 35c0-6.1 4.9-11 11-11 2.8 0 5.3 1 7.3 2.8"></path>
+        </svg></div>
+</div>
+</div>`
+/*关闭弹出框口*/
+function x_admin_loading(o){
+    if(o){
+    	$("body").append(htmlLoad);
+    }else{
+    	$(".easemobim-prompt-wrapper").remove();
+    }
+}
+
 
 

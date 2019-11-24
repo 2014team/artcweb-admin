@@ -1,6 +1,10 @@
 
 package com.artcweb.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,47 +14,62 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.artcweb.baen.AdminCategory;
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.Order;
+import com.artcweb.baen.PicPackage;
+import com.artcweb.baen.User;
 import com.artcweb.service.OrderService;
-
+import com.artcweb.service.PicPackageService;
+import com.artcweb.service.UserService;
 
 @Controller
 @RequestMapping("/admin/center/order")
 public class OrderController {
 
-	@Autowired 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private OrderService orderService;
-	
-	
+
+	@Autowired
+	private PicPackageService picPackageService;
 
 	/**
 	 * @Title: toList
-	 * @Description: 列表UI
+	 * @Description: 到列表UI
 	 * @return
 	 */
 	@RequestMapping(value = "/list/ui")
 	public String toList() {
 
-		return "/order/admin_order";
+		return "/order/order";
 	}
 
 	/**
 	 * @Title: toAdd
-	 * @Description: 新增UI
+	 * @Description: 到新增UI
 	 * @return
 	 */
 	@RequestMapping(value = "/add")
-	public String toAdd() {
+	public String toAdd(HttpServletRequest request) {
 
-		return "/order/admin_order_edit";
+		// 用户信息
+		Map<String, Object> paramMap = null;
+		List<User> userList = userService.select(paramMap);
+		request.setAttribute("userList", userList);
+
+		// 获取套餐信息
+		List<PicPackage> packageList = picPackageService.select(paramMap);
+		request.setAttribute("packageList", packageList);
+		return "/order/order_edit";
 	}
 
 	/**
 	 * @Title: toEdit
-	 * @Description: 编辑UI
+	 * @Description: 到编辑UI
 	 * @param id
 	 * @param request
 	 * @return
@@ -58,9 +77,22 @@ public class OrderController {
 	@RequestMapping(value = "/edit/{id}")
 	public String toEdit(@PathVariable Integer id, HttpServletRequest request) {
 
-		Order entity = orderService.get(id);
-		request.setAttribute("entity", entity);
-		return "/order/admin_order_edit";
+		// 获取 订单信息
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("id", id);
+		Order order = orderService.getById(paramMap);
+		request.setAttribute("order", order);
+
+		// 获取套餐信息
+		paramMap.clear();
+		List<PicPackage> packageList = picPackageService.select(paramMap);
+		request.setAttribute("packageList", packageList);
+
+		// 用户信息
+		List<User> userList = userService.select(paramMap);
+		request.setAttribute("userList", userList);
+
+		return "/order/order_edit";
 	}
 
 	/**
@@ -72,47 +104,17 @@ public class OrderController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/save")
-	public LayUiResult save(AdminCategory adminCate) {
-//
-		LayUiResult result = new LayUiResult();
-//
-//		// 参数验证
-//		String checkResult = adminCategoryService.checkSaveParam(adminCate);
-//		if (StringUtils.isNotBlank(checkResult)) {
-//			result.failure(checkResult);
-//			return result;
-//		}
-//
-//		Integer operator = null;
-//		Integer id = adminCate.getId();
-//
-//		// 修改
-//		if (null != id) {
-//			// 验证唯一性
-//			String checkUpdateUnique = adminCategoryService.checkUpdateUnique(adminCate);
-//			if (StringUtils.isNotBlank(checkUpdateUnique)) {
-//				result.failure(checkUpdateUnique);
-//				return result;
-//			}
-//			operator = adminCategoryService.update(adminCate);
-//			// 保存
-//		}
-//		else {
-//			// 验证唯一性
-//			String checkAddUnique = adminCategoryService.checkAddUnique(adminCate);
-//			if (StringUtils.isNotBlank(checkAddUnique)) {
-//				result.failure(checkAddUnique);
-//				return result;
-//			}
-//			operator = adminCategoryService.save(adminCate);
-//		}
-//
-//		if (null != operator && operator > 0) {
-//			result.success();
-//			return result;
-//		}
+	public LayUiResult save(Order entity, MultipartFile file, HttpServletRequest request) {
 
-		result.failure();
+		int template = entity.getTemplate();
+		LayUiResult result = null;
+		// 选择模本
+		if (template == 1) {
+			result = orderService.saveChooseTemplate(entity);
+		}
+		else {// 新建模板
+			result = orderService.saveNewTemplate(entity, file, request);
+		}
 		return result;
 	}
 
@@ -145,11 +147,11 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(AdminCategory adminCate) {
+	public LayUiResult delete(Order entity) {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
-		Integer id = adminCate.getId();
+		Integer id = entity.getId();
 		int delResult = orderService.delete(id);
 		if (delResult > 0) {
 			result.success();

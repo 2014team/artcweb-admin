@@ -2,7 +2,6 @@
 package com.artcweb.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,19 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.PicPackage;
+import com.artcweb.constant.UploadConstant;
+import com.artcweb.service.ImageService;
 import com.artcweb.service.PicPackageService;
-
+import com.artcweb.util.ImageUtil;
 
 @Controller
 @RequestMapping("/admin/center/package")
 public class PicPackageController {
 
 	@Autowired
-	private PicPackageService  picPackageService;
-	
+	private ImageService imageService;
+
+	@Autowired
+	private PicPackageService picPackageService;
+
 	/**
 	 * @Title: toList
 	 * @Description: 列表UI
@@ -30,31 +35,38 @@ public class PicPackageController {
 	 */
 	@RequestMapping(value = "/list/ui")
 	public String toList() {
-		return "/package/admin_package";
+
+		return "/package/package";
 	}
-	
+
 	/**
 	 * @Title: toAdd
-	 * @Description: 新增UI
+	 * @Description: 到新增UI
 	 * @return
 	 */
 	@RequestMapping(value = "/add")
 	public String toAdd() {
-		return "/package/admin_package_edit";
+
+		return "/package/package_edit";
 	}
 
 	/**
 	 * @Title: toEdit
-	 * @Description: 编辑UI
+	 * @Description: 到编辑UI
 	 * @param id
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/edit/{id}")
-	public String toEdit(@PathVariable Integer id, HttpServletRequest request) {
-		PicPackage entity = picPackageService.get(id);
+	@RequestMapping(value = "/edit/{packageId}")
+	public String toEdit(@PathVariable Integer packageId, HttpServletRequest request) {
+
+		PicPackage entity = picPackageService.get(packageId);
+		if (null != entity) {
+			entity.setImageUrl(ImageUtil.imageUrlDeal(entity.getImageUrl()));
+		}
+
 		request.setAttribute("entity", entity);
-		return "/package/admin_package_edit";
+		return "/package/package_edit";
 	}
 
 	/**
@@ -66,7 +78,7 @@ public class PicPackageController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/save")
-	public LayUiResult save(PicPackage entity) {
+	public LayUiResult save(PicPackage entity, MultipartFile file, HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 
@@ -78,26 +90,76 @@ public class PicPackageController {
 		}
 
 		Integer operator = null;
-		Integer id = entity.getId();
+		String imageUrl = null;
+		Integer packageId = entity.getPackageId();
 
 		// 修改
-		if (null != id) {
-			// 验证唯一性
-			String checkUpdateUnique = picPackageService.checkUpdateUnique(entity);
-			if (StringUtils.isNotBlank(checkUpdateUnique)) {
-				result.failure(checkUpdateUnique);
+		if (null != packageId && packageId >0 ) {
+
+			String checkUpdateUnique = null;
+			if (file != null) {
+				// 图片验证
+				String errorMsg = imageService.checkImage(file);
+				if (StringUtils.isNotBlank(errorMsg)) {
+					result.failure(errorMsg);
+					return result;
+				}
+				// 验证唯一性
+				checkUpdateUnique = picPackageService.checkUpdateUnique(entity);
+				if (StringUtils.isNotBlank(checkUpdateUnique)) {
+					result.failure(checkUpdateUnique);
+					return result;
+				}
+
+				// 上传图片
+				imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+
+				entity.setImageUrl(imageUrl);
+				operator = picPackageService.update(entity);
+
+			}
+			else {
+
+				// 验证唯一性
+				checkUpdateUnique = picPackageService.checkUpdateUnique(entity);
+				if (StringUtils.isNotBlank(checkUpdateUnique)) {
+					result.failure(checkUpdateUnique);
+					return result;
+				}
+
+				PicPackage picPackage = picPackageService.get(Integer.valueOf(entity.getPackageId()));
+				if (null != picPackage) {
+					picPackage.setPackageName(entity.getPackageName());
+					picPackage.setStep(entity.getStep());
+				}
+
+				operator = picPackageService.update(picPackage);
+			}
+
+		}
+		else {// 保存
+
+			if (null == file) {
+				result.failure("图片不能为空!");
 				return result;
 			}
-			operator = picPackageService.update(entity);
-			// 保存
-		}
-		else {
+
+			// 图片验证
+			String errorMsg = imageService.checkImage(file);
+			if (StringUtils.isNotBlank(errorMsg)) {
+				result.failure(errorMsg);
+				return result;
+			}
+
 			// 验证唯一性
 			String checkAddUnique = picPackageService.checkAddUnique(entity);
 			if (StringUtils.isNotBlank(checkAddUnique)) {
 				result.failure(checkAddUnique);
 				return result;
 			}
+			// 上传图片
+			imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+			entity.setImageUrl(imageUrl);
 			operator = picPackageService.save(entity);
 		}
 
@@ -143,12 +205,12 @@ public class PicPackageController {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
-		Integer id = entity.getId();
-		if(null == id){
-			result.failure("参数[id]不能为空!");
+		Integer packageId = entity.getId();
+		if (null == packageId) {
+			result.failure("参数[packageId]不能为空!");
 			return result;
 		}
-		int delResult = picPackageService.delete(id);
+		int delResult = picPackageService.delete(packageId);
 		if (delResult > 0) {
 			result.success();
 			return result;

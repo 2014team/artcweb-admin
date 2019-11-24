@@ -1,8 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
   <head>
     <%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
   </head>
@@ -18,7 +17,7 @@
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎管理员：
             <span class="x-red">${user.userName}</span>！当前时间:<%=now %></blockquote>
-       <!--  <fieldset class="layui-elem-field">
+         <fieldset class="layui-elem-field">
             <legend>数据统计</legend>
             <div class="layui-field-box">
                 <div class="layui-col-md12">
@@ -137,8 +136,8 @@
                     </tbody>
                 </table>
             </div>
-        </fieldset> -->
-        <!-- <fieldset class="layui-elem-field">
+        </fieldset> 
+         <fieldset class="layui-elem-field">
             <legend>开发团队</legend>
             <div class="layui-field-box">
                 <table class="layui-table">
@@ -155,7 +154,7 @@
                 </table>
             </div>
         </fieldset>
-        <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由L-admin提供技术支持。</blockquote> -->
+        <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由L-admin提供技术支持。</blockquote> 
     </div>
    
     </body>

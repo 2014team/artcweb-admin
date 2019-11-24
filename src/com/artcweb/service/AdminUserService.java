@@ -1,6 +1,7 @@
 package com.artcweb.service;
 
 import com.artcweb.baen.AdminUser;
+import com.artcweb.baen.LayUiResult;
 
 public interface AdminUserService extends BaseService<AdminUser, Integer> {
 
@@ -19,6 +20,12 @@ public interface AdminUserService extends BaseService<AdminUser, Integer> {
 	* @return
 	*/
 	public AdminUser login(AdminUser user);
+
+	public LayUiResult findByPage(AdminUser entity, LayUiResult result);
+
+	public int deleteByBatch(String array);
+	
+	public AdminUser getById(Integer id);
 	
 	
 	

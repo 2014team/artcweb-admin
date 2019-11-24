@@ -13,5 +13,11 @@ public interface UserDao extends BaseDao<User, Integer> {
 
 	public List<User> checkUnique(Map<String, Object> paramMap);
 
+	public User getByMap(Map<String, Object> paramMap);
+
 	public int deleteByBatch(String array);
+	
+	public List<User>  selectByBatch(String array);
+	
+	
 }

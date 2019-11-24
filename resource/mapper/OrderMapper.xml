@@ -10,6 +10,7 @@
 		<result property="packageId" column="package_id" />
 		<result property="currentStep" column="current_step" />
 		<result property="sort" column="sort" />
+		<result property="template" column="template" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
 	</resultMap>
@@ -18,20 +19,28 @@
 	<!--保存 -->
 	<insert id="save" parameterType="com.artcweb.baen.Order">
 		insert into
-		order(mobile,package_id,current_step,sort,create_date,update_date)
-		values(#{mobile},#{packageId}#{currentStep},#{sort},now(),now())
+		`order`(mobile,package_id,current_step,sort,template,create_date,update_date)
+		values(#{mobile},#{packageId},#{currentStep},#{sort},#{template},now(),now())
 	</insert>
 
 	<!--删除 -->
 	<delete id="delete" parameterType="Integer">
 		delete from
-		order
+		`order`
 		where id=#{id}
 	</delete>
+	
+	<!--根据map删除  -->
+	<delete id="deleteByMap" parameterType="Map">
+		delete from
+		`order`
+		where mobile=#{mobile}
+	</delete>
 
+	<!-- 批量删除 -->
 	<delete id="deleteByBatch" parameterType="String">
 		delete from
-		order
+		`order`
 		where
 		FIND_IN_SET (id,#{id})
 	</delete>
@@ -39,12 +48,12 @@
 
 	<!-- 修改 -->
 	<update id="update" parameterType="com.artcweb.baen.Order">
-		update order
+		update `order`
 		set
 		mobile=#{mobile}
 		,package_id=#{packageId}
-		,step=#{step}
 		,current_step=#{currentStep}
+		,template=#{template}
 		,sort=#{sort}
 		,update_date=now()
 		where
@@ -54,7 +63,7 @@
 	<!-- 查找 -->
 	<select id="get" parameterType="Integer" resultMap="result">
 		select * from
-		order
+		`order`
 		where id = #{id}
 		order by sort limit 1
 	</select>
@@ -62,9 +71,9 @@
 
 
 	<!-- 查询 -->
-	<select id="select" parameterType="Map" resultType="com.artcweb.baen.Order">
+	<select id="getById" parameterType="Map" resultType="com.artcweb.baen.Order">
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
-		as packageName,
+		as packageName,p.package_id as  packageId, o.template as template,
 		p.image_url as imageUrl ,p.step ,o.current_step as
 		currentStep
 		FROM `order` o,`user` u,pic_package p
@@ -73,6 +82,42 @@
 		<if test="mobile!= null and '' != mobile">
 			and o.mobile=#{mobile}
 		</if>
+		<if test="id != null and '' != id">
+			and o.id=#{id}
+		</if>
+		limit 1
+	</select>
+	
+	<!-- 查询 -->
+	<select id="select" parameterType="Map" resultType="com.artcweb.baen.Order">
+		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
+		as packageName,
+		p.image_url as imageUrl ,p.step ,o.current_step as
+		currentStep, o.template as template
+		FROM `order` o,`user` u,pic_package p
+		WHERE
+		o.mobile=u.mobile AND o.package_id = p.package_id
+		<if test="mobile!= null and '' != mobile">
+			and o.mobile=#{mobile}
+		</if>
+		<if test="id != null and '' != id">
+			and o.id=#{id}
+		</if>
+		ORDER BY o.sort, o.`update_date` desc
+	</select>
+	
+	<!-- 查询 -->
+	<select id="selectByMap" parameterType="Map" resultMap="result">
+		SELECT * FROM `order` o 
+		WHERE
+		1 = 1
+		<if test="mobile!= null and '' != mobile">
+			and o.mobile=#{mobile}
+		</if>
+		<if test="id != null and '' != id">
+			and o.id=#{id}
+		</if>
+		ORDER BY o.sort, o.`update_date` desc
 	</select>
 
 
@@ -81,14 +126,14 @@
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
 		as packageName,
 		p.image_url as imageUrl ,p.step ,o.current_step as
-		currentStep
+		currentStep,o.template as template
 		FROM `order` o,`user` u,pic_package p
 		WHERE
 		o.mobile=u.mobile AND o.package_id = p.package_id
 		<if test="entity.mobile!= null and '' != entity.mobile">
 			and o.mobile=#{entity.mobile}
 		</if>
-		ORDER BY o.sort limit ${page.begin},${page.limit} ;
+		ORDER BY o.sort, o.`update_date` desc limit ${page.begin},${page.limit} ;
 	</select>
 
 	<!-- 分页数量 -->
@@ -114,7 +159,7 @@
 		<if test="entity.mobile!= null and '' != entity.mobile">
 			and o.mobile=#{entity.mobile}
 		</if>
-		ORDER BY o.sort limit ${page.begin},${page.limit} ;
+		ORDER BY o.sort ,o.`update_date` DESC limit,  ${page.begin},${page.limit} ;
 	</select>
 
 	<!-- API分页数量 -->
@@ -146,7 +191,7 @@
 		LIMIT 1
 	</select>
 	
-	
+	<!-- 更新当前执行步骤 -->
 	<update id="updateCurrentStep" parameterType="Map">
 		update `order`
 		set current_step=#{currentStep}
@@ -154,6 +199,23 @@
 		where
 		id=#{orderId}
 	</update>
+	
+	
+	<!-- 更新唯一性验证 -->
+	<select id="checkUnique" parameterType="Map" resultMap="result">
+		select * from
+		`order`
+		where 1 = 1
+		<if test="null != packageId and '' != packageId">
+			and package_id = #{packageId}
+		</if>
+		<if test="null != mobile and '' != mobile">
+			and mobile = #{mobile}
+		</if>
+		<if test="null != id and '' != id">
+			<![CDATA[and id <> #{id} ]]>
+		</if>
+	</select>
 	
 
 

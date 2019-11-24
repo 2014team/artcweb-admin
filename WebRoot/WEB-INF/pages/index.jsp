@@ -1,12 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
   <head>
     <meta charset="UTF-8">
 	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
   </head>
   
-  <body>
+  <body class="load-body">
     <!-- 顶部开始 -->
     <div class="container">
         <div class="logo"><a href="index.html">L-admin v2.0</a></div>
@@ -81,7 +80,8 @@
                    <!--  <li><a _href="html/upload.html"><i class="iconfont">&#xe6a7;</i><cite>文件上传</cite></a></li>
                     <li><a _href="html/page.html"><i class="iconfont">&#xe6a7;</i><cite>分页</cite></a></li> -->
                     <li><a _href="/admin/center/package/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>套餐列表</cite></a></li>
-                    <li><a _href="/admin/center/order/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li>
+                    <li><a _href="/admin/center/user/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>用户列表</cite></a></li>
+                    <!-- <li><a _href="/admin/center/order/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li> -->
                    <!--  <li><a _href="html/carousel.html"><i class="iconfont">&#xe6a7;</i><cite>轮播图</cite></a></li>
                     <li><a _href="html/city.html"><i class="iconfont">&#xe6a7;</i><cite>城市三级联动</cite></a></li> -->
                 </ul>
@@ -120,19 +120,20 @@
                     <i class="iconfont nav_right">&#xe6a7;</i>
                 </a>
                 <ul class="sub-menu">
-                  <!--   <li>
-                        <a _href="html/admin-list.html">
+                    <li>
+                        <a _href="/admin/user/list/ui.do">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>管理员列表</cite>
                         </a>
-                    </li > -->
+                    </li > 
                  <!--    <li>
                         <a _href="html/admin-role.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>角色管理</cite>
                         </a>
                     </li > -->
-                    <li>
+                   
+                   <!--  <li>
                         <a _href="/admin/center/system/category/list/ui.do">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>权限分类</cite>
@@ -143,7 +144,7 @@
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>权限管理</cite>
                         </a>
-                    </li >
+                    </li > -->
                 </ul>
             </li>            
 <!--             <li>

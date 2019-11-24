@@ -2,7 +2,6 @@
 <!DOCTYPE html>
   <head>
   	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
-  	<%@include file="/WEB-INF/pages/common/jsp_jstl.jsp" %>
   </head>
   
    <body>
@@ -11,15 +10,14 @@
         <a href="">首页</a>
         <a href="">管理员管理</a>
         <a>
-          <cite>权限管理</cite></a>
+          <cite>列表</cite></a>
       </span>
       <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:38px">ဂ</i></a>
     </div>
     <div class="x-body">
       <div class="layui-row demoTable">
-        <!-- <form class="layui-form layui-col-md12 x-so layui-form-pane"> -->
-           	分类名：
+           	用户名：
           <div class="layui-inline">
 		    <input class="layui-input" name="categoryName" id=categoryName autocomplete="off">
 		  </div>
@@ -29,32 +27,39 @@
       
    	
    	 <!-- 列表 -->	
-     <table class="layui-hide" id="right_list" lay-filter="right_list" ></table>
+     <table class="layui-hide" id="table_list" lay-filter="table_list" ></table>
      
      <!-- 头部工具条 -->
 	<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
-   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('catogoryReload','/admin/center/system/category/delete/batch.do')">批量删除</button>
-   			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/system/right/add.do')"><i class="layui-icon"></i>增加</button>
+   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('tableReload','/admin/user/delete/batch.do')">批量删除</button>
+   			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/user/add.do',600,260)"><i class="layui-icon"></i>增加</button>
   		</div>
 	</script>
      
      <!--列表行Bar  -->
-     <script type="text/html" id="categoryBar">
+     <script type="text/html" id="rowBar">
 		 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
  		 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 
    
   </body>
+  
+  <!-- 序号模板 -->
+<script type="text/html" id="indexTpl">
+   {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+
 
 <script type="text/javascript">
 	layui.use('table', function() {
 		var table = layui.table;
 
 		  table.render({
-			elem : '#right_list',
-			url : '/admin/center/system/right/list.do',
+			elem : '#table_list',
+			url : '/admin/user/list.do',
 			toolbar: '#toolbar',
 		    defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
 		      title: '提示'
@@ -74,30 +79,28 @@
 			cols : [ [
 				 {checkbox: true, fixed: true},
 				{
-					field : 'id',
-					title : 'ID',
-					sort : true
+					field : 'indexId', 
+					title : '序号',
+					templet: '#indexTpl',
+					width:75,
+					sort : true,					
 				}
 				, {
-					field : 'rightRule',
-					title : '权限规则',
-					sort : true
+					field : 'userName',
+					title : '用户名',
+					
 				}
 				, {
-					field : 'rightName',
-					title : '权限名称'
+					field : 'password',
+					title : '密码'
 				}
 				, {
-					field : 'rightCategoryName',
-					title : '所属分类'
-				}
-				, {
-					align:'center', toolbar: '#categoryBar',
+					align:'center', toolbar: '#rowBar',
 					title : '操作'
 				}
 
 			] ]
-			  ,id: 'rightReload'
+			  ,id: 'tableReload'
 		});
 		
 		
@@ -105,7 +108,7 @@
 		$('#search_id').on('click', function(){
            var categoryName = $('#categoryName').val();
 		      //执行重载
-		      table.reload( 'rightReload',{
+		      table.reload( 'tableReload',{
 		        page: {
 		          curr: 1 //重新从第 1 页开始
 		        }
@@ -117,14 +120,14 @@
         }); 
 		
 		//监听行工具条
-		table.on('tool(right_list)', function(obj) {
+		table.on('tool(table_list)', function(obj) {
 			 var data = obj.data;
 			 switch(obj.event){
 			  case 'del': //删除
-				crup_delete(obj,'/admin/center/system/right/delete.do');
+				crup_delete(obj,'/admin/user/delete.do',data.id);
 		      break;
 		      case 'edit':// 编辑
-				x_admin_show('编辑','/admin/center/system/right/edit/'+obj.data.id+'.do');
+				x_admin_show('编辑','/admin/user/edit/'+obj.data.id+'.do',600,260);
 		      break;
 			 }
 		});

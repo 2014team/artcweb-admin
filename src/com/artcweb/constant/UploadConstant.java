@@ -9,6 +9,6 @@ public class UploadConstant {
 	public static final Integer LIMIT_IMAGE_SIZE = 6 * 1024 * 1024;//6M
 	
 	//保存路径
-	public static final String SAVE_UPLOAD_PATH = "/upload/";
+	public static final String SAVE_UPLOAD_PATH = "/upload/packge/";
 
 }

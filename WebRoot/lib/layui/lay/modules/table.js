@@ -215,6 +215,7 @@
 						o = [],
 						u = [],
 						st = (c.config.rowStyle ? c.config.rowStyle(a) : ''),
+						cd = (c.config.rowChildStyle ? c.config.rowChildStyle(a) : ''),
 						h = e + s.limit * (n - 1) + 1;
 					0 !== a.length && (r || (a[d.config.indexName] = e), c.eachCols(function(e, n) {
 						var r = n.field || e,
@@ -240,7 +241,7 @@
 							}(), "</div></td>" ].join("");
 							l.push(y), n.fixed && "right" !== n.fixed && o.push(y), "right" === n.fixed && u.push(y)
 						}
-					}), y.push('<tr data-index="' + e + '" ' + st + '>' + l.join("") + "</tr>"), p.push('<tr data-index="' + e + '"  ' + st + '>' + o.join("") + "</tr>"), m.push('<tr data-index="' + e + '" ' + st + '>' + u.join("") + "</tr>"))
+					}), y.push('<tr data-index="' + e + '" ' + st + '>' + l.join("") + "</tr>"+cd), p.push('<tr data-index="' + e + '"  ' + st + '>' + o.join("") + "</tr>+cd"), m.push('<tr data-index="' + e + '" ' + st + '>' + u.join("") + "</tr>+cd"))
 				}), c.layBody.scrollTop(0), c.layMain.find("." + f).remove(), c.layMain.find("tbody").html(y.join("")), c.layFixLeft.find("tbody").html(p.join("")), c.layFixRight.find("tbody").html(m.join("")), c.renderForm(), c.syncCheckAll(), c.haveInit ? c.scrollPatch() : setTimeout(function() {
 					c.scrollPatch()
 				}, 50), c.haveInit = !0, void l.close(c.tipsIndex))

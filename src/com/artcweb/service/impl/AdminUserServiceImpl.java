@@ -1,13 +1,16 @@
 package com.artcweb.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.artcweb.baen.AdminCategory;
 import com.artcweb.baen.AdminUser;
+import com.artcweb.baen.LayUiResult;
 import com.artcweb.dao.AdminUserDao;
 import com.artcweb.service.AdminUserService;
 
@@ -15,7 +18,7 @@ import com.artcweb.service.AdminUserService;
 public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> implements  AdminUserService{
 	
 	@Autowired
-	private AdminUserDao userDao;
+	private AdminUserDao adminUserDao;
 	
 
 	/**
@@ -48,8 +51,33 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> im
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		paramMap.put("userName", user.getUserName());
 		paramMap.put("password", user.getPassword());
-		return userDao.get(paramMap);
+		return adminUserDao.get(paramMap);
 		 
+	}
+
+	@Override
+	public LayUiResult findByPage(AdminUser entity, LayUiResult result) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("entity", entity);
+		paramMap.put("page", result);
+		int count = findByPageCount(paramMap);
+		if (count > 0) {
+			List<AdminUser> dataList = findByPage(paramMap);
+			result.setData(dataList);
+			result.setCount(count);
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteByBatch(String array) {
+
+		return adminUserDao.deleteByBatch(array);
+	}
+
+	@Override
+	public AdminUser getById(Integer id) {
+		return adminUserDao.getById(id);
 	}
 
 }

@@ -2,7 +2,6 @@
 <!DOCTYPE html>
   <head>
     <%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
-  	<%@include file="/WEB-INF/pages/common/jsp_jstl.jsp" %>
   </head>
    <body>
     <div class="x-body">
@@ -10,27 +9,31 @@
           <input type="hidden" id="id" name="id"  value="${entity.id }" /> 
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>分类ID
+                  <span class="x-red">*</span>用户名
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="categoryId" name="categoryId"  value="${entity.categoryId }" lay-verify="required|number"
-                  autocomplete="off" class="layui-input">
+              
+              		<c:choose>
+              			<c:when test="${empty entity.userName }">
+			                  <input type="text" id="userName" name="userName"  value="" lay-verify="required"    autocomplete="off" class="layui-input">
+              			</c:when>
+              			<c:otherwise>
+			                  <input type="text" id="userName" name="userName"  value="${entity.userName }" disabled="disabled" lay-verify="required"       autocomplete="off" class="layui-input">
+              			</c:otherwise>
+              		</c:choose>
+              
+            
               </div>
-              <div class="layui-form-mid layui-word-aux">
-           		       数字
-              </div>
+            
           </div>
           
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>分类名
+                  <span class="x-red">*</span>密码
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="categoryName" name="categoryName" value="${entity.categoryName }" lay-verify="required|categoryName"
+                  <input type="password" id="password" name=password value="${entity.password }" lay-verify="required"
                   autocomplete="off" class="layui-input">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  1到20个字符
               </div>
           </div>
           <div class="layui-form-item">
@@ -49,17 +52,9 @@
            $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
-          //自定义验证规则
-          form.verify({
-            categoryName: function(value){
-              if(value.length > 20){
-                return '请输入1到20个字符!';
-              }
-            }
-          });
           
         //保存
-        crup_save(form,'save','/admin/center/system/category/save.do');
+        crup_save(form,'save','/admin/user/save.do');
           
         });
     </script>

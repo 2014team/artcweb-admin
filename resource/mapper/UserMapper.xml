@@ -27,11 +27,18 @@
 		where id=#{id}
 	</delete>
 
+	<!-- 批量删除 -->
 	<delete id="deleteByBatch" parameterType="String">
 		delete from
 		user
 		where FIND_IN_SET (id,#{id})
 	</delete>
+	
+	<select id="selectByBatch" parameterType="String" resultMap="result">
+		select * from
+		user
+		where FIND_IN_SET (id,#{id})
+	</select>
 
 
 	<!-- 修改 -->
@@ -61,6 +68,15 @@
 		</if>
 	</select>
 	
+	<select id="getByMap" parameterType="Map" resultMap="result">
+		select * from user
+		where 1 = 1
+		<if test="null != mobile and '' != mobile">
+			and mobile = #{mobile}
+		</if>
+		limit 1
+	</select>
+	
 	
 	<!-- 更新唯一性验证 -->
 	<select id="checkUnique" parameterType="Map" resultMap="result">
@@ -70,6 +86,9 @@
 		<if test="null != mobile and '' != mobile">
 			and mobile = #{mobile}
 		</if>
+		<if test="null != id and '' != id">
+		<![CDATA[	and id <>  #{id} ]]>
+		</if>
 	</select>
 
 
@@ -78,10 +97,10 @@
 		select * 
 		from user
 		where 1=1
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != entity.mobile and '' != entity.mobile">
+			and mobile = #{entity.mobile}
 		</if>
-		 order by sort limit ${page.begin},${page.limit};
+		 order by sort ,update_date desc limit ${page.begin},${page.limit};
 	</select>
 
 	<!-- 分页数量 -->
@@ -89,8 +108,8 @@
 		select count(1) user from
 		user
 		where 1=1
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != entity.mobile and '' != entity.mobile">
+			and mobile = #{entity.mobile}
 		</if>
 	</select>
 

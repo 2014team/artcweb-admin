@@ -101,7 +101,7 @@ public class ApiOrderController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("orderId", orderId);
 		paramMap.put("currentStep", currentStep);
-		Integer order = orderService.updateCurrentStep(paramMap);
+		Integer order = orderService.updateCurrentStepByApi(paramMap);
 		if (null != order && order > 0) {
 			result.success();
 			return result;

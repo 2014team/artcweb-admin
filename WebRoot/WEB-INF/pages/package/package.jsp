@@ -1,16 +1,14 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
   <head>
   	<%@include file="/WEB-INF/pages/common/head_layui.jsp" %>
-  	<%@include file="/WEB-INF/pages/common/jsp_jstl.jsp" %>
   </head>
   
    <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">管理员管理</a>
+        <a href="">套餐管理</a>
         <a>
           <cite>套餐列表</cite></a>
       </span>
@@ -19,13 +17,12 @@
     </div>
     <div class="x-body">
       <div class="layui-row demoTable">
-        <!-- <form class="layui-form layui-col-md12 x-so layui-form-pane"> -->
            	套餐名称：
           <div class="layui-inline">
 		    <input class="layui-input" name="packageName" id=packageName autocomplete="off">
 		  </div>
           <button class="layui-btn" type="button" id="search_id">搜索</button>
-      <!--   </form> -->
+           <button class="layui-btn" type="button" id="clean_search_input">置空搜索框</button>
       </div>
       
    	
@@ -35,7 +32,7 @@
      <!-- 头部工具条 -->
 	<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
-   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('rendReloadId','/admin/center/package/delete/batch.do')">批量删除</button>
+   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="package_delAll('rendReloadId','/admin/center/package/delete/batch.do')">批量删除</button>
    			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/package/add.do')"><i class="layui-icon"></i>增加</button>
   		</div>
 	</script>
@@ -45,9 +42,18 @@
 		 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
  		 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
-
-   
   </body>
+  
+
+<!--图片模板  -->
+<script type="text/html" id="imageUrlTpl">
+  <img alt="{{d.imageUrl}}" src="{{d.imageUrl}}">
+</script>
+<!-- 序号模板 -->
+<script type="text/html" id="indexTpl">
+   {{d.LAY_TABLE_INDEX+1}}
+</script>
+
 
 <script type="text/javascript">
 	layui.use('table', function() {
@@ -74,16 +80,13 @@
 
 			},
 			cols : [ [
-				 {checkbox: true, fixed: true},
+				 {checkbox: true},
 				{
-					field : 'id',
-					title : 'ID',
-					sort : true
-				}
-				, {
-					field : 'packageId',
-					title : '套餐ID',
-					sort : true
+					field : 'indexId', 
+					title : '序号',
+					templet: '#indexTpl',
+					width:75,
+					sort : true,					
 				}
 				, {
 					field : 'packageName',
@@ -94,11 +97,13 @@
 					title : '执行步骤'
 				}
 				, {
-					field : 'imageUrl',
-					title : '图片'
+					field : 'imageUrl' ,
+					title : '图片' ,
+					templet: '#imageUrlTpl',
+					width:80
 				}
 				, {
-					align:'center', toolbar: '#rowBar',
+					align:'left', toolbar: '#rowBar',
 					title : '操作'
 				}
 
@@ -109,7 +114,6 @@
 		
 		/* 搜索 */
 		$('#search_id').on('click', function(){
-		debugger
            var searchPackageName = $('#packageName').val();
 		      //执行重载
 		      table.reload( 'rendReloadId',{
@@ -129,15 +133,71 @@
 			 var data = obj.data;
 			 switch(obj.event){
 			  case 'del': //删除
-				crup_delete(obj,'/admin/center/package/delete.do');
+				crup_delete(obj,'/admin/center/package/delete.do',data.packageId);
 		      break;
 		      case 'edit':// 编辑
-				x_admin_show('编辑','/admin/center/package/edit/'+obj.data.id+'.do');
+				x_admin_show('编辑','/admin/center/package/edit/'+obj.data.packageId+'.do');
 		      break;
 			 }
 		});
 	});
 	
+	
+	//置空搜索框
+	$("#clean_search_input").on('click',function(){
+			$("#packageName").val('');
+	});
+	
+	
+	//批量删除
+	function package_delAll(layfilterId,url) {
+	var selectData = layui.table.checkStatus(layfilterId).data;
+	if(selectData.length < 1){	
+		layer.msg('请选择要删除的数据！', {icon: 2});
+		return false;
+	}
+	layer.confirm('确认要删除吗？', function(index) {
+		var array = new Array();
+		$.each(selectData,function(i,e){
+			array.push(e.packageId);
+		 })
+		$.ajax({
+			url : url,
+			type : "POST",
+			data : {"array":JSON.stringify(array)},
+			dataType : "json",
+			success : function(data) {
+				if (data.code == 200) { //这个是从后台取回来的状态值
+					layer.close(index);
+					layer.msg(data.msg, {
+						icon : 1,
+						time : 1000
+					},function(){
+						
+						//刷新列表
+						window.location.reload();
+					});
+					
+					
+				} else {
+					layer.msg(data.msg, {
+						icon : 2,
+						time : 1000
+					});
+				}
+			},
+			error : function(e) {
+				console.log(e);
+				layer.msg("系统异常，稍后再试!", {
+					icon : 2,
+					time : 1000
+				});
+			}
+		});
+		
+	});
+		
+   }	
 </script>
 
 </html>
