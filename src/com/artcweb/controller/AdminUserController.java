@@ -103,14 +103,13 @@ public class AdminUserController {
 		request.setAttribute("user", user);
 		return "index";
 	}
-	
 
 	/**
 	 * @Title: toList
 	 * @Description: 列表UI
 	 * @return
 	 */
-	@RequestMapping(value = "/user/list/ui")
+	@RequestMapping(value = "/center/account/list/ui")
 	public String toList() {
 
 		return "/admin/user";
@@ -121,7 +120,7 @@ public class AdminUserController {
 	 * @Description: 新增UI
 	 * @return
 	 */
-	@RequestMapping(value = "/user/add")
+	@RequestMapping(value = "/center/account/add")
 	public String toAdd() {
 
 		return "/admin/user_edit";
@@ -134,7 +133,7 @@ public class AdminUserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/user/edit/{id}")
+	@RequestMapping(value = "/center/account/edit/{id}")
 	public String toEdit(@PathVariable Integer id, HttpServletRequest request) {
 
 		AdminUser entity = adminUserService.getById(id);
@@ -150,56 +149,55 @@ public class AdminUserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/save")
-	public LayUiResult save(AdminUser adminUser,HttpServletRequest request) {
+	@RequestMapping(value = "/center/account/save")
+	public LayUiResult save(AdminUser adminUser, HttpServletRequest request) {
 
-		AdminUser entity = SessionUtil.getSessionUser(request);
 		LayUiResult result = new LayUiResult();
-		if(null != entity){
-			if(!"admin".equals(entity.getUserName())){
-				result.failure("您没有权限删除操作!");
-				return result;
-			}
+		String errMsg = adminUserService.checkAdmin(request);
+		if (StringUtils.isNotBlank(errMsg)) {
+			result.failure(errMsg);
+			return result;
 		}
-		
-		//参数验证
+
+		// 参数验证
 		String userName = adminUser.getUserName();
-		if(StringUtils.isBlank(userName)){
+		if (StringUtils.isBlank(userName)) {
 			result.failure("用户名不能为空!");
 			return result;
 		}
 		String password = adminUser.getPassword();
-		if(StringUtils.isBlank(password)){
+		if (StringUtils.isBlank(password)) {
 			result.failure("密码不能为空!");
 			return result;
 		}
-		
-		Integer id= adminUser.getId();
+
+		Integer id = adminUser.getId();
 		Integer operate = 0;
-		if(null != id && id > 0){//修改
+		if (null != id && id > 0) {// 修改
 			AdminUser user = adminUserService.getById(id);
-			if(null != user){
+			if (null != user) {
 				user.setUserName(userName);
 				user.setPassword(password);
 				operate = adminUserService.update(user);
 			}
-		}else{//保存
+		}
+		else {// 保存
 			adminUser.setVaild(0);
 			adminUser.setEmail("");
-			
-			//唯一性验证
-			Map<String,Object> paramMap = new HashMap<String,Object>();
-			paramMap.put("userName",userName);
-			List<AdminUser>  list = adminUserService.checkUnique(paramMap);
-			if(null != list && list.size() > 0){
+
+			// 唯一性验证
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("userName", userName);
+			List<AdminUser> list = adminUserService.checkUnique(paramMap);
+			if (null != list && list.size() > 0) {
 				result.failure("用户已存在!");
 				return result;
 			}
-			
+
 			operate = adminUserService.save(adminUser);
 		}
-		
-		if(null != operate && operate > 0){
+
+		if (null != operate && operate > 0) {
 			result.success();
 			return result;
 		}
@@ -216,7 +214,7 @@ public class AdminUserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/list", method = { RequestMethod.POST,
+	@RequestMapping(value = "/center/account/list", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
 	public LayUiResult list(AdminUser entity, HttpServletRequest request) {
 
@@ -235,23 +233,21 @@ public class AdminUserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/delete", method = { RequestMethod.POST,
+	@RequestMapping(value = "/center/account/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(AdminUser entity,HttpServletRequest request) {
-		
-		AdminUser adminUser = SessionUtil.getSessionUser(request);
+	public LayUiResult delete(AdminUser entity, HttpServletRequest request) {
+
 		LayUiResult result = new LayUiResult();
-		if(null != adminUser){
-			if(!"admin".equals(adminUser.getUserName())){
-				result.failure("您没有权限删除操作!");
-				return result;
-			}
+		String errMsg = adminUserService.checkAdmin(request);
+		if (StringUtils.isNotBlank(errMsg)) {
+			result.failure(errMsg);
+			return result;
 		}
 
 		// 获取参数
 		Integer id = entity.getId();
 		Integer delResult = adminUserService.delete(id);
-		if (null!= delResult && delResult > 0) {
+		if (null != delResult && delResult > 0) {
 			result.success();
 			return result;
 		}
@@ -267,17 +263,15 @@ public class AdminUserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/user/delete/batch", method = { RequestMethod.POST,
+	@RequestMapping(value = "/center/account/delete/batch", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult deleteBatch(String array,HttpServletRequest request) {
-		
-		AdminUser adminUser = SessionUtil.getSessionUser(request);
+	public LayUiResult deleteBatch(String array, HttpServletRequest request) {
+
 		LayUiResult result = new LayUiResult();
-		if(null != adminUser){
-			if(!"admin".equals(adminUser.getUserName())){
-				result.failure("您没有权限删除操作!");
-				return result;
-			}
+		String errMsg = adminUserService.checkAdmin(request);
+		if (StringUtils.isNotBlank(errMsg)) {
+			result.failure(errMsg);
+			return result;
 		}
 
 		if (StringUtils.isBlank(array)) {

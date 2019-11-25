@@ -54,7 +54,7 @@
           ,layer = layui.layer;
           
         //保存
-        crup_save(form,'save','/admin/user/save.do');
+        crup_save(form,'save','/admin/center/account/save.do');
           
         });
     </script>

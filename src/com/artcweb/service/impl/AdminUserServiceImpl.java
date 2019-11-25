@@ -4,15 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.artcweb.baen.AdminCategory;
 import com.artcweb.baen.AdminUser;
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.dao.AdminUserDao;
 import com.artcweb.service.AdminUserService;
+import com.artcweb.util.SessionUtil;
 
 @Service
 public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> implements  AdminUserService{
@@ -84,6 +86,18 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser, Integer> im
 	public List<AdminUser> checkUnique(Map<String, Object> paramMap) {
 
 		return adminUserDao.checkUnique(paramMap);
+	}
+	
+	@Override
+	public String checkAdmin(HttpServletRequest request) {
+
+		AdminUser entity = SessionUtil.getSessionUser(request);
+		if (null != entity) {
+			if (!"admin".equals(entity.getUserName())) {
+				return "您没有权限删除操作!";
+			}
+		}
+		return null;
 	}
 
 }

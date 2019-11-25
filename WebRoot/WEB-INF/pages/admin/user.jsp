@@ -33,8 +33,8 @@
      <!-- 头部工具条 -->
 	<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
-   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('tableReload','/admin/user/delete/batch.do')">批量删除</button>
-   			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/user/add.do',600,260)"><i class="layui-icon"></i>增加</button>
+   			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('tableReload','/admin/center/account/delete/batch.do')">批量删除</button>
+   			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/account/add.do',600,260)"><i class="layui-icon"></i>增加</button>
   		</div>
 	</script>
      
@@ -60,7 +60,7 @@
 
 		  table.render({
 			elem : '#table_list',
-			url : '/admin/user/list.do',
+			url : '/admin/center/account/list.do',
 			toolbar: '#toolbar',
 		    defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
 		      title: '提示'
@@ -125,10 +125,10 @@
 			 var data = obj.data;
 			 switch(obj.event){
 			  case 'del': //删除
-				crup_delete(obj,'/admin/user/delete.do',data.id);
+				crup_delete(obj,'/admin/center/account/delete.do',data.id);
 		      break;
 		      case 'edit':// 编辑
-				x_admin_show('编辑','/admin/user/edit/'+obj.data.id+'.do',600,260);
+				x_admin_show('编辑','/admin/center/account/edit/'+obj.data.id+'.do',600,260);
 		      break;
 			 }
 		});

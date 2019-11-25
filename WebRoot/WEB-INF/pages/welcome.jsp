@@ -17,7 +17,7 @@
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎管理员：
             <span class="x-red">${user.userName}</span>！当前时间:<%=now %></blockquote>
-         <fieldset class="layui-elem-field">
+       <!--   <fieldset class="layui-elem-field">
             <legend>数据统计</legend>
             <div class="layui-field-box">
                 <div class="layui-col-md12">
@@ -155,7 +155,7 @@
             </div>
         </fieldset>
         <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由L-admin提供技术支持。</blockquote> 
-    </div>
+     --></div>
    
     </body>
 </html>
