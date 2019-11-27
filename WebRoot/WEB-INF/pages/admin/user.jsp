@@ -40,12 +40,12 @@
 	</script>
     -->	 
      <!--列表行Bar  -->
-     <!--
+     
      <script type="text/html" id="rowBar">
 		 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
- 		 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+ 		 <!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
 	</script>
-  -->
+  
   </body>
   
   <!-- 序号模板 -->
@@ -62,7 +62,7 @@
 		  table.render({
 			elem : '#table_list',
 			url : '/admin/center/account/list.do',
-			toolbar: '#toolbar',
+			/* toolbar: '#toolbar', */
 		    defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
 		      title: '提示'
 		      ,layEvent: 'LAYTABLE_TIPS'
@@ -96,10 +96,10 @@
 					field : 'password',
 					title : '密码'
 				}
-				/* , {
+				 , {
 					align:'center', toolbar: '#rowBar',
 					title : '操作'
-				}  */
+				}  
 
 			] ]
 			  ,id: 'tableReload'
