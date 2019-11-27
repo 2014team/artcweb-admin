@@ -4,6 +4,7 @@ package com.artcweb.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,14 @@ import com.artcweb.baen.PicPackage;
 import com.artcweb.constant.UploadConstant;
 import com.artcweb.service.ImageService;
 import com.artcweb.service.PicPackageService;
+import com.artcweb.util.FileUtil;
 import com.artcweb.util.ImageUtil;
 
 @Controller
 @RequestMapping("/admin/center/package")
 public class PicPackageController {
+	
+	private static Logger logger = Logger.getLogger(PicPackageController.class);
 
 	@Autowired
 	private ImageService imageService;
@@ -114,6 +118,18 @@ public class PicPackageController {
 
 				// 上传图片
 				imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+				
+				//删除原来图片
+				PicPackage picPackage = picPackageService.get(packageId);
+				if(null != picPackage){
+					String sourceImageUrl = picPackage.getImageUrl();
+						//删除原来物理图片
+						if(StringUtils.isNotBlank(sourceImageUrl)){
+							boolean  deleteResult = FileUtil.deleteFile(sourceImageUrl,request);
+							logger.info("物理删除图片结果 = "+deleteResult);
+						}
+					
+				}
 
 				entity.setImageUrl(imageUrl);
 				operator = picPackageService.update(entity);
@@ -203,7 +219,7 @@ public class PicPackageController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(PicPackage entity) {
+	public LayUiResult delete(PicPackage entity,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
@@ -212,7 +228,7 @@ public class PicPackageController {
 			result.failure("参数[packageId]不能为空!");
 			return result;
 		}
-		int delResult = picPackageService.delete(packageId);
+		int delResult = picPackageService.deletePicPackage(packageId,request);
 		if (delResult > 0) {
 			result.success();
 			return result;
@@ -231,7 +247,7 @@ public class PicPackageController {
 	@ResponseBody
 	@RequestMapping(value = "/delete/batch", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult deleteBatch(String array) {
+	public LayUiResult deleteBatch(String array,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		if (StringUtils.isBlank(array)) {
@@ -241,7 +257,7 @@ public class PicPackageController {
 
 		array = array.replace("[", "").replace("]", "");
 
-		int deleteResult = picPackageService.deleteByBatch(array);
+		int deleteResult = picPackageService.deleteByBatch(array,request);
 		if (deleteResult > 0) {
 			result.success();
 			return result;

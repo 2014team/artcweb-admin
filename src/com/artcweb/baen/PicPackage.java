@@ -28,6 +28,8 @@ public class PicPackage extends BaseBean {
 	 * 钉子数量
 	 */
 	private Integer pins;
+	
+	private Integer useCount;
 
 	public Integer getPackageId() {
 
@@ -77,4 +79,16 @@ public class PicPackage extends BaseBean {
 		this.pins = pins;
 	}
 
+	
+	public Integer getUseCount() {
+	
+		return useCount;
+	}
+
+	
+	public void setUseCount(Integer useCount) {
+	
+		this.useCount = useCount;
+	}
+	
 }

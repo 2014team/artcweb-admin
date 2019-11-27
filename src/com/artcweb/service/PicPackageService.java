@@ -1,6 +1,8 @@
 
 package com.artcweb.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.PicPackage;
 
@@ -45,7 +47,15 @@ public interface PicPackageService extends BaseService<PicPackage, Integer> {
 	* @param array
 	* @return
 	*/
-	public int deleteByBatch(String array);
+	public int deleteByBatch(String array,HttpServletRequest request);
+
+	/**
+	* @Title: deletePicPackage
+	* @Description: 删除
+	* @param packageId
+	* @return
+	*/
+	public int deletePicPackage(Integer packageId,HttpServletRequest request);
 
 
 }

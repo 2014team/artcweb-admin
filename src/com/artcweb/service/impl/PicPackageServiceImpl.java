@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,13 @@ import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.PicPackage;
 import com.artcweb.dao.PicPackageDao;
 import com.artcweb.service.PicPackageService;
+import com.artcweb.util.FileUtil;
 import com.artcweb.util.ImageUtil;
 
 @Service
 public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> implements PicPackageService {
 
+	private static Logger logger = Logger.getLogger(PicPackageServiceImpl.class);
 	@Autowired
 	private PicPackageDao picPackageDao;
 
@@ -136,9 +141,45 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 	 * @return
 	 */
 	@Override
-	public int deleteByBatch(String array) {
+	public int deleteByBatch(String array,HttpServletRequest request) {
+		
+		List<PicPackage> list = picPackageDao.selectByBatch(array);
+		int result = picPackageDao.deleteByBatch(array);
+		if(null != list && list.size() > 0){
+			for (PicPackage picPackage : list) {
+				String imageUrl = picPackage.getImageUrl();
+				//删除原来物理图片
+				if(StringUtils.isNotBlank(imageUrl)){
+					boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+					logger.info("物理删除图片结果 = "+deleteResult);
+				}
+			}
+		}
 
-		return picPackageDao.deleteByBatch(array);
+		return result;
+	}
+
+	
+	/**
+	* @Title: deletePicPackage
+	* @Description: 删除
+	* @param packageId
+	* @return
+	*/
+	@Override
+	public int deletePicPackage(Integer packageId,HttpServletRequest request) {
+		PicPackage picPackage = get(packageId);
+		String imageUrl = picPackage.getImageUrl();
+		int result = 0;
+		if(null != picPackage){
+			result = delete(packageId);
+			//删除原来物理图片
+			if(StringUtils.isNotBlank(imageUrl)){
+				boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+				logger.info("物理删除图片结果 = "+deleteResult);
+			}
+		}
+		return result;
 	}
 
 }

@@ -37,6 +37,13 @@
 		where
 		FIND_IN_SET (package_id,#{packageId})
 	</delete>
+	
+	<select id="selectByBatch" parameterType="String" resultMap="result">
+		select *  from
+		pic_package
+		where
+		FIND_IN_SET (package_id,#{packageId})
+	</select>
 
 
 	<!-- 修改 -->
@@ -75,8 +82,16 @@
 
 
 	<!-- 分页查找 -->
-	<select id="findByPage" parameterType="Map" resultMap="result">
-		select * from pic_package
+	<select id="findByPage" parameterType="Map" resultType="com.artcweb.baen.PicPackage">
+		SELECT 
+		p.package_id as packageId,
+		p.package_name as packageName,
+		p.image_url as imageUrl,
+		p.step as step,
+		p.pins as pins,
+		p.create_date as createDate,
+		p.update_date as updateDate,
+		(SELECT COUNT(1) FROM `order` o WHERE o.`package_id` = p.`package_id` ) AS useCount FROM pic_package p 
 		where 1=1
 		<if test="entity.packageName != null and '' != entity.packageName">
 			and package_name=#{entity.packageName}

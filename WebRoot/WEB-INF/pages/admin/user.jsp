@@ -79,7 +79,7 @@
 
 			},
 			cols : [ [
-				 {checkbox: true, fixed: true},
+				/*  {checkbox: true, fixed: true}, */
 				{
 					field : 'indexId', 
 					title : '序号',

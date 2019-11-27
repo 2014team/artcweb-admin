@@ -93,6 +93,10 @@
 					title : '套餐名称'
 				}
 				, {
+					field : 'useCount',
+					title : '用户数'
+				}
+				, {
 					field : 'step',
 					title : '执行步骤'
 				}
