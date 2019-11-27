@@ -115,6 +115,9 @@
    				formData.append('step', $('#step').val());
    				formData.append('pins', $('#pins').val());
    				formData.append('file', files);
+   				
+   				 // 等候加载
+    	    	 x_admin_loading(true);
     			$.ajax({
     				url : '/admin/center/package/save.do',
     				type : "POST",
@@ -124,6 +127,8 @@
         			contentType : false, // 不要设置Content-Type请求头
     				dataType : "json",
     				success : function(data) {
+    				//移除等待加载
+    				x_admin_loading(false);
     						if (data.code == 200) { //这个是从后台取回来的状态值
 								layer.msg(data.msg, {icon : 6,time : 1000
 								}, function() {
