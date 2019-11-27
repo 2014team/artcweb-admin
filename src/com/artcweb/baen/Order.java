@@ -44,6 +44,11 @@ public class Order extends BaseBean {
 	 * 执行步骤
 	 */
 	private String step;
+	
+	/**
+	* 钉子数量
+	*/
+	private Integer pins;
 
 	/**
 	 * 0:新建模板 1：选择模板
@@ -139,5 +144,14 @@ public class Order extends BaseBean {
 
 		this.template = template;
 	}
+
+	public Integer getPins() {
+		return pins;
+	}
+
+	public void setPins(Integer pins) {
+		this.pins = pins;
+	}
+	
 
 }

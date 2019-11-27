@@ -39,6 +39,10 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		if (StringUtils.isBlank(step)) {
 			return "参数[step]不能为空!";
 		}
+		Integer pins = entity.getPins();
+		if (null == pins || pins < 1) {
+			return "参数[pins]不能为空!";
+		}
 		return null;
 	}
 

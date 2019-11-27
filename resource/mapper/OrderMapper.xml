@@ -10,6 +10,7 @@
 		<result property="packageId" column="package_id" />
 		<result property="currentStep" column="current_step" />
 		<result property="sort" column="sort" />
+		<result property="pins" column="pins" />
 		<result property="template" column="template" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
@@ -75,7 +76,8 @@
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
 		as packageName,p.package_id as  packageId, o.template as template,
 		p.image_url as imageUrl ,p.step ,o.current_step as
-		currentStep
+		currentStep,p.pins as
+		pins
 		FROM `order` o,`user` u,pic_package p
 		WHERE
 		o.mobile=u.mobile AND o.package_id = p.package_id
@@ -178,7 +180,7 @@
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
 		as packageName,
 		p.image_url as imageUrl ,p.step ,o.current_step as
-		currentStep
+		currentStep,p.pins as pins
 		FROM `order` o,`user` u,pic_package p
 		WHERE
 		o.mobile=u.mobile AND o.package_id = p.package_id

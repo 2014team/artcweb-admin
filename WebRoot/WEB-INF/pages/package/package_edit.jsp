@@ -22,6 +22,19 @@
               </div>
           </div>
           
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+                  <span class="x-red">*</span>钉子数量
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="pins" name="pins" value="${entity.pins }" lay-verify="required|number"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  数字
+              </div>
+          </div>
+          
           <div class="layui-form-item layui-form-text">
 		    <label class="layui-form-label"> <span class="x-red">*</span>执行步骤</label>
 		    <div class="layui-input-block">
@@ -100,6 +113,7 @@
    				formData.append('packageId', $('#packageId').val());
    				formData.append('packageName',$('#packageName').val());
    				formData.append('step', $('#step').val());
+   				formData.append('pins', $('#pins').val());
    				formData.append('file', files);
     			$.ajax({
     				url : '/admin/center/package/save.do',

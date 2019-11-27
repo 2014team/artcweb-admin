@@ -179,6 +179,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 		if (null == sort) {
 			return "参数[sort]不能为空!";
 		}
+		/*Integer pins = entity.getPins();
+		if (null == pins || pins < 1) {
+			return "参数[pins]不能为空!";
+		}*/
 		return null;
 	}
 
@@ -374,6 +378,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 				if (null != picPackage) {
 					picPackage.setPackageName(entity.getPackageName());
 					picPackage.setStep(entity.getStep());
+					picPackage.setPins(entity.getPins());
 				}
 				operator = picPackageDao.update(picPackage);
 
@@ -422,6 +427,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 			PicPackage picPackage = new PicPackage();
 			picPackage.setPackageName(entity.getPackageName());
 			picPackage.setStep(entity.getStep());
+			picPackage.setPins(entity.getPins());
 			picPackage.setImageUrl(entity.getImageUrl());
 			operator = picPackageDao.save(picPackage);
 			if (null != operator && operator > 0) {
@@ -453,6 +459,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 		String step = entity.getStep();
 		if (StringUtils.isBlank(step)) {
 			return "参数[step]不能为空!";
+		}
+		Integer pins = entity.getPins();
+		if (null == pins || pins < 1) {
+			return "参数[pins]不能为空!";
 		}
 
 		return null;

@@ -24,6 +24,10 @@ public class PicPackage extends BaseBean {
 	 * 执行步骤
 	 */
 	private String step;
+	/**
+	 * 钉子数量
+	 */
+	private Integer pins;
 
 	public Integer getPackageId() {
 
@@ -63,6 +67,14 @@ public class PicPackage extends BaseBean {
 	public void setStep(String step) {
 
 		this.step = step;
+	}
+
+	public Integer getPins() {
+		return pins;
+	}
+
+	public void setPins(Integer pins) {
+		this.pins = pins;
 	}
 
 }

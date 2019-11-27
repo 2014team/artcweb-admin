@@ -2,6 +2,7 @@
 package com.artcweb.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,6 +132,7 @@ public class PicPackageController {
 				if (null != picPackage) {
 					picPackage.setPackageName(entity.getPackageName());
 					picPackage.setStep(entity.getStep());
+					picPackage.setPins(entity.getPins());
 				}
 
 				operator = picPackageService.update(picPackage);

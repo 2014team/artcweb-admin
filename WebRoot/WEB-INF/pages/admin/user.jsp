@@ -31,20 +31,21 @@
      <table class="layui-hide" id="table_list" lay-filter="table_list" ></table>
      
      <!-- 头部工具条 -->
+	<!-- 
 	<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
    			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('tableReload','/admin/center/account/delete/batch.do')">批量删除</button>
    			 <button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/account/add.do',600,260)"><i class="layui-icon"></i>增加</button>
   		</div>
 	</script>
-     
+    -->	 
      <!--列表行Bar  -->
+     <!--
      <script type="text/html" id="rowBar">
 		 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
  		 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
-
-   
+  -->
   </body>
   
   <!-- 序号模板 -->
@@ -95,10 +96,10 @@
 					field : 'password',
 					title : '密码'
 				}
-				, {
+				/* , {
 					align:'center', toolbar: '#rowBar',
 					title : '操作'
-				}
+				}  */
 
 			] ]
 			  ,id: 'tableReload'
