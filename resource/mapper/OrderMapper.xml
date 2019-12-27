@@ -7,6 +7,7 @@
 	<resultMap type="com.artcweb.baen.Order" id="result">
 		<result property="id" column="id" />
 		<result property="mobile" column="mobile" />
+		<result property="userName" column="user_name" />
 		<result property="packageId" column="package_id" />
 		<result property="currentStep" column="current_step" />
 		<result property="sort" column="sort" />
@@ -20,8 +21,8 @@
 	<!--保存 -->
 	<insert id="save" parameterType="com.artcweb.baen.Order">
 		insert into
-		`order`(mobile,package_id,current_step,sort,template,create_date,update_date)
-		values(#{mobile},#{packageId},#{currentStep},#{sort},#{template},now(),now())
+		`order`(mobile,package_id,current_step,sort,template,user_id,create_date,update_date)
+		values(#{mobile},#{packageId},#{currentStep},#{sort},#{template},#{userId},now(),now())
 	</insert>
 
 	<!--删除 -->
@@ -92,15 +93,15 @@
 	
 	<!-- 查询 -->
 	<select id="select" parameterType="Map" resultType="com.artcweb.baen.Order">
-		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
-		as packageName,
-		p.image_url as imageUrl ,p.min_image_url as minImageUrl ,p.step ,o.current_step as
-		currentStep, o.template as template
+		SELECT u.id AS id,o.id AS orderId ,u.`user_name` AS userName,o.sort ,o.mobile,p.package_name
+		AS packageName,
+		p.image_url AS imageUrl ,p.min_image_url AS minImageUrl ,p.step ,o.current_step AS
+		currentStep,o.template AS template
 		FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
-		<if test="mobile!= null and '' != mobile">
-			and o.mobile=#{mobile}
+		o.user_id=u.id AND o.package_id = p.package_id
+		<if test="userName!= null and '' != userName">
+			and u.user_name=#{userName}
 		</if>
 		<if test="id != null and '' != id">
 			and o.id=#{id}
@@ -125,15 +126,15 @@
 
 	<!-- 分页查找 -->
 	<select id="findByPage" parameterType="Map" resultType="com.artcweb.baen.Order">
-		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
-		as packageName,
-		p.image_url as imageUrl ,p.min_image_url as minImageUrl ,p.step ,o.current_step as
-		currentStep,o.template as template
+		SELECT u.id AS id,o.id AS orderId ,u.`user_name` AS userName,o.sort ,o.mobile,p.package_name
+		AS packageName,
+		p.image_url AS imageUrl ,p.min_image_url AS minImageUrl ,p.step ,o.current_step AS
+		currentStep,o.template AS template
 		FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
-		<if test="entity.mobile!= null and '' != entity.mobile">
-			and o.mobile=#{entity.mobile}
+		o.user_id=u.id AND o.package_id = p.package_id
+		<if test="entity.userName!= null and '' != entity.userName">
+			and u.user_name=#{entity.userName}
 		</if>
 		ORDER BY o.sort, o.`update_date` desc limit ${page.begin},${page.limit} ;
 	</select>
@@ -142,9 +143,9 @@
 	<select id="findByPageCount" parameterType="Map" resultType="int">
 		SELECT count(1) FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
-		<if test="entity.mobile!= null and '' != entity.mobile">
-			and o.mobile=#{entity.mobile}
+		o.user_id=u.id AND o.package_id = p.package_id
+		<if test="entity.userName!= null and '' != entity.userName">
+			and u.user_name=#{entity.userName}
 		</if>
 	</select>
 
@@ -211,8 +212,8 @@
 		<if test="null != packageId and '' != packageId">
 			and package_id = #{packageId}
 		</if>
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != userId and '' != userId">
+			and user_id = #{userId}
 		</if>
 		<if test="null != id and '' != id">
 			<![CDATA[and id <> #{id} ]]>

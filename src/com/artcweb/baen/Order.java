@@ -14,6 +14,15 @@ public class Order extends BaseBean {
 	 * 手机号码
 	 */
 	private String mobile;
+	
+	/**
+	 * 用户ID
+	 */
+	private String userId;
+	/**
+	 * 用户名称
+	 */
+	private String userName;
 
 	/**
 	 * 当前步骤
@@ -39,22 +48,32 @@ public class Order extends BaseBean {
 	 * imageUrl图片
 	 */
 	private String imageUrl;
+
+	/**
+	 * 小图片
+	 */
 	private String minImageUrl;
 
 	/**
 	 * 执行步骤
 	 */
 	private String step;
-	
+
 	/**
-	* 钉子数量
-	*/
+	 * 钉子数量
+	 */
 	private Integer pins;
 
 	/**
 	 * 0:新建模板 1：选择模板
 	 */
 	private int template;
+
+	/**
+	 * 0:新建模板 1：选择模板
+	 */
+
+	private int comeFrom;
 
 	public Integer getOrderId() {
 
@@ -161,6 +180,30 @@ public class Order extends BaseBean {
 	public void setMinImageUrl(String minImageUrl) {
 		this.minImageUrl = minImageUrl;
 	}
+
+	public int getComeFrom() {
+		return comeFrom;
+	}
+
+	public void setComeFrom(int comeFrom) {
+		this.comeFrom = comeFrom;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	
-	
+
 }

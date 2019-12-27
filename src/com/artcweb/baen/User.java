@@ -8,9 +8,9 @@ public class User extends BaseBean {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 手机号码
+	 * 用户名称
 	 */
-	private String mobile;
+	private String userName;
 
 	/**
 	 * 排序
@@ -21,43 +21,35 @@ public class User extends BaseBean {
 
 	private int orderCount;
 
-	public String getMobile() {
-
-		return mobile;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setMobile(String mobile) {
-
-		this.mobile = mobile;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Integer getSort() {
-
 		return sort;
 	}
 
 	public void setSort(Integer sort) {
-
 		this.sort = sort;
 	}
 
 	public List<Order> getOrderList() {
-
 		return orderList;
 	}
 
 	public void setOrderList(List<Order> orderList) {
-
 		this.orderList = orderList;
 	}
 
 	public int getOrderCount() {
-
 		return orderCount;
 	}
 
 	public void setOrderCount(int orderCount) {
-
 		this.orderCount = orderCount;
 	}
 

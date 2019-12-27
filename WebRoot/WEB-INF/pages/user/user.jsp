@@ -16,9 +16,9 @@
 	</div>
 	<div class="x-body">
 		<div class="layui-row demoTable">
-			手机号码：
+			买家名称：
 			<div class="layui-inline">
-				<input class="layui-input" name="mobile" id="mobile"
+				<input class="layui-input" name="userName" id="userName"
 					autocomplete="off">
 			</div>
 			<button class="layui-btn" type="button" id="search_id">搜索</button>
@@ -33,7 +33,7 @@
 		<!-- 头部工具条 -->
 		<script type="text/html" id="toolbar">
   		<div class="layui-btn-container">
-			<button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/user/add.do',600,260)"><i class="layui-icon"></i>增加手机号码</button>  		
+			<button class="layui-btn layui-btn-sm"  onclick="x_admin_show('编辑','/admin/center/user/add.do',600,260)"><i class="layui-icon"></i>增加买家</button>  		
    			 <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="crup_delAll('rendReloadId','/admin/center/user/delete/batch.do')">批量删除</button>
 	</div>
 	</script>
@@ -56,9 +56,9 @@
 <script type="text/html" id="mobileTpl">
 {{}}
 {{#  if(d.orderCount == 0 ){ }}
-  <i class="layui-icon" status='true' style="color: #ddd;">&#xe623;</i>{{d.mobile}}
+  <i class="layui-icon" status='true' style="color: #ddd;">&#xe623;</i>{{d.userName}}
 {{#  } else { }}
-  <i class="layui-icon x-show" status='true'>&#xe623;</i>{{d.mobile}}
+  <i class="layui-icon x-show" status='true'>&#xe623;</i>{{d.userName}}
 {{#  } }} 
   
 </script>
@@ -96,8 +96,8 @@
 			cols : [ [
 				 {checkbox: true,},
 				 {
-					field : 'mobile',
-					title : '手机号码',
+					field : 'userName',
+					title : '买家名称',
 					templet: '#mobileTpl',
 					sort : true
 				}
@@ -156,7 +156,7 @@
 		
 		/* 搜索 */
 		$('#search_id').on('click', function(){
-           var mobile = $('#mobile').val();
+           var userName = $('#userName').val();
 		      //执行重载
 		      table.reload( 'rendReloadId',{
 		      	method:"post",
@@ -164,7 +164,7 @@
 		          curr: 1 //重新从第 1 页开始
 		        }
 		        ,where: {
-		            "mobile": mobile
+		            "userName": userName
 		        }
 		      }, 'data');
       
@@ -239,7 +239,7 @@
 		
 	//置空搜索框
 	$("#clean_search_input").on('click',function(){
-			$("#mobile").val('');
+			$("#userName").val('');
 	});
 	
 	

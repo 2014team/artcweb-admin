@@ -20,6 +20,7 @@ import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.Order;
 import com.artcweb.baen.PicPackage;
 import com.artcweb.baen.User;
+import com.artcweb.constant.ComeFromConstant;
 import com.artcweb.service.OrderService;
 import com.artcweb.service.PicPackageService;
 import com.artcweb.service.UserService;
@@ -110,9 +111,11 @@ public class OrderController {
 		LayUiResult result = null;
 		// 选择模本
 		if (template == 1) {
+			entity.setComeFrom(ComeFromConstant.TEMPLATE);
 			result = orderService.saveChooseTemplate(entity);
 		}
 		else {// 新建模板
+			entity.setComeFrom(ComeFromConstant.CUSTOM_MAKE);
 			result = orderService.saveNewTemplate(entity, file, request);
 		}
 		return result;

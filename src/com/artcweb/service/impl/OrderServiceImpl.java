@@ -198,11 +198,11 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 		List<Order> list = null;
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("mobile", entity.getMobile());
+		paramMap.put("userId", entity.getUserId());
 		paramMap.put("packageId", entity.getPackageId());
 		list = orderDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "手机号码已存在该订单!";
+			return "用户已存在该订单!";
 		}
 		return null;
 	}
@@ -244,7 +244,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("id", entity.getOrderId());
-		paramMap.put("mobile", entity.getMobile());
+		paramMap.put("userId", entity.getUserId());
 		paramMap.put("packageId", entity.getPackageId());
 		list = orderDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
@@ -435,6 +435,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 			picPackage.setStep(entity.getStep());
 			picPackage.setPins(entity.getPins());
 			picPackage.setImageUrl(entity.getImageUrl());
+			picPackage.setComeFrom(entity.getComeFrom());
 			operator = picPackageDao.save(picPackage);
 			if (null != operator && operator > 0) {
 				// 保存订单信息

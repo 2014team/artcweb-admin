@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.PicPackage;
+import com.artcweb.constant.ComeFromConstant;
 import com.artcweb.constant.UploadConstant;
 import com.artcweb.service.ImageService;
 import com.artcweb.service.PicPackageService;
@@ -85,6 +86,9 @@ public class PicPackageController {
 	@RequestMapping(value = "/save")
 	public LayUiResult save(PicPackage entity, MultipartFile file, HttpServletRequest request) {
 
+		entity.setComeFrom(ComeFromConstant.TEMPLATE);
+		
+		
 		LayUiResult result = new LayUiResult();
 
 		// 参数验证
@@ -187,6 +191,7 @@ public class PicPackageController {
 			minImageUrl = imageService.uploadMinImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
 			entity.setImageUrl(imageUrl);
 			entity.setMinImageUrl(minImageUrl);
+			entity.setComeFrom(ComeFromConstant.TEMPLATE);
 			operator = picPackageService.save(entity);
 		}
 
@@ -211,6 +216,8 @@ public class PicPackageController {
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
 	public LayUiResult list(PicPackage entity, HttpServletRequest request) {
 
+		entity.setComeFrom(ComeFromConstant.TEMPLATE);
+		
 		// 获取参数
 		Integer page = Integer.valueOf(request.getParameter("page"));
 		Integer limit = Integer.valueOf(request.getParameter("limit"));

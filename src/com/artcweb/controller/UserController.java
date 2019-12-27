@@ -19,6 +19,7 @@ import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.Order;
 import com.artcweb.baen.PicPackage;
 import com.artcweb.baen.User;
+import com.artcweb.constant.ComeFromConstant;
 import com.artcweb.service.OrderService;
 import com.artcweb.service.PicPackageService;
 import com.artcweb.service.UserService;
@@ -213,7 +214,8 @@ public class UserController {
 		request.setAttribute("user", user);
 		
 		// 获取套餐信息
-		Map<String, Object> paramMap = null;
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("comeFrom", ComeFromConstant.TEMPLATE);
 		List<PicPackage> packageList = picPackageService.select(paramMap);
 		request.setAttribute("packageList", packageList);
 		return "/user/user_order_edit";
@@ -239,13 +241,14 @@ public class UserController {
 		if(null != order){
 			// 获取用户信息
 			paramMap.clear();
-			paramMap.put("mobile", order.getMobile());
+			paramMap.put("userName", order.getUserName());
 			User user = userService.getByMap(paramMap);
 			request.setAttribute("user", user);
 		}
 		
 		//获取字典
 		paramMap.clear();
+		paramMap.put("comeFrom", ComeFromConstant.TEMPLATE);
 		List<PicPackage> packageList = picPackageService.select(paramMap);
 		request.setAttribute("packageList", packageList);
 		request.setAttribute("order", order);

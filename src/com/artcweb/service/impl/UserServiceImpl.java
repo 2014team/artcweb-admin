@@ -35,9 +35,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 	@Override
 	public String checkSaveParam(User entity) {
 
-		String mobile = entity.getMobile();
-		if (StringUtils.isBlank(mobile)) {
-			return "参数[mobile]不能为空!";
+		String userName = entity.getUserName();
+		if (StringUtils.isBlank(userName)) {
+			return "参数[userName]不能为空!";
 		}
 		Integer sort = entity.getSort();
 		if (null == sort) {
@@ -59,7 +59,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("id", entity.getId());
-		paramMap.put("mobile", entity.getMobile());
+		paramMap.put("userName", entity.getUserName());
 		list = userDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
 			return "手机号码已存在!";
@@ -79,7 +79,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		List<User> list = null;
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("mobile", entity.getMobile());
+		paramMap.put("userName", entity.getUserName());
 		list = userDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
 			return "手机号码已存在!";
@@ -125,7 +125,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		}
 		for (User user : dataList) {
 			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("mobile", user.getMobile());
+			paramMap.put("userName", user.getUserName());
 			List<Order> orderList = orderDao.select(paramMap);
 			if (null != orderList && orderList.size() > 0) {
 				for (Order order : orderList) {
@@ -163,7 +163,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 			resilt = userDao.deleteByBatch(array);
 			for (User user : list) {
 				Map<String, Object> paramMap = new HashMap<String, Object>();
-				paramMap.put("mobile", user.getMobile());
+				paramMap.put("userName", user.getUserName());
 				orderDao.deleteByMap(paramMap);
 			}
 		}
@@ -186,12 +186,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		LayUiResult layUiResult = new LayUiResult();
 		User user = userDao.get(id);
 		if (null != user) {
-			String mobile = user.getMobile();
+			String userName = user.getUserName();
 			Integer result = userDao.delete(id);
 			if (null != result && result > 0) {
-				if (StringUtils.isNotBlank(mobile)) {
+				if (StringUtils.isNotBlank(userName)) {
 					Map<String, Object> paramMap = new HashMap<String, Object>();
-					paramMap.put("mobile", mobile);
+					paramMap.put("userName", userName);
 					orderDao.deleteByMap(paramMap);
 				}
 
@@ -220,10 +220,10 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		
 		List<Order> orderList = null;
 		if(null != user){
-			String mobile = user.getMobile();
+			String userName = user.getUserName();
 			//查询订单修改手机号
 			Map<String,Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("mobile", mobile);
+			paramMap.put("userName", userName);
 			orderList = orderDao.selectByMap(paramMap);
 			
 		}
@@ -234,7 +234,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 				//查询订单修改手机号
 				if(null != orderList && orderList.size() > 0){
 					for (Order order : orderList) {
-						order.setMobile(entity.getMobile());
+						order.setUserName(entity.getUserName());
 						 orderDao.update(order);
 					}
 			}

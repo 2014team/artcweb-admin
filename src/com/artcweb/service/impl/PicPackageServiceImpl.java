@@ -64,6 +64,7 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("packageId", entity.getPackageId());
+		paramMap.put("comeFrom", entity.getComeFrom());
 		/* paramMap.put("packageId", entity.getPackageId()); */
 		paramMap.put("packageName", entity.getPackageName());
 		list = picPackageDao.checkUnique(paramMap);
@@ -86,7 +87,7 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		List<PicPackage> list = null;
 		// 分类ID与分类名唯一性验证
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		/* paramMap.put("packageId", entity.getPackageId()); */
+		paramMap.put("comeFrom", entity.getComeFrom());
 		paramMap.put("packageName", entity.getPackageName());
 		list = picPackageDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {

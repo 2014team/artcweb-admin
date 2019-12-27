@@ -6,7 +6,7 @@
 
 	<resultMap type="com.artcweb.baen.User" id="result">
 		<result property="id" column="id" />
-		<result property="mobile" column="mobile" />
+		<result property="userName" column="user_name" />
 		<result property="sort" column="sort" />
 		<result property="createDate" column="create_date" />
 		<result property="updateDate" column="update_date" />
@@ -16,8 +16,8 @@
 	<!--保存 -->
 	<insert id="save" parameterType="com.artcweb.baen.User">
 		insert into
-		user(mobile,sort,create_date,update_date)
-		values(#{mobile},#{sort},now(),now())
+		user(user_name,sort,create_date,update_date)
+		values(#{userName},#{sort},now(),now())
 	</insert>
 
 	<!--删除 -->
@@ -45,7 +45,7 @@
 	<update id="update" parameterType="com.artcweb.baen.User">
 		update user
 		set
-		mobile=#{mobile}
+		user_name=#{userName}
 		,sort=#{sort}
 		,update_date=now()
 		where id=#{id}
@@ -63,16 +63,16 @@
 	<select id="select" parameterType="Map" resultMap="result">
 		select * from user
 		where 1 = 1
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != userName and '' != userName">
+			and user_name = #{userName}
 		</if>
 	</select>
 	
 	<select id="getByMap" parameterType="Map" resultMap="result">
 		select * from user
 		where 1 = 1
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != userName and '' != userName">
+			and user_name = #{userName}
 		</if>
 		limit 1
 	</select>
@@ -83,8 +83,8 @@
 		select * from
 		user
 		where 1 = 1
-		<if test="null != mobile and '' != mobile">
-			and mobile = #{mobile}
+		<if test="null != userName and '' != userName">
+			and user_name = #{userName}
 		</if>
 		<if test="null != id and '' != id">
 		<![CDATA[	and id <>  #{id} ]]>
@@ -97,8 +97,8 @@
 		select * 
 		from user
 		where 1=1
-		<if test="null != entity.mobile and '' != entity.mobile">
-			and mobile = #{entity.mobile}
+		<if test="null != userName and '' != userName">
+			and user_name = #{userName}
 		</if>
 		 order by sort ,update_date desc limit ${page.begin},${page.limit};
 	</select>
@@ -108,8 +108,8 @@
 		select count(1) user from
 		user
 		where 1=1
-		<if test="null != entity.mobile and '' != entity.mobile">
-			and mobile = #{entity.mobile}
+		<if test="null != userName and '' != userName">
+			and user_name = #{userName}
 		</if>
 	</select>
 

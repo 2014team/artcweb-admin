@@ -19,6 +19,10 @@ public class PicPackage extends BaseBean {
 	 * imageUrl图片
 	 */
 	private String imageUrl;
+
+	/**
+	 * 小图片地址
+	 */
 	private String minImageUrl;
 
 	/**
@@ -29,8 +33,16 @@ public class PicPackage extends BaseBean {
 	 * 钉子数量
 	 */
 	private Integer pins;
-	
+
+	/**
+	 * 用户数量
+	 */
 	private Integer useCount;
+
+	/**
+	 * 来源 0：定制   1：模板
+	 */
+	private Integer comeFrom;
 
 	public Integer getPackageId() {
 
@@ -80,15 +92,13 @@ public class PicPackage extends BaseBean {
 		this.pins = pins;
 	}
 
-	
 	public Integer getUseCount() {
-	
+
 		return useCount;
 	}
 
-	
 	public void setUseCount(Integer useCount) {
-	
+
 		this.useCount = useCount;
 	}
 
@@ -99,6 +109,13 @@ public class PicPackage extends BaseBean {
 	public void setMinImageUrl(String minImageUrl) {
 		this.minImageUrl = minImageUrl;
 	}
-	
-	
+
+	public Integer getComeFrom() {
+		return comeFrom;
+	}
+
+	public void setComeFrom(Integer comeFrom) {
+		this.comeFrom = comeFrom;
+	}
+
 }

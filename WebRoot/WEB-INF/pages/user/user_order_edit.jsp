@@ -12,11 +12,11 @@
 			
 			<div class="layui-form-item">
 				<label for="L_pass" class="layui-form-label"> <span
-					class="x-red">*</span>手机用户
+					class="x-red">*</span>买家名称
 				</label>
 				<div class="layui-input-inline">
-					<input type="text" id="mobile" name="mobile"
-						value="${user.mobile }" lay-verify="required|number|phone"
+					<input type="text" id="userName" name="userName"
+						value="${user.userName }" lay-verify="required"
 						autocomplete="off" class="layui-input" disabled="disabled">
 				</div>
 				<div class="layui-form-mid layui-word-aux"></div>
@@ -54,6 +54,19 @@
 					<input type="text" id="sort" name="sort"
 						value="${empty order.sort ? 1 : order.sort }"
 						lay-verify="required|number" autocomplete="off"
+						class="layui-input">
+				</div>
+				<div class="layui-form-mid layui-word-aux"></div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label for="L_pass" class="layui-form-label"> <span
+					class="x-red">*</span>手机号码
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="mobile" name="mobile"
+						value=""
+						lay-verify="required|number|phone" autocomplete="off"
 						class="layui-input">
 				</div>
 				<div class="layui-form-mid layui-word-aux"></div>
@@ -230,7 +243,7 @@
 	   				formData.append('packageId', obj.packageId);
         		}
         		
-        		
+        		formData.append('userId', ${user.id});
         		formData.append('step', $('#step').val());
         		formData.append('pins', $('#pins').val());
        			formData.append('packageName',obj.packageName);
