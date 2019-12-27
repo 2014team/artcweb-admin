@@ -338,6 +338,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 
 		Integer operator = null;
 		String imageUrl = null;
+		String minImageUrl = null;
 		Integer packageId = entity.getPackageId();
 		Integer orderId = entity.getOrderId();
 		if (null != packageId || (null != orderId && orderId > 0)) {// 修改
@@ -359,8 +360,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 
 				// 上传图片
 				imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+				minImageUrl = imageService.uploadMinImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
 
 				entity.setImageUrl(imageUrl);
+				entity.setMinImageUrl(minImageUrl);
 				operator = update(entity);
 
 			}
@@ -421,11 +424,14 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 			}
 			// 上传图片
 			imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+			minImageUrl = imageService.uploadMinImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+			entity.setMinImageUrl(minImageUrl);
 			entity.setImageUrl(imageUrl);
 
 			// 保存套餐信息
 			PicPackage picPackage = new PicPackage();
 			picPackage.setPackageName(entity.getPackageName());
+			picPackage.setMinImageUrl(entity.getMinImageUrl());
 			picPackage.setStep(entity.getStep());
 			picPackage.setPins(entity.getPins());
 			picPackage.setImageUrl(entity.getImageUrl());

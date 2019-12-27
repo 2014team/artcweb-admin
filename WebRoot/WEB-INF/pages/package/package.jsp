@@ -46,8 +46,8 @@
   
 
 <!--图片模板  -->
-<script type="text/html" id="imageUrlTpl">
-  <img alt="{{d.imageUrl}}" src="{{d.imageUrl}}">
+<script type="text/html" id="minImageUrl">
+  <img alt="{{d.minImageUrl}}" src="{{d.minImageUrl}}" >
 </script>
 <!-- 序号模板 -->
 <script type="text/html" id="indexTpl">
@@ -56,6 +56,8 @@
 
 
 <script type="text/javascript">
+     var editRowObj;
+
 	layui.use('table', function() {
 		var table = layui.table;
 
@@ -101,9 +103,9 @@
 					title : '执行步骤'
 				}
 				, {
-					field : 'imageUrl' ,
+					field : 'minImageUrl' ,
 					title : '图片' ,
-					templet: '#imageUrlTpl',
+					templet: '#minImageUrl',
 					width:80
 				}
 				, {
@@ -134,6 +136,7 @@
 		
 		//监听行工具条
 		table.on('tool(table_list)', function(obj) {
+		editRowObj = obj;
 			 var data = obj.data;
 			 switch(obj.event){
 			  case 'del': //删除
@@ -202,6 +205,53 @@
 	});
 		
    }	
+   
+ 
+   //刷新
+	function reloadTable(packageId,packageName){
+		if(packageId){
+			editRelaod(packageName);
+		}else{
+		   saddRelaod();
+		}
+	}
+	
+		function saddRelaod(){
+				//获取当前页
+				// var pageNO = $(".layui-laypage-skip .layui-input").val();
+				//执行重载
+			     layui.table.reload('rendReloadId', {
+			       page: {
+			         curr:1 //重新从第 1 页开始
+			       }
+			     }, 'data'); 
+		}
+		
+		function editRelaod(packageName){
+				 $.ajax({
+					url : '/admin/center/package/list.do',
+					type : "POST",
+					data :{
+				            "packageName": packageName,
+				            "page": "1",
+							"limit": 10,
+				        }, //这个是传给后台的值
+					dataType : "json",
+					success : function(resp) {
+					var data = resp.data[0];
+					console.info(data);
+					editRowObj.update({
+						 packageName: data.packageName
+						 ,useCount: data.useCount
+						 ,step: data.step
+						 ,minImageUrl: data.minImageUrl
+						 });
+						
+					}, 
+					
+				});
+		}
+	
 </script>
 
 </html>

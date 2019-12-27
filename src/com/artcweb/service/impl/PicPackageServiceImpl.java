@@ -130,7 +130,9 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 			return;
 		}
 		String imageUrl = ImageUtil.imageUrlDeal(entity.getImageUrl());
+		String minImageUrl = ImageUtil.imageUrlDeal(entity.getMinImageUrl());
 		entity.setImageUrl(imageUrl);
+		entity.setMinImageUrl(minImageUrl);
 
 	}
 
@@ -148,9 +150,14 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		if(null != list && list.size() > 0){
 			for (PicPackage picPackage : list) {
 				String imageUrl = picPackage.getImageUrl();
+				String minImageUrl = picPackage.getMinImageUrl();
 				//删除原来物理图片
 				if(StringUtils.isNotBlank(imageUrl)){
 					boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+					logger.info("物理删除图片结果 = "+deleteResult);
+				}
+				if(StringUtils.isNotBlank(minImageUrl)){
+					boolean  deleteResult = FileUtil.deleteFile(minImageUrl,request);
 					logger.info("物理删除图片结果 = "+deleteResult);
 				}
 			}
@@ -170,12 +177,17 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 	public int deletePicPackage(Integer packageId,HttpServletRequest request) {
 		PicPackage picPackage = get(packageId);
 		String imageUrl = picPackage.getImageUrl();
+		String minImageUrl = picPackage.getMinImageUrl();
 		int result = 0;
 		if(null != picPackage){
 			result = delete(packageId);
 			//删除原来物理图片
 			if(StringUtils.isNotBlank(imageUrl)){
 				boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+				logger.info("物理删除图片结果 = "+deleteResult);
+			}
+			if(StringUtils.isNotBlank(minImageUrl)){
+				boolean  deleteResult = FileUtil.deleteFile(minImageUrl,request);
 				logger.info("物理删除图片结果 = "+deleteResult);
 			}
 		}

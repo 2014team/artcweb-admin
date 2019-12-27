@@ -19,6 +19,7 @@ public class PicPackage extends BaseBean {
 	 * imageUrl图片
 	 */
 	private String imageUrl;
+	private String minImageUrl;
 
 	/**
 	 * 执行步骤
@@ -90,5 +91,14 @@ public class PicPackage extends BaseBean {
 	
 		this.useCount = useCount;
 	}
+
+	public String getMinImageUrl() {
+		return minImageUrl;
+	}
+
+	public void setMinImageUrl(String minImageUrl) {
+		this.minImageUrl = minImageUrl;
+	}
+	
 	
 }

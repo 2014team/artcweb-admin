@@ -96,6 +96,7 @@ public class PicPackageController {
 
 		Integer operator = null;
 		String imageUrl = null;
+		String minImageUrl = null;
 		Integer packageId = entity.getPackageId();
 
 		// 修改
@@ -118,19 +119,25 @@ public class PicPackageController {
 
 				// 上传图片
 				imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+				minImageUrl = imageService.uploadMinImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
 				
 				//删除原来图片
 				PicPackage picPackage = picPackageService.get(packageId);
 				if(null != picPackage){
 					String sourceImageUrl = picPackage.getImageUrl();
+					String sourceMinImageUrl = picPackage.getMinImageUrl();
 						//删除原来物理图片
 						if(StringUtils.isNotBlank(sourceImageUrl)){
 							boolean  deleteResult = FileUtil.deleteFile(sourceImageUrl,request);
 							logger.info("物理删除图片结果 = "+deleteResult);
 						}
+						if(StringUtils.isNotBlank(sourceMinImageUrl)){
+							boolean  deleteResult = FileUtil.deleteFile(sourceMinImageUrl,request);
+							logger.info("物理删除图片结果 = "+deleteResult);
+						}
 					
 				}
-
+				entity.setMinImageUrl(minImageUrl);
 				entity.setImageUrl(imageUrl);
 				operator = picPackageService.update(entity);
 
@@ -177,7 +184,9 @@ public class PicPackageController {
 			}
 			// 上传图片
 			imageUrl = imageService.uploadImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
+			minImageUrl = imageService.uploadMinImage(request, file, UploadConstant.SAVE_UPLOAD_PATH);
 			entity.setImageUrl(imageUrl);
+			entity.setMinImageUrl(minImageUrl);
 			operator = picPackageService.save(entity);
 		}
 

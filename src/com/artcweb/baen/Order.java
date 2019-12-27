@@ -39,6 +39,7 @@ public class Order extends BaseBean {
 	 * imageUrl图片
 	 */
 	private String imageUrl;
+	private String minImageUrl;
 
 	/**
 	 * 执行步骤
@@ -152,6 +153,14 @@ public class Order extends BaseBean {
 	public void setPins(Integer pins) {
 		this.pins = pins;
 	}
-	
 
+	public String getMinImageUrl() {
+		return minImageUrl;
+	}
+
+	public void setMinImageUrl(String minImageUrl) {
+		this.minImageUrl = minImageUrl;
+	}
+	
+	
 }

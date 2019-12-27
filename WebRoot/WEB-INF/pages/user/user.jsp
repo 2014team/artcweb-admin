@@ -67,6 +67,9 @@
 
 
 <script type="text/javascript">
+
+	var editRowObj;
+
 	layui.use('table', function() {
 		var table = layui.table;
 
@@ -124,7 +127,7 @@
 			  	var html='';
 			  	for(var item in row.orderList){
 			  	console.log(row.orderList[item])
-					html += '<tr data-index="0" cate-id="o' + row.orderList[item].orderId + '" fid="' + row.id + '" style="display: none;"><td data-field="0"><div class="layui-table-cell laytable-cell-1-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon"></i></div></div></td><td data-field="indexId" data-content=""><div class="layui-table-cell laytable-cell-1-indexId">&nbsp;&nbsp;&nbsp;&nbsp;├' + row.orderList[item].packageName + '</div></td><td data-field="mobile"><div class="laytable-cell-1-sort">&nbsp;&nbsp;<img src="' + row.orderList[item].imageUrl + '" width="50" height="50"/></div></td> <td data-field="sort"><div class="layui-table-cell laytable-cell-1-sort">' + row.orderList[item].sort + '</div></td><td data-field="4" align="left" data-off="true"><div class="layui-table-cell laytable-cell-1-4"> <a class="layui-btn layui-btn-xs" lay-event="orderEdit_' + row.orderList[item].orderId + '">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="orderDel_' + row.orderList[item].orderId + '">删除</a> </div></td></tr>'
+					html += '<tr data-index="0" cate-id="o' + row.orderList[item].orderId + '" fid="' + row.id + '" style="display: none;"><td data-field="0"><div class="layui-table-cell laytable-cell-1-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon"></i></div></div></td><td data-field="indexId" data-content=""><div class="layui-table-cell laytable-cell-1-indexId">&nbsp;&nbsp;&nbsp;&nbsp;├' + row.orderList[item].packageName + '</div></td><td data-field="mobile"><div class="laytable-cell-1-sort">&nbsp;&nbsp;<img src="' + row.orderList[item].minImageUrl + '" width="50" height="50"/></div></td> <td data-field="sort"><div class="layui-table-cell laytable-cell-1-sort">' + row.orderList[item].sort + '</div></td><td data-field="4" align="left" data-off="true"><div class="layui-table-cell laytable-cell-1-4"> <a class="layui-btn layui-btn-xs" lay-event="orderEdit_' + row.orderList[item].orderId + '">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="orderDel_' + row.orderList[item].orderId + '">删除</a> </div></td></tr>'
 				}
 
 				return html
@@ -169,8 +172,8 @@
 		
 		//监听行工具条
 		table.on('tool(table_list)', function(obj) {
+			editRowObj = obj;
 			var pageNO = $(".layui-laypage-skip .layui-input").val();
-		
 			 var data = obj.data;
 			 //console.log(obj.event)
 			 if(obj.event){
@@ -208,7 +211,7 @@
 			dataType : "json",
 			success : function(data) {
 				//删除行
-				$("tr[cate-id="+delId+"]").remove();
+				$("tr[cate-id=o"+delId+"]").remove();
 				
 				if (data.code == 200) { //这个是从后台取回来的状态值
 					layer.close(index);
@@ -241,15 +244,37 @@
 	
 	
 	//刷新
-	function reloadTable(){
+	function reloadTable(mobileNum){
+		/* $.ajax({
+			url : '/admin/center/user/list.do',
+			type : "POST",
+			data :{
+		            "mobile": mobileNum,
+		            "page": "1",
+					"limit": 10,
+		        }, //这个是传给后台的值
+			dataType : "json",
+			success : function(resp) {
+			var data = resp.data[0];
+			console.info(data);
+			editRowObj.update({
+				 mobile: data.mobile
+				 ,orderCount: data.orderCount
+				 ,sort: data.sort
+				 });
+				
+			}, 
+			
+		});*/
+	
 		//获取当前页
-		var pageNO = $(".layui-laypage-skip .layui-input").val();
+		 var pageNO = $(".layui-laypage-skip .layui-input").val();
 		//执行重载
 	     layui.table.reload('rendReloadId', {
 	       page: {
 	         curr:pageNO //重新从第 1 页开始
 	       }
-	     }, 'data');
+	     }, 'data'); 
 	}
 	
 </script>

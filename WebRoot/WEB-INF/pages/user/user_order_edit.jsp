@@ -230,6 +230,7 @@
 	   				formData.append('packageId', obj.packageId);
         		}
         		
+        		
         		formData.append('step', $('#step').val());
         		formData.append('pins', $('#pins').val());
        			formData.append('packageName',obj.packageName);
@@ -250,7 +251,7 @@
 				    processData : false, // 使数据不做处理
         			contentType : false, // 不要设置Content-Type请求头
     				dataType : "json",
-    				success : function(data) {   				
+    				success : function(data) {  
     				//移除等待加载
     				x_admin_loading(false);
     				
@@ -262,7 +263,7 @@
 									//关闭当前frame
 									parent.layer.close(index);
 									//刷新列表
-									window.parent.reloadTable()
+									window.parent.reloadTable(obj.mobile)
 								});
 								
 							} else {

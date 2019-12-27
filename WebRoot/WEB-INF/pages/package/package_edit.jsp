@@ -27,7 +27,7 @@
                   <span class="x-red">*</span>钉子数量
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="pins" name="pins" value="${entity.pins }" lay-verify="required|number"
+                  <input type="text" id="pins" name="pins" value="${empty entity.pins?150:entity.pins }" lay-verify="required|number"
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
@@ -105,12 +105,12 @@
 		  });
 		  
         //保存
-        
-        
         form.on('submit(save)', function(obj) {
-        	var formData = new FormData() 
+  			    var  packageName = obj.field.packageName;
+  			    var packageId = $('#packageId').val()
+        		var formData = new FormData() 
         		//上传图片
-   				formData.append('packageId', $('#packageId').val());
+   				formData.append('packageId', packageId);
    				formData.append('packageName',$('#packageName').val());
    				formData.append('step', $('#step').val());
    				formData.append('pins', $('#pins').val());
@@ -137,7 +137,9 @@
 									//关闭当前frame
 									parent.layer.close(index);
 									//刷新列表
-									window.parent.location.reload();
+									//window.parent.location.reload();
+									//刷新列表
+									window.parent.reloadTable(packageId,packageName)
 								});
 								
 							} else {

@@ -143,7 +143,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 	private void imageUrlDeal(Order order) {
 
 		String imageUrl = ImageUtil.imageUrlDeal(order.getImageUrl());
+		String minImageUrl = ImageUtil.imageUrlDeal(order.getMinImageUrl());
 		order.setImageUrl(imageUrl);
+		order.setMinImageUrl(minImageUrl);
 	}
 
 	/**

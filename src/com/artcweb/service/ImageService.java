@@ -23,5 +23,8 @@ public interface ImageService {
 	 * @return
 	 */
 	public String uploadImage(HttpServletRequest request, MultipartFile file, String uploadPath);
+	
+	
+	public String uploadMinImage(HttpServletRequest request, MultipartFile file, String uploadPath);
 
 }

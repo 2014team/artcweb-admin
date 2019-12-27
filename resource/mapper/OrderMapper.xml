@@ -94,7 +94,7 @@
 	<select id="select" parameterType="Map" resultType="com.artcweb.baen.Order">
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
 		as packageName,
-		p.image_url as imageUrl ,p.step ,o.current_step as
+		p.image_url as imageUrl ,p.min_image_url as minImageUrl ,p.step ,o.current_step as
 		currentStep, o.template as template
 		FROM `order` o,`user` u,pic_package p
 		WHERE
@@ -127,7 +127,7 @@
 	<select id="findByPage" parameterType="Map" resultType="com.artcweb.baen.Order">
 		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
 		as packageName,
-		p.image_url as imageUrl ,p.step ,o.current_step as
+		p.image_url as imageUrl ,p.min_image_url as minImageUrl ,p.step ,o.current_step as
 		currentStep,o.template as template
 		FROM `order` o,`user` u,pic_package p
 		WHERE
