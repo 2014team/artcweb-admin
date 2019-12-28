@@ -70,7 +70,7 @@ public class Order extends BaseBean {
 	private int template;
 
 	/**
-	 * 0:新建模板 1：选择模板
+	 * 0:定制 1：模板
 	 */
 
 	private int comeFrom;

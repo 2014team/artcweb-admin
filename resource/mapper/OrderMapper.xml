@@ -155,11 +155,11 @@
 	<!-- API分页查找 -->
 	<select id="findPageByApi" parameterType="Map"
 		resultType="com.artcweb.baen.Order">
-		SELECT o.id as orderId ,o.sort ,p.package_name as packageName,
-		p.image_url as imageUrl
+		SELECT o.id AS orderId ,o.sort ,p.`come_from` AS comeFrom, p.package_name AS packageName,
+		p.image_url AS imageUrl
 		FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
+		o.user_id=u.id AND o.package_id = p.package_id
 		<if test="entity.mobile!= null and '' != entity.mobile">
 			and o.mobile=#{entity.mobile}
 		</if>
@@ -170,7 +170,7 @@
 	<select id="findPageByApiCount" parameterType="Map" resultType="int">
 		SELECT count(1) FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
+		o.user_id=u.id AND o.package_id = p.package_id
 		<if test="entity.mobile!= null and '' != entity.mobile">
 			and o.mobile=#{entity.mobile}
 		</if>
@@ -179,13 +179,13 @@
 	<!-- 获取订单详情 -->
 	<select id="getOrderDetail" parameterType="Map"
 		resultType="com.artcweb.baen.Order">
-		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
-		as packageName,
-		p.image_url as imageUrl ,p.step ,o.current_step as
-		currentStep,p.pins as pins
+		SELECT u.id AS id,o.id AS orderId ,o.`mobile`,o.sort ,p.package_name AS packageName,
+		p.`come_from` AS comeFrom,
+		p.image_url AS imageUrl ,p.step ,o.current_step AS
+		currentStep,p.pins AS pins
 		FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
+		o.user_id=u.id AND o.package_id = p.package_id
 		<if test="mobile != null and '' != mobile">
 			and o.mobile=#{mobile}
 		</if>
