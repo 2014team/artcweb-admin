@@ -97,8 +97,8 @@
 		select * 
 		from user
 		where 1=1
-		<if test="null != userName and '' != userName">
-			and user_name = #{userName}
+		<if test="null != entity.userName and '' != entity.userName">
+			and user_name = #{entity.userName}
 		</if>
 		 order by sort ,update_date desc limit ${page.begin},${page.limit};
 	</select>
@@ -108,8 +108,8 @@
 		select count(1) user from
 		user
 		where 1=1
-		<if test="null != userName and '' != userName">
-			and user_name = #{userName}
+		<if test="null != entity.userName and '' != entity.userName">
+			and user_name = #{entity.userName}
 		</if>
 	</select>
 

@@ -28,13 +28,13 @@
 				
 				<c:choose>
 					<c:when test="${0 eq order.template }">
-						<input type="radio" name="template" value="0" title="新建模板" lay-filter="template" checked> 
+						<input type="radio" name="template" value="0" title="定制模板" lay-filter="template" checked> 
 					</c:when>
 					<c:when test="${1 eq order.template }">
 						<input type="radio"  name="template" value="1" title="选择模板" lay-filter="template" checked>	
 					</c:when>
 					<c:otherwise>
-						<input type="radio" name="template" value="0" title="新建模板" lay-filter="template" checked> 
+						<input type="radio" name="template" value="0" title="定制模板" lay-filter="template" checked> 
 						<input type="radio"  name="template" value="1" title="选择模板" lay-filter="template">
 					</c:otherwise>
 				
@@ -56,7 +56,7 @@
 						lay-verify="required|number" autocomplete="off"
 						class="layui-input">
 				</div>
-				<div class="layui-form-mid layui-word-aux"></div>
+				<div class="layui-form-mid layui-word-aux">数字(越小越靠前)</div>
 			</div>
 			
 			<div class="layui-form-item">
@@ -65,7 +65,7 @@
 				</label>
 				<div class="layui-input-inline">
 					<input type="text" id="mobile" name="mobile"
-						value=""
+						value="${ order.mobile }"
 						lay-verify="required|number|phone" autocomplete="off"
 						class="layui-input">
 				</div>
@@ -87,7 +87,7 @@
 
 		<div class="layui-form-item">
 			<label for="L_repass" class="layui-form-label"> <span
-				class="x-red">*</span>套餐名称
+				class="x-red">*</span>图纸名称
 			</label>
 			<div class="layui-input-inline">
 				<input type="text" id="packageName" name="packageName"
@@ -103,7 +103,7 @@
 			</label>
 			<div class="layui-input-inline">
 				<input type="text" id="pins" name="pins"
-					value="${order.pins }" lay-verify="required|number"
+					value="${empty order.pins ? 150 :  order.pins }" lay-verify="required|number"
 					autocomplete="off" class="layui-input">
 			</div>
 			<div class="layui-form-mid layui-word-aux">数字</div>
@@ -134,7 +134,7 @@
 	</div>
 	<div class="template-box" data-value="1" style="display:none;">
 		<div class="layui-form-item">
-			<label class="layui-form-label"><span class="x-red">*</span>套餐列表</label>
+			<label class="layui-form-label"><span class="x-red">*</span>图纸名称</label>
 			<div class="layui-input-inline">
 				<select  lay-filter="rightCategoryId"  lay-verify="required" id="packageId" name="packageId"  lay-search>
 			      	<option value=""></option>

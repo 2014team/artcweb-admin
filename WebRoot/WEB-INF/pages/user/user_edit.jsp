@@ -29,7 +29,7 @@
 						value="${empty entity.sort ? 1: entity.sort}" lay-verify="required|number"
 						autocomplete="off" class="layui-input">
 				</div>
-				<div class="layui-form-mid layui-word-aux">数字</div>
+				<div class="layui-form-mid layui-word-aux">数字(越小越靠前)</div>
 			</div>
 
 			<div class="layui-form-item">

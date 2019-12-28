@@ -103,6 +103,10 @@
 				}
 				
 				, {
+					field : '',
+					title : '图纸名称',
+				}
+				, {
 					field : 'orderCount',
 					title : '订单数',
 					sort : true
@@ -127,7 +131,7 @@
 			  	var html='';
 			  	for(var item in row.orderList){
 			  	console.log(row.orderList[item])
-					html += '<tr data-index="0" cate-id="o' + row.orderList[item].orderId + '" fid="' + row.id + '" style="display: none;"><td data-field="0"><div class="layui-table-cell laytable-cell-1-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon"></i></div></div></td><td data-field="indexId" data-content=""><div class="layui-table-cell laytable-cell-1-indexId">&nbsp;&nbsp;&nbsp;&nbsp;├' + row.orderList[item].packageName + '</div></td><td data-field="mobile"><div class="laytable-cell-1-sort">&nbsp;&nbsp;<img src="' + row.orderList[item].minImageUrl + '" width="50" height="50"/></div></td> <td data-field="sort"><div class="layui-table-cell laytable-cell-1-sort">' + row.orderList[item].sort + '</div></td><td data-field="4" align="left" data-off="true"><div class="layui-table-cell laytable-cell-1-4"> <a class="layui-btn layui-btn-xs" lay-event="orderEdit_' + row.orderList[item].orderId + '">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="orderDel_' + row.orderList[item].orderId + '">删除</a> </div></td></tr>'
+					html += '<tr data-index="0" cate-id="o' + row.orderList[item].orderId + '" fid="' + row.id + '" style="display: none;"><td data-field="0"><div class="layui-table-cell laytable-cell-1-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon"></i></div></div></td><td data-field="indexId" data-content=""><div class="layui-table-cell laytable-cell-1-indexId">&nbsp;&nbsp;&nbsp;&nbsp;├' + row.orderList[item].mobile + '</div></td>  <td data-field="packageName"><div class="layui-table-cell laytable-cell-1-sort">' + row.orderList[item].packageName + '</div></td> <td data-field="mobile"><div class="laytable-cell-1-sort">&nbsp;&nbsp;<img src="' + row.orderList[item].minImageUrl + '" width="50" height="50"/></div></td> <td data-field="sort"><div class="layui-table-cell laytable-cell-1-sort">' + row.orderList[item].sort + '</div></td><td data-field="4" align="left" data-off="true"><div class="layui-table-cell laytable-cell-1-4"> <a class="layui-btn layui-btn-xs" lay-event="orderEdit_' + row.orderList[item].orderId + '">编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="orderDel_' + row.orderList[item].orderId + '">删除</a> </div></td></tr>'
 				}
 
 				return html
@@ -189,7 +193,7 @@
 				 	 order_delete('/admin/center/order/delete.do',delId);
 			 	}else if((event.search("orderEdit_") != -1 )){//列表订单编辑
 				 	var delId =  event.slice(10);
-				 	 x_admin_show('编辑','/admin/center/user//order/edit/'+delId+'.do');
+				 	 x_admin_show('编辑','/admin/center/user/order/edit/'+delId+'.do');
 			 	}
 			 }
 			

@@ -37,16 +37,16 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 
 		String packageName = entity.getPackageName();
 		if (StringUtils.isBlank(packageName)) {
-			return "参数[packageName]不能为空!";
+			return "图纸名称不能为空!";
 		}
 		//
 		String step = entity.getStep();
 		if (StringUtils.isBlank(step)) {
-			return "参数[step]不能为空!";
+			return "执行步骤不能为空!";
 		}
 		Integer pins = entity.getPins();
 		if (null == pins || pins < 1) {
-			return "参数[pins]不能为空!";
+			return "钉子数量不能为空!";
 		}
 		return null;
 	}
@@ -69,7 +69,7 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		paramMap.put("packageName", entity.getPackageName());
 		list = picPackageDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "套餐名已存在!";
+			return "图纸名称已存在!";
 		}
 
 		return null;
@@ -91,7 +91,7 @@ public class PicPackageServiceImpl extends BaseServiceImpl<PicPackage, Integer> 
 		paramMap.put("packageName", entity.getPackageName());
 		list = picPackageDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "套餐名已存在!";
+			return "图纸名称已存在!";
 		}
 
 		return null;

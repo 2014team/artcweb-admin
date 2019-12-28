@@ -93,7 +93,11 @@ public class UserController {
 			result.failure(checkResult);
 			return result;
 		}
-
+		
+		String userName = entity.getUserName();
+		entity.setUserName(StringUtils.trim(userName));
+		
+		
 		Integer operator = null;
 		Integer id = entity.getId();
 
@@ -106,9 +110,9 @@ public class UserController {
 				return result;
 			}
 			operator = userService.updateUser(entity);
-			// 保存
+			
 		}
-		else {
+		else {// 保存
 			// 验证唯一性
 			String checkAddUnique = userService.checkAddUnique(entity);
 			if (StringUtils.isNotBlank(checkAddUnique)) {

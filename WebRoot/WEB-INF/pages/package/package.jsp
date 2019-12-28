@@ -8,16 +8,16 @@
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">套餐管理</a>
+        <a href="">模板管理</a>
         <a>
-          <cite>套餐列表</cite></a>
+          <cite>模板列表</cite></a>
       </span>
       <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:38px">ဂ</i></a>
     </div>
     <div class="x-body">
       <div class="layui-row demoTable">
-           	套餐名称：
+           	模板名称：
           <div class="layui-inline">
 		    <input class="layui-input" name="packageName" id=packageName autocomplete="off">
 		  </div>
@@ -92,7 +92,7 @@
 				}
 				, {
 					field : 'packageName',
-					title : '套餐名称'
+					title : '图纸名称'
 				}
 				, {
 					field : 'useCount',

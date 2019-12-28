@@ -55,6 +55,7 @@
 		mobile=#{mobile}
 		,package_id=#{packageId}
 		,current_step=#{currentStep}
+		,mobile=#{mobile}
 		,template=#{template}
 		,sort=#{sort}
 		,update_date=now()
@@ -74,16 +75,16 @@
 
 	<!-- 查询 -->
 	<select id="getById" parameterType="Map" resultType="com.artcweb.baen.Order">
-		SELECT u.id as id,o.id as orderId ,u.`mobile`,o.sort ,p.package_name
-		as packageName,p.package_id as  packageId, o.template as template,
-		p.image_url as imageUrl ,p.step ,o.current_step as
-		currentStep,p.pins as
+		SELECT u.id AS id,o.id AS orderId ,o.`mobile`,u.`user_name` AS userName,o.sort ,p.package_name
+		AS packageName,p.package_id AS  packageId, o.template AS template,
+		p.image_url AS imageUrl ,p.step ,o.current_step AS
+		currentStep,p.pins AS
 		pins
 		FROM `order` o,`user` u,pic_package p
 		WHERE
-		o.mobile=u.mobile AND o.package_id = p.package_id
-		<if test="mobile!= null and '' != mobile">
-			and o.mobile=#{mobile}
+		o.user_id=u.id AND o.package_id = p.package_id
+		<if test="userName!= null and '' != userName">
+			and u.user_name=#{userName}
 		</if>
 		<if test="id != null and '' != id">
 			and o.id=#{id}

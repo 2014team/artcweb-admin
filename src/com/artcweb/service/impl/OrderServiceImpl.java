@@ -177,12 +177,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 
 		Integer sort = entity.getSort();
 		if (null == sort) {
-			return "参数[sort]不能为空!";
+			return "排序号不能为空!";
 		}
-		/*Integer pins = entity.getPins();
-		if (null == pins || pins < 1) {
-			return "参数[pins]不能为空!";
-		}*/
 		return null;
 	}
 
@@ -290,11 +286,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 				order.setMobile(entity.getMobile());
 				order.setSort(entity.getSort());
 				operator = orderDao.update(order);
-				// 保存
 			}
 
 		}
-		else {
+		else {	// 保存
 			// 验证唯一性
 			String checkAddUnique = checkAddUnique(entity);
 			if (StringUtils.isNotBlank(checkAddUnique)) {
@@ -389,6 +384,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 
 					// 修改订单信息
 					Order order = orderDao.get(entity.getOrderId());
+					order.setMobile(entity.getMobile());
 					order.setPackageId(picPackage.getPackageId());
 					order.setPackageName(picPackage.getPackageName());
 					operator = orderDao.update(order);
@@ -461,17 +457,25 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 
 		String packageName = entity.getPackageName();
 		if (StringUtils.isBlank(packageName)) {
-			return "参数[packageName]不能为空!";
+			return "模板名称不能为空!";
 		}
 		String step = entity.getStep();
 		if (StringUtils.isBlank(step)) {
-			return "参数[step]不能为空!";
+			return "执行步骤不能为空!";
 		}
 		Integer pins = entity.getPins();
 		if (null == pins || pins < 1) {
-			return "参数[pins]不能为空!";
+			return "钉子数量不能为空!";
 		}
-
+		String mobile = entity.getMobile();
+		if (StringUtils.isBlank(mobile)) {
+			return "手机号码不能为空!";
+		}
+		
+		Integer sort = entity.getSort();
+		if (null == sort) {
+			return "排序号不能为空!";
+		}
 		return null;
 	}
 
@@ -483,7 +487,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 		paramMap.put("packageName", entity.getPackageName());
 		list = picPackageDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "套餐名已存在!";
+			return "图纸名称已存在!";
 		}
 		return null;
 	}

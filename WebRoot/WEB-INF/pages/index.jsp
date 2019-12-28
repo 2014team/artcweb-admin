@@ -79,7 +79,7 @@
                 <ul class="sub-menu">
                    <!--  <li><a _href="html/upload.html"><i class="iconfont">&#xe6a7;</i><cite>文件上传</cite></a></li>
                     <li><a _href="html/page.html"><i class="iconfont">&#xe6a7;</i><cite>分页</cite></a></li> -->
-                    <li><a _href="/admin/center/package/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>套餐列表</cite></a></li>
+                    <li><a _href="/admin/center/package/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>模板列表</cite></a></li>
                     <li><a _href="/admin/center/user/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>用户列表</cite></a></li>
                     <!-- <li><a _href="/admin/center/order/list/ui.do"><i class="iconfont">&#xe6a7;</i><cite>订单列表</cite></a></li> -->
                    <!--  <li><a _href="html/carousel.html"><i class="iconfont">&#xe6a7;</i><cite>轮播图</cite></a></li>
