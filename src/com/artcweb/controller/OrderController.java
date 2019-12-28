@@ -150,13 +150,19 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(Order entity) {
+	public LayUiResult delete(Order entity,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
 		Integer id = entity.getId();
-		int delResult = orderService.delete(id);
-		if (delResult > 0) {
+		if(null == id){
+			result.failure("参数[id]不能为空!");
+			return result;
+		}
+		
+		
+		boolean delResult = orderService.deleteOrder(id, request);
+		if (delResult) {
 			result.success();
 			return result;
 		}
@@ -174,7 +180,7 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value = "/delete/batch", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult deleteBatch(String array) {
+	public LayUiResult deleteBatch(String array,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		if (StringUtils.isBlank(array)) {
@@ -184,8 +190,8 @@ public class OrderController {
 
 		array = array.replace("[", "").replace("]", "");
 
-		int deleteResult = orderService.deleteByBatch(array);
-		if (deleteResult > 0) {
+		boolean deleteResult = orderService.deleteByBatch(array,request);
+		if (deleteResult) {
 			result.success();
 			return result;
 		}

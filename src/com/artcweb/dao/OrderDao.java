@@ -61,12 +61,12 @@ public interface OrderDao extends BaseDao<Order, Integer> {
 	public List<Order> checkUnique(Map<String, Object> paramMap);
 
 	/**
-	 * @Title: getById
+	 * @Title: getByMap
 	 * @Description: 通过id获取订单信息
 	 * @param paramMap
 	 * @return
 	 */
-	public Order getById(Map<String, Object> paramMap);
+	public Order getByMap(Map<String, Object> paramMap);
 	
 	/**
 	* @Title: deleteByMap

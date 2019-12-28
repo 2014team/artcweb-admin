@@ -160,7 +160,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult delete(PicPackage entity) {
+	public LayUiResult delete(PicPackage entity,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		// 获取参数
@@ -170,8 +170,7 @@ public class UserController {
 			return result;
 		}
 		
-		
-		return  userService.deleteUser(id);
+		return  userService.deleteUser(id,request);
 		
 	}
 
@@ -184,7 +183,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/delete/batch", method = { RequestMethod.POST,
 					RequestMethod.GET }, produces = "application/json; charset=UTF-8")
-	public LayUiResult deleteBatch(String array) {
+	public LayUiResult deleteBatch(String array,HttpServletRequest request) {
 
 		LayUiResult result = new LayUiResult();
 		if (StringUtils.isBlank(array)) {
@@ -194,8 +193,8 @@ public class UserController {
 
 		array = array.replace("[", "").replace("]", "");
 
-		int deleteResult = userService.deleteByBatch(array);
-		if (deleteResult > 0) {
+		boolean deleteResult = userService.deleteByBatch(array, request);
+		if (deleteResult) {
 			result.success();
 			return result;
 		}

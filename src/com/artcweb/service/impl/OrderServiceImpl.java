@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,16 +16,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.Order;
 import com.artcweb.baen.PicPackage;
+import com.artcweb.constant.ComeFromConstant;
 import com.artcweb.constant.UploadConstant;
 import com.artcweb.dao.OrderDao;
 import com.artcweb.dao.PicPackageDao;
 import com.artcweb.service.ImageService;
 import com.artcweb.service.OrderService;
+import com.artcweb.util.FileUtil;
 import com.artcweb.util.ImageUtil;
 
 @Service
 public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements OrderService {
-
+	private static Logger logger = Logger.getLogger(OrderServiceImpl.class);
 	@Autowired
 	private OrderDao orderDao;
 
@@ -41,9 +44,55 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 	 * @return
 	 */
 	@Override
-	public int deleteByBatch(String array) {
-
-		return orderDao.deleteByBatch(array);
+	public boolean deleteByBatch(String array,HttpServletRequest request) {
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("idStr", array);
+		
+		//获取订单
+		List<Order> orderList = orderDao.select(paramMap);
+		int delResult = 0;
+		if(null != orderList && orderList.size() > 0){
+			// 删除订单
+			delResult = orderDao.deleteByBatch(array);
+			if(delResult > 0){
+					StringBuffer sb = new StringBuffer();
+					for (Order order : orderList) {
+						sb.append(order.getPackageId());
+						sb.append(",");
+					}
+					
+					String picPackageStr = sb.toString();
+					if(picPackageStr.lastIndexOf(",") != -1){
+						picPackageStr = picPackageStr.substring(0,picPackageStr.length()-1);
+					}
+				//删除模本
+				Integer picPackageRersult = picPackageDao.deleteByBatch(picPackageStr);
+				if(null != picPackageRersult && picPackageRersult > 0){
+					//删除图片
+					for (Order order : orderList) {
+						Integer comeFrom = order.getComeFrom();
+						if(comeFrom == ComeFromConstant.CUSTOM_MAKE){
+							String imageUrl = order.getImageUrl(); 
+							String minImageUrl = order.getMinImageUrl();//删除原来物理图片
+								if(StringUtils.isNotBlank(imageUrl)){
+									boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+									logger.info("物理删除图片结果 = "+deleteResult);
+								}
+								if(StringUtils.isNotBlank(minImageUrl)){
+									boolean  deleteResult = FileUtil.deleteFile(minImageUrl,request);
+									logger.info("物理删除图片结果 = "+deleteResult);
+								}
+								
+						}
+					}
+					
+				}
+				
+				return true;	
+					
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -224,7 +273,7 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 	@Override
 	public Order getById(Map<String, Object> paramMap) {
 
-		return orderDao.getById(paramMap);
+		return orderDao.getByMap(paramMap);
 	}
 
 	/**
@@ -490,5 +539,52 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer> implements
 			return "图纸名称已存在!";
 		}
 		return null;
+	}
+
+	
+	/**
+	* @Title: deleteOrder
+	* @Description: 删除订单
+	* @param id
+	* @param request
+	* @return
+	*/
+	@Override
+	public boolean deleteOrder(Integer id ,HttpServletRequest request) {
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("id", id);
+		Order order = orderDao.getByMap(paramMap);
+		if(null != order){
+			String imageUrl = order.getImageUrl(); 
+			String minImageUrl = order.getMinImageUrl();
+			Integer packageId = order.getPackageId();
+			Integer comeFrom = order.getComeFrom();
+			
+			//删除订单
+			Integer delOrder = orderDao.delete(id);
+			if(null != delOrder && delOrder > 0){
+				if(comeFrom == ComeFromConstant.CUSTOM_MAKE){
+					//删除定制模板
+					Integer delPicPackage = picPackageDao.delete(packageId);
+					logger.info("删除定制模板结果 = "+delPicPackage);
+					
+					//删除原来物理图片
+					if(null != delPicPackage && delPicPackage > 0){
+						if(StringUtils.isNotBlank(imageUrl)){
+							boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+							logger.info("物理删除图片结果 = "+deleteResult);
+						}
+						if(StringUtils.isNotBlank(minImageUrl)){
+							boolean  deleteResult = FileUtil.deleteFile(minImageUrl,request);
+							logger.info("物理删除图片结果 = "+deleteResult);
+						}
+						
+					}
+				}
+				return true;
+			}
+			
+		}
+		return false;
 	}
 }

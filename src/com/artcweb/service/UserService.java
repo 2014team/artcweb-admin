@@ -3,6 +3,8 @@ package com.artcweb.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.User;
 
@@ -47,7 +49,7 @@ public interface UserService extends BaseService<User, Integer> {
 	 * @param array
 	 * @return
 	 */
-	public int deleteByBatch(String array);
+	public boolean deleteByBatch(String array,HttpServletRequest request);
 
 	/**
 	 * @Title: getByMap
@@ -61,7 +63,7 @@ public interface UserService extends BaseService<User, Integer> {
 	 * @Title: deleteUser
 	 * @Description: 删除用户信息
 	 */
-	public LayUiResult deleteUser(Integer id);
+	public LayUiResult deleteUser(Integer id,HttpServletRequest request);
 
 	
 	/**

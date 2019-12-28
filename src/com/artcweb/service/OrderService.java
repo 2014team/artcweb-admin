@@ -18,7 +18,7 @@ public interface OrderService extends BaseService<Order, Integer> {
 	 * @param array
 	 * @return
 	 */
-	public int deleteByBatch(String array);
+	public boolean deleteByBatch(String array,HttpServletRequest request);
 
 	/**
 	 * @Title: findByPage
@@ -118,5 +118,15 @@ public interface OrderService extends BaseService<Order, Integer> {
 	 * @return
 	 */
 	public LayUiResult saveNewTemplate(Order entity, MultipartFile file, HttpServletRequest request);
+	
+	
+	/**
+	* @Title: deleteOrder
+	* @Description: 删除订单
+	* @param id
+	* @param request
+	* @return
+	*/
+	public boolean deleteOrder(Integer id ,HttpServletRequest request);
 
 }

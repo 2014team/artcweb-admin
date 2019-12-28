@@ -5,26 +5,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.artcweb.baen.LayUiResult;
 import com.artcweb.baen.Order;
 import com.artcweb.baen.User;
+import com.artcweb.constant.ComeFromConstant;
 import com.artcweb.dao.OrderDao;
+import com.artcweb.dao.PicPackageDao;
 import com.artcweb.dao.UserDao;
 import com.artcweb.service.UserService;
+import com.artcweb.util.FileUtil;
 import com.artcweb.util.ImageUtil;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements UserService {
 
+	
+	private Logger logger = Logger.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserDao userDao;
 
 	@Autowired
 	private OrderDao orderDao;
+	
+	@Autowired
+	private PicPackageDao picPackageDao;
 
 	/**
 	 * @Title: checkSaveParam
@@ -37,11 +48,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 
 		String userName = entity.getUserName();
 		if (StringUtils.isBlank(userName)) {
-			return "参数[userName]不能为空!";
+			return "买家名称不能为空!";
 		}
 		Integer sort = entity.getSort();
 		if (null == sort) {
-			return "参数[sort]不能为空!";
+			return "排序不能为空!";
 		}
 		return null;
 	}
@@ -62,7 +73,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		paramMap.put("userName", entity.getUserName());
 		list = userDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "手机号码已存在!";
+			return "买家名称已存在!";
 		}
 		return null;
 	}
@@ -82,7 +93,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 		paramMap.put("userName", entity.getUserName());
 		list = userDao.checkUnique(paramMap);
 		if (null != list && list.size() > 0) {
-			return "手机号码已存在!";
+			return "买家名称已存在!";
 		}
 		return null;
 	}
@@ -155,19 +166,18 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 	 * @return
 	 */
 	@Override
-	public int deleteByBatch(String array) {
-		
+	public boolean deleteByBatch(String array,HttpServletRequest request) {
 		List<User> list = userDao.selectByBatch(array);
-		int resilt = 0;
 		if(null != list && list.size() > 0){
-			resilt = userDao.deleteByBatch(array);
 			for (User user : list) {
-				Map<String, Object> paramMap = new HashMap<String, Object>();
-				paramMap.put("userName", user.getUserName());
-				orderDao.deleteByMap(paramMap);
+				Integer id = user.getId();
+				//删除用户信息
+				LayUiResult layUiResult = deleteUser(id, request);
+				logger.info("UserServiceImpl.deleteByBatch() code= "+layUiResult.getCode());
 			}
+			return true;
 		}
-		return resilt;
+		return false;
 	}
 
 	@Override
@@ -181,20 +191,55 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
 	 * @Description: 删除用户信息
 	 */
 	@Override
-	public LayUiResult deleteUser(Integer id) {
+	public LayUiResult deleteUser(Integer id,HttpServletRequest request) {
 
 		LayUiResult layUiResult = new LayUiResult();
 		User user = userDao.get(id);
 		if (null != user) {
+			//获取用户订单信息
 			String userName = user.getUserName();
+			Map<String,Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("userName", userName);
+			List<Order> orderList = orderDao.select(paramMap);
+			
 			Integer result = userDao.delete(id);
+			
 			if (null != result && result > 0) {
 				if (StringUtils.isNotBlank(userName)) {
-					Map<String, Object> paramMap = new HashMap<String, Object>();
-					paramMap.put("userName", userName);
-					orderDao.deleteByMap(paramMap);
+					if(null != orderList && orderList.size() > 0){
+						for (Order order : orderList) {
+							Integer orderId = order.getOrderId();
+							//删除订单
+							if(null != orderId && orderId > 0){
+								Integer delOrder = orderDao.delete(orderId);
+								logger.info("UserServiceImpl.deleteUser()删除订单delOrder= "+delOrder);
+							}
+							
+							//删除定制模板
+							Integer comeFrom = order.getComeFrom();
+							Integer packageId = order.getPackageId();
+							if(comeFrom == ComeFromConstant.CUSTOM_MAKE){
+								Integer delPicPackage = picPackageDao.delete(packageId);
+								if(null != delPicPackage && delPicPackage > 0 ){
+									//删除物理图片
+									String imageUrl = order.getImageUrl();
+									String minImageUrl = order.getMinImageUrl();
+									if(StringUtils.isNotBlank(imageUrl)){
+										boolean  deleteResult = FileUtil.deleteFile(imageUrl,request);
+										logger.info("物理删除图片结果 = "+deleteResult);
+									}
+									if(StringUtils.isNotBlank(minImageUrl)){
+										boolean  deleteResult = FileUtil.deleteFile(minImageUrl,request);
+										logger.info("物理删除图片结果 = "+deleteResult);
+									}
+								}
+								
+							}
+						}
+						
+					}
+					
 				}
-
 				layUiResult.success();
 				return layUiResult;
 
